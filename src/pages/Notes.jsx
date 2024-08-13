@@ -1,12 +1,17 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchNotesWithRatings, updateRating } from '../services/apiNotes';
-import { FaStar } from 'react-icons/fa';
+import { FaStar, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { useState } from 'react';
+import Spinner from '../ui/Spinner';
+import Modal from '../ui/Modal';
 
 function Notes() {
   const queryClient = useQueryClient();
   const [hoveredRatings, setHoveredRatings] = useState({});
   const [selectedRatings, setSelectedRatings] = useState({});
+  const [selectedSubject, setSelectedSubject] = useState(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Fetch notes using React Query
   const {
@@ -41,31 +46,116 @@ function Notes() {
     setHoveredRatings((prev) => ({ ...prev, [noteId]: null }));
   };
 
-  if (isLoading) return <p className="text-center text-gray-600">Loading...</p>;
+  const handleSubjectFilter = (subject) => {
+    setSelectedSubject(subject);
+    setIsDropdownOpen(false); // Close dropdown after selecting a subject
+  };
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  if (isLoading) return <Spinner />;
   if (error)
     return (
-      <p className="text-center text-red-500">
+      <p className="text-center text-red-400">
         Error loading notes: {error.message}
       </p>
     );
 
-  // Sort notes in descending order based on their rating
-  const sortedNotes = notes
-    .slice() // Create a shallow copy of the notes array to avoid mutating the original
-    .sort((a, b) => (b.rating || 0) - (a.rating || 0)); // Sort by rating in descending order
+  // Group notes by subject
+  const notesBySubject = notes.reduce((acc, note) => {
+    if (!acc[note.subject]) {
+      acc[note.subject] = [];
+    }
+    acc[note.subject].push(note);
+    return acc;
+  }, {});
 
-  // Get the highest-rated note
-  const highestRatedNote = sortedNotes[0] || {};
+  // Find the best note in each subject
+  const bestNotes = Object.keys(notesBySubject).reduce((acc, subject) => {
+    const bestNote = notesBySubject[subject].reduce((best, current) =>
+      (current.rating || 0) > (best.rating || 0) ? current : best,
+    );
+    acc[subject] = bestNote;
+    return acc;
+  }, {});
+
+  // Filter notes by the selected subject
+  const filteredNotes = selectedSubject
+    ? notesBySubject[selectedSubject] || []
+    : notes;
+
+  // Get unique subjects
+  const subjects = Object.keys(notesBySubject);
+
+  const sortedNotes = filteredNotes.sort((a, b) => {
+    const ratingA = a.rating || 0;
+    const ratingB = b.rating || 0;
+    return ratingB - ratingA;
+  });
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-gray-900 min-h-screen">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-4xl font-bold text-gray-800">Notes</h1>
-        <button className="bg-red-500 text-white font-semibold rounded-md px-4 py-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-300">
-          Upload
-        </button>
+        <h1 className="text-4xl font-bold text-white">Notes</h1>
+        <div className="flex space-x-2">
+          <div className="relative">
+            <button
+              onClick={toggleDropdown}
+              className="bg-gray-700 text-white px-4 py-2 rounded-md font-semibold text-sm flex items-center hover:bg-gray-600 transition-all duration-300"
+            >
+              {selectedSubject ? selectedSubject : 'Select Subject'}
+              {isDropdownOpen ? (
+                <FaChevronUp className="ml-2" />
+              ) : (
+                <FaChevronDown className="ml-2" />
+              )}
+            </button>
+
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-gray-800 text-white rounded-md shadow-lg z-10">
+                <button
+                  onClick={() => handleSubjectFilter(null)}
+                  className={`block w-full text-left px-4 py-2 rounded-md font-semibold text-sm ${
+                    !selectedSubject
+                      ? 'bg-blue-600 text-white'
+                      : 'text-gray-300'
+                  } hover:bg-blue-700 transition-all duration-300`}
+                >
+                  All Subjects
+                </button>
+                {subjects.map((subject) => (
+                  <button
+                    key={subject}
+                    onClick={() => handleSubjectFilter(subject)}
+                    className={`block w-full text-left px-4 py-2 rounded-md font-semibold text-sm ${
+                      selectedSubject === subject
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-300'
+                    } hover:bg-blue-700 transition-all duration-300`}
+                  >
+                    {subject}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          <button
+            className="bg-red-600 text-white font-semibold text-sm rounded-md px-4 py-2 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 transition-colors duration-300"
+            onClick={openModal}
+          >
+            Upload
+          </button>
+        </div>
       </div>
-      <div className="grid grid-cols-2 gap-6">
+
+      <Modal isOpen={isModalOpen} onClose={closeModal} title="Upload Notes" />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {sortedNotes.map((note) => {
           // Display average rating from the database
           const averageRating = note.rating ? note.rating.toFixed(1) : '0.0';
@@ -73,18 +163,16 @@ function Notes() {
           return (
             <div
               key={note.id}
-              className={`bg-white p-6 rounded-lg shadow-lg border border-gray-300 flex flex-col justify-between h-full relative ${
-                note.id === highestRatedNote.id ? 'bg-yellow-50' : ''
-              }`}
+              className={`bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col justify-between h-full relative transition-shadow duration-300 hover:shadow-xl`}
             >
-              {note.id === highestRatedNote.id && (
-                <div className="absolute top-0 right-0 bg-yellow-500 text-white px-3 py-1 text-sm font-semibold rounded-bl-lg">
-                  Best Note
+              {note.id === bestNotes[note.subject].id && (
+                <div className="absolute top-0 right-0 bg-yellow-600 text-white  px-3 py-1 text-[0.7rem] font-semibold rounded-bl-lg">
+                  Best Note in {note.subject}
                 </div>
               )}
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-2xl font-semibold text-gray-800">
+                  <h2 className="text-2xl font-semibold text-white">
                     {note.title}
                   </h2>
                   <div className="flex items-center text-yellow-500">
@@ -92,20 +180,25 @@ function Notes() {
                     <span className="ml-2 text-lg">{averageRating}</span>
                   </div>
                 </div>
-                <p className="text-gray-700 mb-4">{note.description}</p>
+
+                <p className="text-gray-300 mb-4">{note.description}</p>
               </div>
 
-              <a
-                href={note.file_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-center text-white bg-blue-500 hover:bg-blue-600 rounded-lg px-4 py-2 mt-auto transition-colors duration-300"
-              >
-                View Note
-              </a>
+              <div className="mt-auto">
+                <p className=" mb-2 p-1  text-white">
+                  {note.author ? `By : ${note.author}` : ''}
+                </p>
+                <a
+                  href={note.file_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-center text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 transition-colors duration-300"
+                >
+                  View Note
+                </a>
+              </div>
 
-              <div className="flex items-center gap-2 mt-4">
-                <span className="text-gray-800">Rate this note:</span>
+              <div className="flex items-center gap-2 mt-4 justify-center">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
                     key={star}
@@ -119,7 +212,7 @@ function Notes() {
                         note.rating ||
                         0)
                         ? 'text-yellow-500'
-                        : 'text-gray-400'
+                        : 'text-gray-500'
                     } hover:text-yellow-300 transition-colors duration-200`}
                   >
                     <FaStar className="w-5 h-5" />

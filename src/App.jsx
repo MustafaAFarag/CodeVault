@@ -6,6 +6,7 @@ import Homepage from './pages/Homepage';
 import PageNotFound from './pages/PageNotFound';
 import Notes from './pages/Notes';
 import Lectures from './pages/Lectures';
+import Resources from './pages/Resources';
 
 const queryClient = new QueryClient();
 
@@ -22,7 +23,7 @@ function App() {
             <Route path="/lectures" element={<Lectures />} />
             <Route path="/quiztime" element={<Homepage />} />
             <Route path="/showcase" element={<Homepage />} />
-            <Route path="/resources" element={<Homepage />} />
+            <Route path="/resources" element={<Resources />} />
           </Route>
 
           <Route path="*" element={<PageNotFound />} />

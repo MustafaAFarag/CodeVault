@@ -22,7 +22,6 @@ export async function fetchLecturesAndSheets() {
     return acc;
   }, {});
 
-  // Return the fetched subjects and grouped sheets
   return {
     subjectsData,
     sheetsBySubject,
