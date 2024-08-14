@@ -1,13 +1,33 @@
 /* eslint-disable react/prop-types */
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
-import supabase from '../services/supabase';
+import { useState, useEffect } from 'react';
+import supabase from '../../services/supabase';
 import { toast } from 'react-toastify';
 
-const Modal = ({ isOpen, onClose, title }) => {
+const NotesModal = ({ isOpen, onClose, title }) => {
   const { register, handleSubmit, reset } = useForm();
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [subjects, setSubjects] = useState([]); // State to store subjects
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchSubjects(); // Fetch subjects when the modal opens
+    }
+  }, [isOpen]);
+
+  const fetchSubjects = async () => {
+    const { data: subjectsData, error } = await supabase
+      .from('subjects')
+      .select('name');
+
+    if (error) {
+      console.error('Error fetching subjects:', error.message);
+      toast.error('Error fetching subjects.');
+    } else {
+      setSubjects(subjectsData);
+    }
+  };
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -18,7 +38,6 @@ const Modal = ({ isOpen, onClose, title }) => {
 
     setUploading(true);
 
-    // Upload file to Supabase storage
     const { data: fileData, error: uploadError } = await supabase.storage
       .from('notes')
       .upload(`public/${file.name}`, file);
@@ -32,7 +51,6 @@ const Modal = ({ isOpen, onClose, title }) => {
 
     const fileUrl = fileData.path; // Adjust based on your storage response
 
-    // Insert note into Supabase database
     const { error: dbError } = await supabase.from('notes').insert([
       {
         title: data.title,
@@ -60,58 +78,64 @@ const Modal = ({ isOpen, onClose, title }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-semibold mb-4">{title}</h2>
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70">
+      <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-96">
+        <h2 className="text-2xl font-semibold mb-4 text-white">{title}</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-300">
               Title
             </label>
             <input
               type="text"
               {...register('title', { required: true })}
-              className="mt-1 block w-full border text-red-800 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full border border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-700 text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-300">
               Description
             </label>
             <textarea
               {...register('description', { required: true })}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full border border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-700 text-white"
               rows="4"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-300">
               Subject
             </label>
-            <input
-              type="text"
+            <select
               {...register('subject', { required: true })}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            />
+              className="mt-1 block w-full border border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-700 text-white"
+            >
+              <option value="">Select a subject</option>
+              {subjects.map((subject) => (
+                <option key={subject.name} value={subject.name}>
+                  {subject.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-300">
               Author
             </label>
             <input
               type="text"
               {...register('author', { required: true })}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full border border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-700 text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-300">
               File
             </label>
             <input
               type="file"
               onChange={handleFileChange}
-              className="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md"
+              className="mt-1 block w-full text-sm text-gray-300 border border-gray-600 rounded-md bg-gray-700"
             />
           </div>
           <div className="flex justify-end space-x-2">
@@ -136,4 +160,4 @@ const Modal = ({ isOpen, onClose, title }) => {
   );
 };
 
-export default Modal;
+export default NotesModal;

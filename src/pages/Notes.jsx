@@ -1,9 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchNotesWithRatings, updateRating } from '../services/apiNotes';
+import { fetchNotes, updateRating } from '../services/apiNotes';
 import { FaStar, FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Spinner from '../ui/Spinner';
-import Modal from '../ui/Modal';
+import NotesModal from '../features/Notes/NotesModal';
 
 function Notes() {
   const queryClient = useQueryClient();
@@ -20,7 +20,7 @@ function Notes() {
     isLoading,
   } = useQuery({
     queryKey: ['notes'],
-    queryFn: fetchNotesWithRatings,
+    queryFn: fetchNotes,
   });
 
   const mutation = useMutation({
@@ -57,6 +57,23 @@ function Notes() {
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (notes.length > 0) {
+      // Set the first subject as the default selected subject
+      const firstSubject = Object.keys(
+        notes.reduce((acc, note) => {
+          if (!acc[note.subject]) {
+            acc[note.subject] = [];
+          }
+          acc[note.subject].push(note);
+          return acc;
+        }, {}),
+      )[0];
+
+      setSelectedSubject(firstSubject);
+    }
+  }, [notes]);
 
   if (isLoading) return <Spinner />;
   if (error)
@@ -108,7 +125,7 @@ function Notes() {
               onClick={toggleDropdown}
               className="bg-gray-700 text-white px-4 py-2 rounded-md font-semibold text-sm flex items-center hover:bg-gray-600 transition-all duration-300"
             >
-              {selectedSubject ? selectedSubject : 'Select Subject'}
+              {selectedSubject || 'Select Subject'}
               {isDropdownOpen ? (
                 <FaChevronUp className="ml-2" />
               ) : (
@@ -118,16 +135,6 @@ function Notes() {
 
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-gray-800 text-white rounded-md shadow-lg z-10">
-                <button
-                  onClick={() => handleSubjectFilter(null)}
-                  className={`block w-full text-left px-4 py-2 rounded-md font-semibold text-sm ${
-                    !selectedSubject
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-300'
-                  } hover:bg-blue-700 transition-all duration-300`}
-                >
-                  All Subjects
-                </button>
                 {subjects.map((subject) => (
                   <button
                     key={subject}
@@ -153,7 +160,11 @@ function Notes() {
         </div>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal} title="Upload Notes" />
+      <NotesModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        title="Upload Notes"
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {sortedNotes.map((note) => {

@@ -11,16 +11,6 @@ export async function fetchNotes() {
   return data;
 }
 
-export async function fetchNotesWithRatings() {
-  const { data, error } = await supabase.from('notes').select('*');
-
-  if (error) {
-    throw new Error('Notes with ratings could not be loaded: ' + error.message);
-  }
-
-  return data;
-}
-
 export async function updateRating(noteId, rating) {
   const { data, error } = await supabase
     .from('notes')
