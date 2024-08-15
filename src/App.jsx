@@ -7,9 +7,11 @@ import PageNotFound from './pages/PageNotFound';
 import Notes from './pages/Notes';
 import Lectures from './pages/Lectures';
 import Resources from './pages/Resources';
-import { ToastContainer } from 'react-toastify';
 import Sections from './pages/Sections';
 import Login from './pages/Login';
+import { Toaster } from 'react-hot-toast';
+import ProtectedRoute from './ui/ProtectedRoute';
+import SignUp from './pages/SignUp';
 
 const queryClient = new QueryClient();
 
@@ -19,7 +21,13 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
         <Routes>
-          <Route element={<AppLayout />}>
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Navigate replace to="/dashboard" />} />
             <Route path="/" element={<Homepage />} />
             <Route path="/dashboard" element={<Homepage />} />
@@ -32,11 +40,12 @@ function App() {
             <Route path="/resources" element={<Resources />} />
           </Route>
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
 
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
-      <ToastContainer
+      <Toaster
         position="top-center"
         gutter={12}
         containerStyle={{ margin: '8px' }}

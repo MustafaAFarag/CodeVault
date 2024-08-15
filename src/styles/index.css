@@ -78,15 +78,15 @@ body {
   color: white;
 }
 
-.dropdown-transition {
+/* .dropdown-transition {
   transition:
     max-height 0.4s ease-out,
     opacity 0.4s ease-out,
     visibility 0.4s ease-out;
   overflow: hidden;
-  max-height: 0; /* Start hidden */
-  opacity: 0; /* Start hidden */
-  visibility: hidden; /* Start hidden */
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .dropdown-transition.open {
@@ -94,7 +94,13 @@ body {
     max-height 0.4s ease-out,
     opacity 0.4s ease-out,
     visibility 0.4s ease-out;
-  max-height: 1000px; /* Or a value large enough to fit content */
+  max-height: 1000px;
   opacity: 1;
-  visibility: visible;
+  visibility: visible; 
+} */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

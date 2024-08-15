@@ -12,7 +12,15 @@ function LoginForm() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;
-    login({ email, password });
+    login(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail('');
+          setPassword('');
+        },
+      },
+    );
   }
 
   return (
@@ -57,7 +65,7 @@ function LoginForm() {
         type="submit"
         disabled={isLoading}
       >
-        {!isLoading ? ' Log in' : <SpinnerMini />}
+        {isLoading ? <SpinnerMini /> : 'Log in'}
       </button>
     </form>
   );
