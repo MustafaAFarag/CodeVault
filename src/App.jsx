@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import AppLayout from './ui/AppLayout';
@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './ui/ProtectedRoute';
 import SignUp from './pages/SignUp';
+import Dashboard from './pages/Dashboard';
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,10 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="*" element={<PageNotFound />} />
           <Route
             element={
               <ProtectedRoute>
@@ -28,10 +33,8 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route index element={<Navigate replace to="/dashboard" />} />
-            <Route path="/" element={<Homepage />} />
-            <Route path="/dashboard" element={<Homepage />} />
-
+            <Route path="/dashboard" element={<Dashboard />} />
+            {/* Dashboard component*/}
             <Route path="/notes" element={<Notes />} />
             <Route path="/lectures" element={<Lectures />} />
             <Route path="/sections" element={<Sections />} />
@@ -39,10 +42,6 @@ function App() {
             <Route path="/showcase" element={<Homepage />} />
             <Route path="/resources" element={<Resources />} />
           </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-
-          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
       <Toaster
