@@ -11,16 +11,25 @@ function MainNav() {
             Home
           </StyledNavLink>
         </li>
+
         <li>
           <StyledNavLink to="/notes">
             <HiOutlineHome />
             Notes
           </StyledNavLink>
         </li>
+
         <li>
           <StyledNavLink to="/lectures">
             <HiOutlineHome />
             Lectures
+          </StyledNavLink>
+        </li>
+
+        <li>
+          <StyledNavLink to="/sections">
+            <HiOutlineHome />
+            Sections
           </StyledNavLink>
         </li>
 

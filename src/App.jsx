@@ -8,6 +8,7 @@ import Notes from './pages/Notes';
 import Lectures from './pages/Lectures';
 import Resources from './pages/Resources';
 import { ToastContainer } from 'react-toastify';
+import Sections from './pages/Sections';
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ function App() {
 
             <Route path="/notes" element={<Notes />} />
             <Route path="/lectures" element={<Lectures />} />
+            <Route path="/sections" element={<Sections />} />
             <Route path="/quiztime" element={<Homepage />} />
             <Route path="/showcase" element={<Homepage />} />
             <Route path="/resources" element={<Resources />} />
