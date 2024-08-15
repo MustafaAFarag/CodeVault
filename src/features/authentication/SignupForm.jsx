@@ -1,13 +1,23 @@
 import { useForm } from 'react-hook-form';
 import SpinnerMini from '../../ui/SpinnerMini';
+import { useSignup } from './useSignup';
+import { useNavigate } from 'react-router-dom';
 
 /* eslint-disable react/prop-types */
-function SignupForm({ isLoading }) {
+function SignupForm() {
+  const navigate = useNavigate();
+  const { signup, isLoading } = useSignup();
   const { register, formState, getValues, handleSubmit } = useForm();
   const { errors } = formState;
 
-  function onSubmit(data) {
-    console.log(data);
+  function onSubmit({ fullName, email, password }) {
+    console.log(fullName, email, password);
+    signup(
+      { fullName, email, password },
+      {
+        onSuccess: navigate('/login'),
+      },
+    );
   }
 
   return (
