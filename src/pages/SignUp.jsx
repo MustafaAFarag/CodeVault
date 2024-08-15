@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import SignupForm from '../features/authentication/SignupForm';
 import Logo from '../ui/Logo';
 
@@ -8,6 +9,14 @@ function SignUp() {
         <Logo className="mb-6" />
         <h4 className="text-center text-2xl text-white mb-6">Sign up</h4>
         <SignupForm />
+
+        <Link
+          to="/login"
+          className="text-blue-400 hover:text-blue-300 text-sm mt-4"
+        >
+          Already have an Account?
+          <span className="font-semibold"> Log in!</span>
+        </Link>
       </div>
     </main>
   );

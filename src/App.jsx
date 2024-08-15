@@ -21,6 +21,9 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Homepage />} /> {/* Homepage  Component*/}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route
             element={
               <ProtectedRoute>
@@ -28,10 +31,8 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route index element={<Navigate replace to="/dashboard" />} />
-            <Route path="/" element={<Homepage />} />
             <Route path="/dashboard" element={<Homepage />} />
-
+            {/* Dashboard  Component*/}
             <Route path="/notes" element={<Notes />} />
             <Route path="/lectures" element={<Lectures />} />
             <Route path="/sections" element={<Sections />} />
@@ -39,9 +40,6 @@ function App() {
             <Route path="/showcase" element={<Homepage />} />
             <Route path="/resources" element={<Resources />} />
           </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
@@ -60,7 +58,7 @@ function App() {
             fontSize: '16px',
             maxWidth: '500px',
             padding: '16px 24px',
-            backgroundColor: 'red',
+            backgroundColor: 'gray',
             color: 'black',
           },
         }}
