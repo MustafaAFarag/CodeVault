@@ -1,11 +1,11 @@
 @layer base {
   :root {
-    --color-primary: #1a365d;
-    --color-secondary: #e6f3ff;
-    --color-accent: #ffd700;
-    --color-background: #f8f8f8;
-    --color-text: #333333;
-    --color-heading: #000000;
+    --color-primary: #d2af84;
+    --color-secondary: #4b5563;
+    --color-accent: #d97706;
+    --color-background: #1f2937;
+    --color-text: #e5e7eb;
+    --color-heading: #f3f4f6;
   }
 }
 

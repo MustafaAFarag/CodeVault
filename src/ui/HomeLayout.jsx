@@ -5,9 +5,7 @@ function HomeLayout() {
   return (
     <div className="flex flex-col min-h-screen relative">
       <HomeHeader />
-      <main className="">
-        <Outlet />
-      </main>
+      <Outlet />
     </div>
   );
 }

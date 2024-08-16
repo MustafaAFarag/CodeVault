@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 
 function HomeHeader() {
   return (
-    <header className="border-b border-gray-800 px-8 py-5">
+    <header className="border-b border-secondary px-8 py-5 bg-background">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
-        <a href="/" className="flex items-center gap-4 z-50">
+        <Link to="/" className="flex items-center gap-4 z-50">
           <img
             alt="NoteVault Logo"
             loading="lazy"
@@ -12,22 +12,14 @@ function HomeHeader() {
             width="90"
             height="90"
           />
-          <span className="text-xl font-semibold text-white">NoteVault</span>
-        </a>
+          <span className="text-xl font-semibold text-primary">NoteVault</span>
+        </Link>
         <nav className="text-xl z-10">
           <ul className="flex gap-16 items-center">
             <li>
               <Link
-                to="/notes"
-                className="text-white hover:text-gray-300 transition-colors"
-              >
-                Notes
-              </Link>
-            </li>
-            <li>
-              <Link
                 to="/about"
-                className="text-white hover:text-gray-300 transition-colors"
+                className="text-text hover:text-accent transition-colors"
               >
                 About
               </Link>
@@ -35,9 +27,9 @@ function HomeHeader() {
             <li>
               <Link
                 to="/login"
-                className="text-white hover:text-gray-300 transition-colors"
+                className="text-text hover:text-accent transition-colors"
               >
-                Login / Signup
+                Login
               </Link>
             </li>
           </ul>
