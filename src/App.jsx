@@ -13,6 +13,8 @@ import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './ui/ProtectedRoute';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
+import About from './pages/about';
+import HomeLayout from './ui/HomeLayout';
 
 const queryClient = new QueryClient();
 
@@ -22,10 +24,13 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route element={<HomeLayout />}>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Route>
+
           <Route
             element={
               <ProtectedRoute>
@@ -42,6 +47,8 @@ function App() {
             <Route path="/showcase" element={<Homepage />} />
             <Route path="/resources" element={<Resources />} />
           </Route>
+
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
       <Toaster
