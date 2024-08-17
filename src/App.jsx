@@ -39,12 +39,9 @@ function App() {
             }
           >
             <Route path="/dashboard" element={<Dashboard />} />
-            {/* Dashboard component*/}
             <Route path="/notes" element={<Notes />} />
             <Route path="/lectures" element={<Lectures />} />
             <Route path="/sections" element={<Sections />} />
-            <Route path="/quiztime" element={<Homepage />} />
-            <Route path="/showcase" element={<Homepage />} />
             <Route path="/resources" element={<Resources />} />
           </Route>
 

@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
+import LogoLink from './LogoLink';
 
 function HomeHeader() {
   return (
     <header className="border-b border-secondary px-8 py-5 bg-background">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
-        <Link to="/" className="flex items-center gap-4 z-50">
+        <LogoLink to="/" className="flex items-center gap-4 z-50">
           <img
             alt="NoteVault Logo"
             loading="lazy"
@@ -12,8 +13,10 @@ function HomeHeader() {
             width="90"
             height="90"
           />
-          <span className="text-xl font-semibold text-primary">NoteVault</span>
-        </Link>
+          <span className="text-xl font-semibold text-text hover:text-accent transition-all duration-300">
+            NoteVault
+          </span>
+        </LogoLink>
         <nav className="text-xl z-10">
           <ul className="flex gap-16 items-center">
             <li>

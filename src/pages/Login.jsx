@@ -15,8 +15,8 @@ function Login() {
           to="/signup"
           className="text-blue-400 hover:text-blue-300 text-sm mt-4"
         >
-          Don&apos;t have an account?{' '}
-          <span className="font-semibold">Sign up!</span>
+          Don&apos;t have an account?
+          <span className="font-semibold"> Sign up!</span>
         </Link>
       </div>
     </main>

@@ -39,20 +39,6 @@ function MainNav() {
             Resources
           </StyledNavLink>
         </li>
-
-        <li>
-          <StyledNavLink to="/quiztime">
-            <HiOutlineHome />
-            QuizTime!
-          </StyledNavLink>
-        </li>
-
-        <li>
-          <StyledNavLink to="/showcase">
-            <HiOutlineHome />
-            Showcase
-          </StyledNavLink>
-        </li>
       </ul>
     </nav>
   );
