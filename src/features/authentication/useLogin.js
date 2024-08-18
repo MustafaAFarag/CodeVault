@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { login as loginApi } from '../../services/apiAuth';
+import { getCurrentUser, login as loginApi } from '../../services/apiAuth';
 import toast from 'react-hot-toast';
 
 export function useLogin() {
@@ -9,9 +9,15 @@ export function useLogin() {
 
   const { mutate: login, isPending } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
-    onSuccess: (user) => {
-      queryClient.setQueryData(['user'], user.user);
-      navigate('/dashboard', { replace: true });
+    onSuccess: async () => {
+      try {
+        // Fetch user details from the 'users' table
+        const userDetails = await getCurrentUser();
+        queryClient.setQueryData(['user'], userDetails);
+        navigate('/dashboard', { replace: true });
+      } catch (error) {
+        toast.error('Failed to fetch user details');
+      }
     },
     onError: () => toast.error('Provided email or password is incorrect'),
   });

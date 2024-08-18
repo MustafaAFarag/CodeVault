@@ -1,5 +1,20 @@
 import supabase from './supabase';
 
+// Function to create a new user in the 'users' table after signing up
+async function createUserInDatabase(userId, fullName) {
+  const { data, error } = await supabase.from('users').insert([
+    {
+      id: userId,
+      full_name: fullName,
+      role: 'ordinary', // Default role, change as needed
+    },
+  ]);
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
 export async function signup({ fullName, email, password }) {
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -14,6 +29,9 @@ export async function signup({ fullName, email, password }) {
 
   if (error) throw new Error(error.message);
 
+  // Create user in the new users table
+  await createUserInDatabase(data.user.id, fullName);
+
   return data;
 }
 
@@ -25,23 +43,35 @@ export async function login({ email, password }) {
 
   if (error) throw new Error(error.message);
 
-  console.log(data);
   return data;
 }
 
-// So when the user comes back to the page he stays logged in
+// Fetch the current user and their details from the 'users' table
 export async function getCurrentUser() {
-  const { data: session } = await supabase.auth.getSession();
+  // Fetch the current session
+  const {
+    data: { session },
+    error: sessionError,
+  } = await supabase.auth.getSession();
 
-  if (!session.session) return null;
+  if (sessionError || !session?.user) {
+    throw new Error('Could not fetch session');
+  }
 
-  const { data, error } = await supabase.auth.getUser();
+  const userId = session.user.id;
 
-  console.log(data);
+  // Fetch user details from the 'users' table using the user ID
+  const { data: userDetails, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', userId)
+    .single(); // Fetch a single user record
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    throw new Error(error.message);
+  }
 
-  return data?.user;
+  return userDetails;
 }
 
 export async function logout() {

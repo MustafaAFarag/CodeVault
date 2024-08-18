@@ -1,5 +1,3 @@
-// get current user and store it in the cache
-
 import { useQuery } from '@tanstack/react-query';
 import { getCurrentUser } from '../../services/apiAuth';
 
@@ -7,7 +5,8 @@ export function useUser() {
   const { isLoading, data: user } = useQuery({
     queryKey: ['user'],
     queryFn: getCurrentUser,
+    retry: false, // Avoid retries to handle errors gracefully
   });
 
-  return { isLoading, user, isAuthenticated: user?.role === 'authenticated' };
+  return { isLoading, user, isAuthenticated: !!user };
 }

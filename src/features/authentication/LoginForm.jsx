@@ -1,20 +1,26 @@
-/* eslint-disable no-unused-vars */
 import { useState } from 'react';
-import '../../styles/index.css'; // Import your CSS file
 import { useLogin } from './useLogin';
 import SpinnerMini from '../../ui/SpinnerMini';
+import toast from 'react-hot-toast';
 
 function LoginForm() {
-  const [email, setEmail] = useState('tefa@example.com');
-  const [password, setPassword] = useState('mypassword');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { login, isLoading } = useLogin();
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;
+
     login(
       { email, password },
       {
+        onSuccess: () => {
+          toast.success('Login Successful!');
+        },
+        onError: (error) => {
+          toast.error(`Login failed: ${error.message}`);
+        },
         onSettled: () => {
           setEmail('');
           setPassword('');
