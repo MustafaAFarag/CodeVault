@@ -24,3 +24,49 @@ export async function fetchNotes() {
 
   return notesWithAverage;
 }
+
+// Function to generate a random letter
+function getRandomLetter() {
+  const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  return letters.charAt(Math.floor(Math.random() * letters.length));
+}
+
+// Function to sanitize the file name
+function sanitizeFileName(fileName) {
+  return fileName
+    .split('')
+    .map((char) => (char.match(/[^a-zA-Z0-9.\-_]/) ? getRandomLetter() : char))
+    .join('')
+    .replace(/_+/g, '_') // Replace multiple underscores with a single underscore
+    .replace(/^_|_$/g, ''); // Remove leading or trailing underscores
+}
+
+export async function uploadNote({ title, description, subject_id, pdf }) {
+  // Sanitize the file name
+  const sanitizedFileName = sanitizeFileName(pdf.name);
+  const uploadFolder = 'user_uploads';
+
+  // Upload the PDF file to Supabase Storage with the sanitized file name
+  const { data: pdfData, error: uploadError } = await supabase.storage
+    .from('notes')
+    .upload(`${uploadFolder}/${sanitizedFileName}`, pdf);
+
+  if (uploadError) throw new Error(uploadError.message);
+
+  // Construct the full URL for the uploaded PDF
+  const pdfUrl = `https://vgbfbajsepobgszdnpic.supabase.co/storage/v1/object/public/notes/${pdfData.path}`;
+
+  // Insert the note details into the 'notes' table
+  const { data, error } = await supabase.from('notes').insert([
+    {
+      title,
+      description,
+      subject_id,
+      pdf_url: pdfUrl, // Use the constructed pdf_url
+    },
+  ]);
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}

@@ -84,18 +84,17 @@ body {
 }
 
 .p-rating .p-rating-item.p-rating-item-active .p-rating-icon {
-  color: #facc15 !important; /* Highlight color when selected */
+  color: #facc15 !important;
 }
 
 .p-rating .p-rating-item:focus {
-  box-shadow: 0 0 0 0.2rem rgba(250, 204, 21, 0.5) !important; /* Adjust color and opacity as needed */
+  box-shadow: 0 0 0 0.2rem rgba(250, 204, 21, 0.5) !important;
 }
 
 .p-rating .p-rating-item:not(.p-disabled):hover {
-  color: #facc15 !important; /* Hover color */
+  color: #facc15 !important;
 }
 
-/* Optional: If you want to remove the focus ring entirely */
 .p-rating .p-rating-item:focus {
   outline: none !important;
   box-shadow: none !important;
@@ -121,6 +120,15 @@ body {
   opacity: 1;
   visibility: visible; 
 } */
+
+/* // Upload Note
+// Recalculate the average rating when someone rate a note
+// the user who created a note Delete or edit his own note
+// autoumaticlly filtered by rating and add best note
+// pagination by prime reacts
+// note view counter
+// share notes
+// favorite notes */
 
 @keyframes spin {
   to {
