@@ -78,6 +78,29 @@ body {
   color: white;
 }
 
+/* Replace the existing .p-rating styles with these */
+.p-rating .p-rating-item .p-rating-icon {
+  color: #e5e7eb !important; /* Default star color */
+}
+
+.p-rating .p-rating-item.p-rating-item-active .p-rating-icon {
+  color: #facc15 !important; /* Highlight color when selected */
+}
+
+.p-rating .p-rating-item:focus {
+  box-shadow: 0 0 0 0.2rem rgba(250, 204, 21, 0.5) !important; /* Adjust color and opacity as needed */
+}
+
+.p-rating .p-rating-item:not(.p-disabled):hover {
+  color: #facc15 !important; /* Hover color */
+}
+
+/* Optional: If you want to remove the focus ring entirely */
+.p-rating .p-rating-item:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 /* .dropdown-transition {
   transition:
     max-height 0.4s ease-out,
