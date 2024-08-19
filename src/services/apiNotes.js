@@ -24,19 +24,27 @@ export async function fetchNotes() {
   return notesWithAverage;
 }
 
+// async function fetchUserRating(noteId, userId) {
+//   const { data, error } = await supabase
+//     .from('note_rating')
+//     .select('*')
+//     .eq('note_id', noteId)
+//     .eq('user_id', userId)
+//     .single();
+
+//   if (error) return null; // No existing rating found
+//   return data;
+// }
+
 export async function rateNote(noteId, ratingValue, userId) {
-  const { data, error } = await supabase
-    .from('note_rating')
-    .upsert({
-      note_id: noteId,
-      user_id: userId,
-      rating: ratingValue,
-    })
-    .select();
+  const { error } = await supabase.from('note_rating').upsert(
+    { note_id: noteId, user_id: userId, rating: ratingValue },
+    { onConflict: ['note_id', 'user_id'] }, // Now this works because of the unique constraint
+  );
 
-  if (error) throw new Error(error.message);
-
-  return data;
+  if (error) {
+    throw new Error(error.message);
+  }
 }
 
 // Function to generate a random letter
