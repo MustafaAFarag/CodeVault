@@ -5,7 +5,11 @@ function Dashboard() {
   const { isLoading: userLoading, user } = useUser();
 
   if (userLoading) return <Spinner />;
-  return <div>Welcome {user?.full_name}!</div>;
+  return (
+    <div>
+      Welcome {user?.full_name} {user?.role}!
+    </div>
+  );
 }
 
 export default Dashboard;

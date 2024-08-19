@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchNotes, uploadNote } from '../services/apiNotes'; // Update the import
+import { fetchNotes, uploadNote, rateNote } from '../services/apiNotes';
+import { useUser } from '../features/authentication/useUser';
 import Spinner from '../ui/Spinner';
 import SubjectDropdown from '../features/Sheets/SubjectDropdown';
 import { FaStar } from 'react-icons/fa';
 import { Rating } from 'primereact/rating';
 
 function Notes() {
+  const { user } = useUser();
+
   const [selectedSubject, setSelectedSubject] = useState('');
-  const [value, setValue] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formValues, setFormValues] = useState({
     title: '',
@@ -24,11 +26,21 @@ function Notes() {
     queryFn: fetchNotes,
   });
 
-  const mutation = useMutation({
+  console.log('Fetched notes:', data);
+
+  const uploadMutation = useMutation({
     mutationFn: uploadNote,
     onSuccess: () => {
       queryClient.invalidateQueries(['notes']);
       setIsModalOpen(false);
+    },
+  });
+
+  const rateNoteMutation = useMutation({
+    mutationFn: ({ noteId, ratingValue, userId }) =>
+      rateNote(noteId, ratingValue, userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['notes']); // Refetch the notes data
     },
   });
 
@@ -54,7 +66,18 @@ function Notes() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate(formValues);
+    uploadMutation.mutate(formValues);
+  };
+
+  const handleRatingChange = (noteId, ratingValue) => {
+    if (!user) return alert('You must be logged in to rate notes.');
+
+    if (!noteId || !ratingValue || !user.id) {
+      console.error('Missing data:', { noteId, ratingValue, userId: user.id });
+      return;
+    }
+
+    rateNoteMutation.mutate({ noteId, ratingValue, userId: user.id });
   };
 
   if (isLoading) return <Spinner />;
@@ -62,7 +85,6 @@ function Notes() {
   if (error)
     return <p className="text-center text-red-400">Error: {error.message}</p>;
 
-  // Group notes by subject_id and extract unique subjects
   const notesBySubject = data.reduce((acc, note) => {
     if (!acc[note.subject_id]) {
       acc[note.subject_id] = {
@@ -76,7 +98,6 @@ function Notes() {
 
   const subjects = Object.values(notesBySubject).map((group) => group.subject);
 
-  // Filter notes based on the selected subject
   const filteredNotes = selectedSubject
     ? notesBySubject[selectedSubject]?.notes || []
     : [];
@@ -128,8 +149,8 @@ function Notes() {
                 View PDF
               </a>
               <Rating
-                value={value}
-                onChange={(e) => setValue(e.value)}
+                value={note.user_rating || 0} // Display user's rating if available
+                onChange={(e) => handleRatingChange(note.note_id, e.value)}
                 cancel={false}
                 className="my-2"
               />
@@ -142,14 +163,12 @@ function Notes() {
         </p>
       )}
 
-      {/* Upload Note Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-lg w-full">
             <h2 className="text-2xl font-bold text-white mb-4">
               Upload a New Note
             </h2>
-            {/* Form Fields */}
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-white mb-2">Title</label>

@@ -9,7 +9,6 @@ export async function fetchNotes() {
 
   if (error) throw new Error(error.message);
 
-  // Calculate the average rating for each note
   const notesWithAverage = data.map((note) => {
     const totalRating = note.note_rating.reduce(
       (acc, rating) => acc + rating.rating,
@@ -23,6 +22,21 @@ export async function fetchNotes() {
   });
 
   return notesWithAverage;
+}
+
+export async function rateNote(noteId, ratingValue, userId) {
+  const { data, error } = await supabase
+    .from('note_rating')
+    .upsert({
+      note_id: noteId,
+      user_id: userId,
+      rating: ratingValue,
+    })
+    .select();
+
+  if (error) throw new Error(error.message);
+
+  return data;
 }
 
 // Function to generate a random letter
