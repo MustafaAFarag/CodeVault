@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 function SubjectDropdown({ subjects, onChange }) {
+  console.log(subjects);
   return (
     <div className="mb-6">
       <label className="text-white font-semibold mr-4"> Select Subject:</label>

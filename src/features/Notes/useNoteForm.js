@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 export function useNoteForm() {
   const [formValues, setFormValues] = useState({
@@ -25,11 +26,28 @@ export function useNoteForm() {
     setIsModalOpen(false);
   };
 
-  const handleSubmit = (e, uploadMutation) => {
-    e.preventDefault();
-    uploadMutation.mutate(formValues, {
-      onSuccess: () => setIsModalOpen(false),
+  const clearFormValues = () => {
+    setFormValues({
+      title: '',
+      description: '',
+      subject_id: '',
+      pdf: null,
     });
+  };
+
+  const handleSubmit = async (e, uploadMutation) => {
+    e.preventDefault();
+    try {
+      await uploadMutation.mutateAsync(formValues);
+      // Clear form values and close the modal on success
+      clearFormValues();
+      setIsModalOpen(false);
+    } catch (error) {
+      // Optionally handle error here
+      toast.error(`Error: ${error.message}`);
+    } finally {
+      // Set isUploading to false and perform any additional actions if necessary
+    }
   };
 
   return {
@@ -39,5 +57,6 @@ export function useNoteForm() {
     isModalOpen,
     handleUploadClick,
     handleCloseModal,
+    clearFormValues, // Expose the clearFormValues function
   };
 }

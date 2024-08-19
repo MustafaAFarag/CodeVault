@@ -34,6 +34,12 @@ function SheetsPage({ title, queryKey, queryFn }) {
 
       <SubjectDropdown subjects={subjectsData} onChange={handleSubjectChange} />
 
+      {!selectedSubject && (
+        <p className="text-center text-gray-400">
+          Please select a subject to view {title.toLowerCase()}
+        </p>
+      )}
+
       {selectedSubject &&
         sheetsBySubject[selectedSubject] &&
         sheetsBySubject[selectedSubject].length > 0 && (

@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+
 function UploadNoteModal({
   isOpen,
   onClose,
@@ -6,6 +7,7 @@ function UploadNoteModal({
   formValues,
   subjects,
   handleChange,
+  isUploading,
 }) {
   if (!isOpen) return null;
 
@@ -25,6 +27,7 @@ function UploadNoteModal({
               onChange={handleChange}
               className="w-full px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600"
               placeholder="Enter the title"
+              disabled={isUploading}
             />
           </div>
           <div className="mb-4">
@@ -35,6 +38,7 @@ function UploadNoteModal({
               onChange={handleChange}
               className="w-full px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600"
               placeholder="Enter the description"
+              disabled={isUploading}
             ></textarea>
           </div>
           <div className="mb-4">
@@ -44,6 +48,7 @@ function UploadNoteModal({
               value={formValues.subject_id}
               onChange={handleChange}
               className="w-full px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600"
+              disabled={isUploading}
             >
               <option value="">Select a subject</option>
               {subjects.map((subject) => (
@@ -60,21 +65,28 @@ function UploadNoteModal({
               name="pdf"
               onChange={handleChange}
               className="w-full px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600"
+              disabled={isUploading}
             />
           </div>
           <div className="flex justify-end">
             <button
               type="button"
               onClick={onClose}
-              className="bg-red-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-700 transition-all mr-2"
+              className={`bg-red-600 text-white px-4 py-2 rounded-md shadow-md transition-all mr-2 ${isUploading ? 'bg-blue-400 cursor-not-allowed' : 'hover:bg-red-700'}`}
+              disabled={isUploading}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700 transition-all"
+              className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md transition-all ${
+                isUploading
+                  ? 'bg-blue-400 cursor-not-allowed'
+                  : 'hover:bg-blue-700'
+              }`}
+              disabled={isUploading}
             >
-              Upload
+              {isUploading ? 'Uploading...' : 'Upload'}
             </button>
           </div>
         </form>

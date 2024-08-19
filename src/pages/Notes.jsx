@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchNotes } from '../services/apiNotes';
+import { fetchNotes, fetchSubjects } from '../services/apiNotes';
 import { useUser } from '../features/authentication/useUser';
 import Spinner from '../ui/Spinner';
 import SubjectDropdown from '../features/Sheets/SubjectDropdown';
@@ -11,17 +12,30 @@ import { useNoteForm } from '../features/Notes/useNoteForm';
 import { useSelectedSubject } from '../features/Notes/useSelectedSubject';
 import ErrorMessage from '../ui/ErrorMessage';
 import { useFilteredNotes } from '../features/Notes/useFilteredNotes';
+import { toast } from 'react-hot-toast';
 
 function Notes() {
+  const [isUploading, setIsUploading] = useState(false);
+
+  const {
+    data: subjectsData,
+    error: subjectsError,
+    isLoading: subjectsLoading,
+  } = useQuery({
+    queryKey: ['subjects'],
+    queryFn: fetchSubjects,
+  });
+
   const { user } = useUser();
   const { selectedSubject, handleSubjectChange } = useSelectedSubject();
   const {
     formValues,
     handleChange,
-    handleSubmit,
+    handleSubmit: handleNoteSubmit,
     isModalOpen,
     handleUploadClick,
     handleCloseModal,
+    clearFormValues,
   } = useNoteForm();
 
   const { data, error, isLoading } = useQuery({
@@ -37,7 +51,7 @@ function Notes() {
       { noteId, ratingValue, userId: user.id },
       {
         onError: (error) => {
-          alert(error.message); // Notify the user that they've already rated this note
+          toast.error(`Error: ${error.message}`);
         },
       },
     );
@@ -45,14 +59,34 @@ function Notes() {
 
   const { subjects, filteredNotes } = useFilteredNotes(data, selectedSubject);
 
-  if (isLoading) return <Spinner />;
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsUploading(true);
+
+    try {
+      await uploadMutation.mutateAsync(formValues);
+      toast.success('Note uploaded successfully!');
+      clearFormValues();
+      handleCloseModal();
+    } catch (error) {
+      toast.error(`Error: ${error.message}`);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  if (isLoading || subjectsLoading) return <Spinner />;
+  if (subjectsError) return <ErrorMessage message={subjectsError.message} />;
 
   return (
     <div className="p-6 bg-gray-900 min-h-screen">
       <h1 className="text-4xl font-bold text-white mb-6 text-center">Notes</h1>
 
       <div className="flex justify-between items-center mb-6">
-        <SubjectDropdown subjects={subjects} onChange={handleSubjectChange} />
+        <SubjectDropdown
+          subjects={subjectsData}
+          onChange={handleSubjectChange}
+        />
         <button
           onClick={handleUploadClick}
           className="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700 transition-all"
@@ -79,11 +113,15 @@ function Notes() {
 
       <UploadNoteModal
         isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onSubmit={(e) => handleSubmit(e, uploadMutation)}
+        onClose={() => {
+          handleCloseModal();
+          clearFormValues(); // Clear form values when closing modal
+        }}
+        onSubmit={handleSubmit}
         formValues={formValues}
-        subjects={subjects}
+        subjects={subjectsData}
         handleChange={handleChange}
+        isUploading={isUploading}
       />
     </div>
   );

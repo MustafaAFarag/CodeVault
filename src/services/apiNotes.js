@@ -1,5 +1,13 @@
 import supabase from './supabase';
 
+export async function fetchSubjects() {
+  const { data, error } = await supabase.from('subjects').select('*');
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
 export async function fetchNotes() {
   const { data, error } = await supabase.from('notes').select(`
       *,
@@ -23,18 +31,6 @@ export async function fetchNotes() {
 
   return notesWithAverage;
 }
-
-// async function fetchUserRating(noteId, userId) {
-//   const { data, error } = await supabase
-//     .from('note_rating')
-//     .select('*')
-//     .eq('note_id', noteId)
-//     .eq('user_id', userId)
-//     .single();
-
-//   if (error) return null; // No existing rating found
-//   return data;
-// }
 
 export async function rateNote(noteId, ratingValue, userId) {
   const { error } = await supabase.from('note_rating').upsert(
