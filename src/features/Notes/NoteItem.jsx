@@ -1,14 +1,31 @@
-/* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
-import { FaStar } from 'react-icons/fa';
-import CustomRating from './CustomRating';
-import { memo, useState } from 'react';
+/* eslint-disable react/display-name */
+/* NoteItem.jsx */
+import { FaStar, FaRegStar } from 'react-icons/fa';
+import { memo, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import {
+  addFavorite,
+  removeFavorite,
+  fetchFavorites,
+} from '../../services/apiFavorites';
+import CustomRating from '../Notes/CustomRating';
 
 const NoteItem = memo(({ note, onRatingChange, user, isBestNote }) => {
   const [userRating, setUserRating] = useState(
     note.note_rating.find((rating) => rating.user_id === user.id)?.rating || 0,
   );
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    const checkFavorite = async () => {
+      if (user) {
+        const favoriteNotes = await fetchFavorites(user.id);
+        setIsFavorite(favoriteNotes.includes(note.note_id));
+      }
+    };
+    checkFavorite();
+  }, [note.note_id, user]);
 
   const handleRatingChange = (ratingValue) => {
     if (!user) {
@@ -26,6 +43,26 @@ const NoteItem = memo(({ note, onRatingChange, user, isBestNote }) => {
 
     setUserRating(ratingValue);
     onRatingChange(note.note_id, ratingValue);
+  };
+
+  const handleFavoriteToggle = async () => {
+    if (!user) {
+      return toast.error('You must be logged in to favorite notes.');
+    }
+
+    try {
+      if (isFavorite) {
+        await removeFavorite(user.id, note.note_id);
+        setIsFavorite(false);
+        toast.success('Removed from favorites!');
+      } else {
+        await addFavorite(user.id, note.note_id);
+        setIsFavorite(true);
+        toast.success('Added to favorites!');
+      }
+    } catch (error) {
+      toast.error(`Error: ${error.message}`);
+    }
   };
 
   return (
@@ -65,6 +102,17 @@ const NoteItem = memo(({ note, onRatingChange, user, isBestNote }) => {
         onChange={handleRatingChange}
         aria-label={`Rate this note titled ${note.title}`}
       />
+      <button
+        onClick={handleFavoriteToggle}
+        className="absolute top-2 right-2"
+        aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+      >
+        {isFavorite ? (
+          <FaStar className="text-yellow-400" />
+        ) : (
+          <FaRegStar className="text-gray-400" />
+        )}
+      </button>
     </div>
   );
 });

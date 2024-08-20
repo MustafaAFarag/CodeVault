@@ -1,34 +1,36 @@
 import supabase from './supabase';
 
-export const addFavorite = async (noteId, userId) => {
-  const { error } = await supabase
-    .from('favorites')
-    .insert([{ note_id: noteId, user_id: userId }]);
-  if (error) throw new Error(error.message);
-};
-
-export const removeFavorite = async (noteId, userId) => {
-  const { error } = await supabase
-    .from('favorites')
-    .delete()
-    .match({ note_id: noteId, user_id: userId });
-  if (error) throw new Error(error.message);
-};
-
-export const checkFavorite = async (noteId, userId) => {
+export const addFavorite = async (userId, noteId) => {
   const { data, error } = await supabase
     .from('favorites')
-    .select('*')
-    .match({ note_id: noteId, user_id: userId });
-  if (error) throw new Error(error.message);
-  return data.length > 0;
+    .insert([{ user_id: userId, note_id: noteId }]);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data;
 };
 
-export const getFavorites = async (userId) => {
+export const removeFavorite = async (userId, noteId) => {
+  const { data, error } = await supabase
+    .from('favorites')
+    .delete()
+    .match({ user_id: userId, note_id: noteId });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data;
+};
+
+export const fetchFavorites = async (userId) => {
   const { data, error } = await supabase
     .from('favorites')
     .select('note_id')
-    .match({ user_id: userId });
-  if (error) throw new Error(error.message);
-  return data;
+    .eq('user_id', userId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data.map((fav) => fav.note_id);
 };
