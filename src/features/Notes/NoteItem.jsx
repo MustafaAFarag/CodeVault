@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
 /* NoteItem.jsx */
-import { FaStar, FaRegStar } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa'; // Import heart icons
 import { memo, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import {
@@ -66,51 +66,55 @@ const NoteItem = memo(({ note, onRatingChange, user, isBestNote }) => {
   };
 
   return (
-    <div className="bg-white p-5 rounded-lg shadow-md border border-gray-300 transition-all duration-300 hover:shadow-lg  relative">
+    <div className="bg-white p-4 rounded-lg shadow-md border border-gray-300 transition-all duration-300 relative flex flex-col h-full">
       {/* Best Note Banner */}
       {isBestNote && (
-        <div className="absolute top-0 right-0 bg-[#D2AF84] text-white font-bold px-3 py-1 rounded-bl-lg text-sm">
+        <div className="absolute top-0 right-0 bg-[#D2AF84] text-white font-bold px-2 py-1 rounded-bl-lg text-xs z-10">
           Best Note
         </div>
       )}
 
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-secondary mb-4">{note.title}</h2>
-        <div className="flex items-center">
-          {note.average_rating !== null && (
-            <FaStar className="text-yellow-400 mr-2" />
-          )}
-          <p className="text-lg text-gray-600">
-            {note.average_rating !== null
-              ? note.average_rating
-              : 'No ratings yet'}
-          </p>
-        </div>
+      <h2 className="text-xl font-semibold text-secondary mb-2 truncate pr-6">
+        {note.title}
+      </h2>
+      <div className="flex items-center mb-2">
+        {note.average_rating !== null && (
+          <FaStar className="text-yellow-400 mr-1 -translate-y-[0.15rem]" />
+        )}
+        <p className="text-md text-gray-600">
+          {note.average_rating !== null
+            ? note.average_rating
+            : 'No ratings yet'}
+        </p>
       </div>
 
-      <p className="text-gray-700 mb-4">{note.description}</p>
+      <p className="text-gray-700 mb-4 truncate">{note.description}</p>
+
       <a
         href={note.pdf_url}
         target="_blank"
-        className="mt-auto block text-white bg-accent hover:bg-blue-600 rounded-lg py-2 text-center transition-all duration-300"
+        className="mt-auto block text-white bg-accent hover:bg-blue-600 rounded-lg py-1 text-center transition-all duration-300"
         rel="noreferrer"
       >
         View PDF
       </a>
+
       <CustomRating
         value={userRating}
         onChange={handleRatingChange}
         aria-label={`Rate this note titled ${note.title}`}
+        className="mt-2"
       />
+
       <button
         onClick={handleFavoriteToggle}
-        className="absolute top-2 right-2"
+        className="absolute bottom-4 right-5 z-20"
         aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
       >
         {isFavorite ? (
-          <FaStar className="text-yellow-400" />
+          <FaHeart className="text-red-400" />
         ) : (
-          <FaRegStar className="text-gray-400" />
+          <FaRegHeart className="text-gray-400" />
         )}
       </button>
     </div>

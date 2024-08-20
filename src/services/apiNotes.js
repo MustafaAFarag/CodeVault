@@ -43,6 +43,25 @@ export async function rateNote(noteId, ratingValue, userId) {
   }
 }
 
+export async function deleteNote(noteId) {
+  const { error } = await supabase.from('notes').delete().eq('note_id', noteId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function updateNote(noteId, updatedNote) {
+  const { error } = await supabase
+    .from('notes')
+    .update(updatedNote)
+    .eq('note_id', noteId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
 // Function to generate a random letter
 function getRandomLetter() {
   const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
