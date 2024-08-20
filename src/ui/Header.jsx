@@ -2,7 +2,7 @@ import Logout from '../features/authentication/Logout';
 
 function Header() {
   return (
-    <header className="bg-gray-800 py-[1.2rem] px-[4.8rem] border-b-2 border-solid border-gray-700 flex justify-end items-center gap-[2.4rem] text-white">
+    <header className="py-4 px-8 border-b-2 border-border flex justify-end items-center gap-6 text-text bg-background">
       <Logout />
     </header>
   );

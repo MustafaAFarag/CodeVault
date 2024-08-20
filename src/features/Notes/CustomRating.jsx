@@ -29,7 +29,7 @@ function CustomRating({ value, onChange, max = 5 }) {
                 ${
                   ratingValue <= (hover || value)
                     ? hover
-                      ? 'text-yellow-200' // Hover color
+                      ? 'text-yellow-300' // Hover color
                       : 'text-yellow-400' // Submitted rating color
                     : 'text-gray-300' // Unrated color
                 }`}

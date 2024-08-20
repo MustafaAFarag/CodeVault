@@ -4,10 +4,10 @@ import SpinnerMini from '../../ui/SpinnerMini';
 
 function Logout() {
   const { logout, isLoading } = useLogout();
-  console.log(isLoading);
+
   return (
     <button
-      className="flex items-center justify-center p-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+      className="flex items-center justify-center p-3 bg-secondary text-background rounded-lg hover:bg-primary hover:text-background focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 transition-all duration-300"
       disabled={isLoading}
       onClick={logout}
     >

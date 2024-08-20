@@ -12,42 +12,52 @@ function UploadNoteModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-lg w-full">
-        <h2 className="text-2xl font-bold text-white mb-4">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
+      <div className="bg-background p-8 rounded-lg shadow-lg max-w-lg w-full">
+        <h2 className="text-3xl font-bold text-secondary mb-6 text-center">
           Upload a New Note
         </h2>
         <form onSubmit={onSubmit}>
-          <div className="mb-4">
-            <label className="block text-white mb-2">Title</label>
+          <div className="mb-5">
+            <label htmlFor="title" className="block text-secondary mb-2">
+              Title
+            </label>
             <input
               type="text"
+              id="title"
               name="title"
               value={formValues.title}
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600"
+              className="w-full px-4 py-2 rounded-md bg-input-background text-text border border-border focus:ring-2 focus:ring-accent focus:outline-none"
               placeholder="Enter the title"
               disabled={isUploading}
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-white mb-2">Description</label>
+          <div className="mb-5">
+            <label htmlFor="description" className="block text-secondary mb-2">
+              Description
+            </label>
             <textarea
+              id="description"
               name="description"
               value={formValues.description}
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600"
+              className="w-full px-4 py-2 rounded-md bg-input-background text-text border border-border focus:ring-2 focus:ring-accent focus:outline-none"
               placeholder="Enter the description"
               disabled={isUploading}
+              rows="4"
             ></textarea>
           </div>
-          <div className="mb-4">
-            <label className="block text-white mb-2">Subject</label>
+          <div className="mb-5">
+            <label htmlFor="subject_id" className="block text-secondary mb-2">
+              Subject
+            </label>
             <select
+              id="subject_id"
               name="subject_id"
               value={formValues.subject_id}
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600"
+              className="w-full px-4 py-2 rounded-md bg-input-background text-text border border-border focus:ring-2 focus:ring-accent focus:outline-none"
               disabled={isUploading}
             >
               <option value="">Select a subject</option>
@@ -58,13 +68,16 @@ function UploadNoteModal({
               ))}
             </select>
           </div>
-          <div className="mb-4">
-            <label className="block text-white mb-2">Upload PDF</label>
+          <div className="mb-5">
+            <label htmlFor="pdf" className="block text-secondary mb-2">
+              Upload PDF
+            </label>
             <input
               type="file"
+              id="pdf"
               name="pdf"
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600"
+              className="w-full px-4 py-2 rounded-md bg-input-background text-text border border-border focus:ring-2 focus:ring-accent focus:outline-none"
               disabled={isUploading}
             />
           </div>
@@ -72,17 +85,21 @@ function UploadNoteModal({
             <button
               type="button"
               onClick={onClose}
-              className={`bg-red-600 text-white px-4 py-2 rounded-md shadow-md transition-all mr-2 ${isUploading ? 'bg-blue-400 cursor-not-allowed' : 'hover:bg-red-700'}`}
+              className={`bg-error  px-5 py-2 rounded-md shadow-md transition-all mr-3 ${
+                isUploading
+                  ? 'bg-opacity-50 cursor-not-allowed'
+                  : 'hover:bg-opacity-80'
+              }`}
               disabled={isUploading}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md transition-all ${
+              className={`bg-accent text-white px-5 py-2 rounded-md shadow-md transition-all ${
                 isUploading
-                  ? 'bg-blue-400 cursor-not-allowed'
-                  : 'hover:bg-blue-700'
+                  ? 'bg-opacity-50 cursor-not-allowed'
+                  : 'hover:bg-opacity-80'
               }`}
               disabled={isUploading}
             >

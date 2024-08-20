@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNotes, fetchSubjects } from '../services/apiNotes';
 import { useUser } from '../features/authentication/useUser';
@@ -16,6 +16,11 @@ import { toast } from 'react-hot-toast';
 
 function Notes() {
   const [isUploading, setIsUploading] = useState(false);
+  const [pagination, setPagination] = useState({
+    first: 0,
+    rows: 6, // Show 6 notes per page
+  });
+  const [searchQuery, setSearchQuery] = useState('');
 
   const {
     data: subjectsData,
@@ -58,13 +63,42 @@ function Notes() {
 
   const { filteredNotes } = useFilteredNotes(data, selectedSubject);
 
+  // Filter notes based on search query
+  const searchedNotes = useMemo(() => {
+    return filteredNotes.filter(
+      (note) =>
+        note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        note.description.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+  }, [filteredNotes, searchQuery]);
+
   // Sort notes by average_rating in descending order
-  const sortedNotes = filteredNotes.sort(
-    (a, b) => b.average_rating - a.average_rating,
+  const sortedNotes = useMemo(() => {
+    return searchedNotes.sort((a, b) => b.average_rating - a.average_rating);
+  }, [searchedNotes]);
+
+  // Calculate the best note globally
+  const bestNote = useMemo(() => {
+    return sortedNotes.length > 0 ? sortedNotes[0] : null;
+  }, [sortedNotes]);
+
+  // Paginate notes
+  const totalRecords = sortedNotes.length;
+  const notesToDisplay = sortedNotes.slice(
+    pagination.first,
+    pagination.first + pagination.rows,
   );
 
-  // Identify the highest-rated note
-  const bestNote = sortedNotes.length > 0 ? sortedNotes[0] : null;
+  const handlePageChange = (event) => {
+    setPagination({
+      first: event.first,
+      rows: event.rows,
+    });
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -86,17 +120,30 @@ function Notes() {
   if (subjectsError) return <ErrorMessage message={subjectsError.message} />;
 
   return (
-    <div className="p-6 bg-gray-900 min-h-screen">
-      <h1 className="text-4xl font-bold text-white mb-6 text-center">Notes</h1>
+    <div className="p-6 bg-background min-h-screen">
+      <h1 className="text-4xl font-bold text-secondary mb-6 text-center">
+        Notes
+      </h1>
 
-      <div className="flex justify-between items-center mb-6">
+      <div className="mb-6">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          placeholder="Search notes..."
+          className="border rounded-md p-2 w-full md:w-1/3 mb-4"
+        />
+      </div>
+
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6">
         <SubjectDropdown
           subjects={subjectsData}
           onChange={handleSubjectChange}
+          className="flex-1"
         />
         <button
           onClick={handleUploadClick}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700 transition-all"
+          className="bg-accent text-white px-4 py-2 rounded-md shadow-md hover:bg-secondary transition-all"
         >
           Upload
         </button>
@@ -104,15 +151,19 @@ function Notes() {
 
       {error ? (
         <ErrorMessage message={error.message} />
-      ) : selectedSubject && sortedNotes.length > 0 ? (
+      ) : selectedSubject && notesToDisplay.length > 0 ? (
         <NoteList
-          notes={sortedNotes}
+          notes={notesToDisplay}
           onRatingChange={handleRatingChange}
           user={user}
           bestNoteId={bestNote?.note_id} // Pass the ID of the best note
+          totalRecords={totalRecords} // Total number of records
+          first={pagination.first}
+          rows={pagination.rows}
+          onPageChange={handlePageChange}
         />
       ) : (
-        <p className="text-center text-gray-400">
+        <p className="text-center text-text">
           {selectedSubject
             ? 'No notes available for this subject.'
             : 'Please select a subject to view notes.'}

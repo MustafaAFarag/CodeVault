@@ -7,10 +7,10 @@ function StyledNavLink({ children, to }) {
       to={to}
       className={({ isActive }) => `
         flex items-center gap-3 
-        ${isActive ? 'text-white bg-gray-800' : 'text-gray-300'}
-        hover:text-white 
+        ${isActive ? 'text-secondary bg-background-secondary' : 'text-primary'}
+        hover:text-secondary
         transition-all duration-300 
-        hover:bg-gray-700 
+        hover:bg-background-secondary
         p-2 rounded-md
       `}
     >

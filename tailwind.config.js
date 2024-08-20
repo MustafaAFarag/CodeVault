@@ -5,15 +5,18 @@ export default {
   theme: {
     fontFamily: {
       sans: ['Poppins', 'sans-serif'],
+      heading: ['Roboto', 'sans-serif'],
     },
     extend: {
       colors: {
-        primary: '#D2AF84', // A gold-ish color that stands out on dark backgrounds
-        secondary: '#4B5563', // Dark gray for secondary elements
-        accent: '#D97706', // A vibrant amber for accents
-        background: '#1f2937', // Keeping your existing background color
-        text: '#E5E7EB', // Light gray for text on dark backgrounds
-        heading: '#F3F4F6', // Slightly lighter than text for headings
+        primary: '#4B5563', // Darker shade for primary text
+        secondary: '#1F2937', // Darker background and highlight color
+        background: '#F9FAFB', // Light background for main content
+        'background-secondary': '#E5E7EB', // New lighter background for active nav links
+        accent: '#4B9CD3', // Calmer blue for interactive elements
+        text: '#374151', // Standard text color
+        sidebarBg: '#F3F4F6', // Light gray for sidebar background
+        border: '#E5E7EB', // Light border color
       },
     },
   },

@@ -1,11 +1,13 @@
 @layer base {
   :root {
-    --color-primary: #d2af84;
-    --color-secondary: #4b5563;
-    --color-accent: #d97706;
-    --color-background: #1f2937;
-    --color-text: #e5e7eb;
-    --color-heading: #f3f4f6;
+    --color-primary: #3b82f6;
+    --color-secondary: #1e3a8a;
+    --color-background: #f3f4f6;
+    --color-sidebar-background: #e5e7eb;
+    --color-text-primary: #1f2937;
+    --color-text-secondary: #6b7280;
+    --color-accent: #f59e0b;
+    --color-border: #d1d5db;
   }
 }
 
@@ -13,49 +15,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  /* .input {
-    @apply rounded-full border border-stone-200 px-4 py-2 text-sm transition-all duration-300 placeholder:text-stone-400 focus:outline-none focus:ring focus:ring-yellow-400 md:px-6 md:py-3;
-  } */
-
-  .loader {
-    width: 45px;
-    aspect-ratio: 0.75;
-    --c: no-repeat linear-gradient(theme(colors.stone.800) 0 0);
-    background:
-      var(--c) 0% 50%,
-      var(--c) 50% 50%,
-      var(--c) 100% 50%;
-    background-size: 20% 50%;
-    animation: loading 1s infinite linear;
-  }
-
-  @keyframes loading {
-    20% {
-      background-position:
-        0% 0%,
-        50% 50%,
-        100% 50%;
-    }
-    40% {
-      background-position:
-        0% 100%,
-        50% 0%,
-        100% 50%;
-    }
-    60% {
-      background-position:
-        0% 50%,
-        50% 100%,
-        100% 0%;
-    }
-    80% {
-      background-position:
-        0% 50%,
-        50% 50%,
-        100% 100%;
-    }
-  }
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: 'Poppins', sans-serif;
 }
 
 @keyframes fadeInUp {
@@ -72,63 +35,6 @@
 .fade-in-up {
   animation: fadeInUp 0.6s ease-out;
 }
-
-body {
-  background-color: #1f2937;
-  color: white;
-}
-
-/* Replace the existing .p-rating styles with these */
-.p-rating .p-rating-item .p-rating-icon {
-  color: #e5e7eb !important; /* Default star color */
-}
-
-.p-rating .p-rating-item.p-rating-item-active .p-rating-icon {
-  color: #facc15 !important;
-}
-
-.p-rating .p-rating-item:focus {
-  box-shadow: 0 0 0 0.2rem rgba(250, 204, 21, 0.5) !important;
-}
-
-.p-rating .p-rating-item:not(.p-disabled):hover {
-  color: #facc15 !important;
-}
-
-.p-rating .p-rating-item:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* .dropdown-transition {
-  transition:
-    max-height 0.4s ease-out,
-    opacity 0.4s ease-out,
-    visibility 0.4s ease-out;
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  visibility: hidden;
-}
-
-.dropdown-transition.open {
-  transition:
-    max-height 0.4s ease-out,
-    opacity 0.4s ease-out,
-    visibility 0.4s ease-out;
-  max-height: 1000px;
-  opacity: 1;
-  visibility: visible; 
-} */
-
-/* 
-// Recalculate the average rating when someone rate a note
-// the user who created a note Delete or edit his own note
-// autoumaticlly filtered by rating and add best note
-// pagination by prime reacts
-// note view counter
-// share notes
-// favorite notes */
 
 @keyframes spin {
   to {

@@ -17,7 +17,7 @@ function SheetsPage({ title, queryKey, queryFn }) {
   if (isLoading) return <Spinner />;
 
   if (error)
-    return <p className="text-center text-red-400">Error: {error.message}</p>;
+    return <p className="text-center text-red-500">Error: {error.message}</p>;
 
   const { subjectsData, sheetsBySubject } = data;
 
@@ -27,15 +27,15 @@ function SheetsPage({ title, queryKey, queryFn }) {
   }
 
   return (
-    <div className="p-6 bg-gray-900 min-h-screen">
-      <h1 className="text-4xl font-bold text-white mb-6 text-center">
+    <div className="p-6 bg-background min-h-screen">
+      <h1 className="text-4xl font-bold text-primary mb-6 text-center">
         {title}
       </h1>
 
       <SubjectDropdown subjects={subjectsData} onChange={handleSubjectChange} />
 
       {!selectedSubject && (
-        <p className="text-center text-gray-400">
+        <p className="text-center text-text">
           Please select a subject to view {title.toLowerCase()}
         </p>
       )}
