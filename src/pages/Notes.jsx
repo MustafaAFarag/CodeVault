@@ -31,7 +31,6 @@ function Notes() {
   const {
     formValues,
     handleChange,
-    handleSubmit: handleNoteSubmit,
     isModalOpen,
     handleUploadClick,
     handleCloseModal,
@@ -57,7 +56,15 @@ function Notes() {
     );
   };
 
-  const { subjects, filteredNotes } = useFilteredNotes(data, selectedSubject);
+  const { filteredNotes } = useFilteredNotes(data, selectedSubject);
+
+  // Sort notes by average_rating in descending order
+  const sortedNotes = filteredNotes.sort(
+    (a, b) => b.average_rating - a.average_rating,
+  );
+
+  // Identify the highest-rated note
+  const bestNote = sortedNotes.length > 0 ? sortedNotes[0] : null;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -97,11 +104,12 @@ function Notes() {
 
       {error ? (
         <ErrorMessage message={error.message} />
-      ) : selectedSubject && filteredNotes.length > 0 ? (
+      ) : selectedSubject && sortedNotes.length > 0 ? (
         <NoteList
-          notes={filteredNotes}
+          notes={sortedNotes}
           onRatingChange={handleRatingChange}
           user={user}
+          bestNoteId={bestNote?.note_id} // Pass the ID of the best note
         />
       ) : (
         <p className="text-center text-gray-400">

@@ -1,8 +1,12 @@
 /* eslint-disable react/prop-types */
+// NoteItem.jsx
 import { FaStar } from 'react-icons/fa';
-import { Rating } from 'primereact/rating';
+import CustomRating from './CustomRating';
+import { useState } from 'react';
 
-function NoteItem({ note, onRatingChange, user }) {
+function NoteItem({ note, onRatingChange, user, isBestNote }) {
+  const [userRating, setUserRating] = useState(note.user_rating || 0);
+
   const handleRatingChange = (ratingValue) => {
     if (!user) return alert('You must be logged in to rate notes.');
 
@@ -15,14 +19,22 @@ function NoteItem({ note, onRatingChange, user }) {
       return;
     }
 
+    setUserRating(ratingValue);
     onRatingChange(note.note_id, ratingValue);
   };
 
   return (
-    <div className="bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-700 transition-all duration-300 hover:shadow-xl hover:bg-gray-700">
-      <div className="flex justify-between items-center">
+    <div className="bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-700 transition-all duration-300 hover:shadow-xl hover:bg-gray-700 relative ">
+      {/* Best Note Banner */}
+      {isBestNote && (
+        <div className="absolute top-0 right-0 rounded-b-lg bg-yellow-500 text-black font-bold px-2 py-1 rounded-br-lg text-sm">
+          Best Note
+        </div>
+      )}
+
+      <div className="flex justify-between items-center mt-2">
         <h2 className="text-xl font-semibold text-white mb-2">{note.title}</h2>
-        <div className="flex items-center mb-2">
+        <div className="flex items-center mb-2 mt-2">
           {note.average_rating !== null && (
             <FaStar className="text-yellow-400 mr-1" />
           )}
@@ -38,15 +50,11 @@ function NoteItem({ note, onRatingChange, user }) {
         href={note.pdf_url}
         target="_blank"
         className="text-blue-400 underline mb-2 block"
+        rel="noreferrer"
       >
         View PDF
       </a>
-      <Rating
-        value={note.user_rating || 0} // Display user's rating if available
-        onChange={(e) => handleRatingChange(e.value)}
-        cancel={false}
-        className="my-2"
-      />
+      <CustomRating value={userRating} onChange={handleRatingChange} />
     </div>
   );
 }
