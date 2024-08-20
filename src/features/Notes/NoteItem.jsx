@@ -1,14 +1,20 @@
+/* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
 // NoteItem.jsx
 import { FaStar } from 'react-icons/fa';
 import CustomRating from './CustomRating';
-import { useState } from 'react';
+import { memo, useState } from 'react';
+import toast from 'react-hot-toast';
 
-function NoteItem({ note, onRatingChange, user, isBestNote }) {
-  const [userRating, setUserRating] = useState(note.user_rating || 0);
-
+const NoteItem = memo(({ note, onRatingChange, user, isBestNote }) => {
+  const [userRating, setUserRating] = useState(
+    note.note_rating.find((rating) => rating.user_id === user.id) || 0,
+  );
+  console.log(userRating);
   const handleRatingChange = (ratingValue) => {
-    if (!user) return alert('You must be logged in to rate notes.');
+    if (!user) {
+      return toast.error('You must be logged in to rate notes.');
+    }
 
     if (!note.note_id || !ratingValue || !user.id) {
       console.error('Missing data:', {
@@ -24,7 +30,7 @@ function NoteItem({ note, onRatingChange, user, isBestNote }) {
   };
 
   return (
-    <div className="bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-700 transition-all duration-300 hover:shadow-xl hover:bg-gray-700 relative ">
+    <div className="bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-700 transition-all duration-300 hover:shadow-xl hover:bg-gray-700 relative">
       {/* Best Note Banner */}
       {isBestNote && (
         <div className="absolute top-0 right-0 rounded-b-lg bg-yellow-500 text-black font-bold px-2 py-1 rounded-br-lg text-sm">
@@ -54,9 +60,13 @@ function NoteItem({ note, onRatingChange, user, isBestNote }) {
       >
         View PDF
       </a>
-      <CustomRating value={userRating} onChange={handleRatingChange} />
+      <CustomRating
+        value={userRating.rating}
+        onChange={handleRatingChange}
+        aria-label={`Rate this note titled ${note.title}`}
+      />
     </div>
   );
-}
+});
 
 export default NoteItem;
