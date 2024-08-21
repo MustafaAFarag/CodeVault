@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNotes, fetchSubjects } from '../services/apiNotes';
 import { useUser } from '../features/authentication/useUser';
-import Spinner from '../ui/Spinner';
+import NotesLoader from '../ui/NotesLoader';
 import SubjectDropdown from '../features/Sheets/SubjectDropdown';
 import NoteList from '../features/Notes/NoteList';
 import UploadNoteModal from '../features/Notes/UploadNoteModal';
@@ -116,7 +116,7 @@ function Notes() {
     }
   };
 
-  if (isLoading || subjectsLoading) return <Spinner />;
+  if (isLoading || subjectsLoading) return <NotesLoader />;
   if (subjectsError) return <ErrorMessage message={subjectsError.message} />;
 
   return (

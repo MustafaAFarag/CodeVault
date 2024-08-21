@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
-/* NoteItem.jsx */
-import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa'; // Import heart icons
+import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
 import { memo, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import {
@@ -74,9 +73,10 @@ const NoteItem = memo(({ note, onRatingChange, user, isBestNote }) => {
         </div>
       )}
 
-      <h2 className="text-xl font-semibold text-secondary mb-2 truncate pr-6">
+      <h2 className="text-lg font-semibold text-secondary mb-2  pr-6">
         {note.title}
       </h2>
+
       <div className="flex items-center mb-2">
         {note.average_rating !== null && (
           <FaStar className="text-yellow-400 mr-1 -translate-y-[0.15rem]" />
@@ -86,9 +86,13 @@ const NoteItem = memo(({ note, onRatingChange, user, isBestNote }) => {
             ? note.average_rating
             : 'No ratings yet'}
         </p>
+        <p className="text-sm text-gray-500 ml-2">
+          ({note.note_rating.length} ratings)
+        </p>{' '}
+        {/* Added rating count */}
       </div>
 
-      <p className="text-gray-700 mb-4 truncate">{note.description}</p>
+      <p className="text-gray-700 mb-4">{note.description}</p>
 
       <a
         href={note.pdf_url}

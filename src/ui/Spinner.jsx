@@ -1,24 +1,15 @@
-import styled, { keyframes } from 'styled-components';
+import { Skeleton } from 'primereact/skeleton';
 
-// change to selekton
-
-const rotate = keyframes`
-  to {
-    transform: rotate(1turn)
-  }
-`;
-
-const Spinner = styled.div`
-  margin: 4.8rem auto;
-
-  width: 6.4rem;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background:
-    radial-gradient(farthest-side, red 94%, #0000) top/10px 10px no-repeat,
-    conic-gradient(#0000 30%, red);
-  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 10px), #000 0);
-  animation: ${rotate} 1.5s infinite linear;
-`;
+const Spinner = () => (
+  <div style={{ margin: '4.8rem auto', width: '6.4rem' }}>
+    <Skeleton shape="circle" size="64px" />
+    <Skeleton
+      shape="rectangle"
+      width="64px"
+      height="64px"
+      style={{ marginTop: '1rem' }}
+    />
+  </div>
+);
 
 export default Spinner;
