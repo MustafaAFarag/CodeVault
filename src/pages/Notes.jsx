@@ -15,6 +15,10 @@ import { useFilteredNotes } from '../features/Notes/useFilteredNotes';
 import { toast } from 'react-hot-toast';
 
 function Notes() {
+  // useEffect(() => {
+  //   throw new Error('Testing error boundary!');
+  // }, []);
+
   const [isUploading, setIsUploading] = useState(false);
   const [pagination, setPagination] = useState({
     first: 0,

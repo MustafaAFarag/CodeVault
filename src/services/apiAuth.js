@@ -6,7 +6,8 @@ async function createUserInDatabase(userId, fullName) {
     {
       id: userId,
       full_name: fullName,
-      role: 'ordinary', // Default role, change as needed
+      role: 'ordinary',
+      avatar: '',
     },
   ]);
 
@@ -29,7 +30,6 @@ export async function signup({ fullName, email, password }) {
 
   if (error) throw new Error(error.message);
 
-  // Create user in the new users table
   await createUserInDatabase(data.user.id, fullName);
 
   return data;
