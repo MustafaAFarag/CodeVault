@@ -5,6 +5,7 @@ import AppLayout from './ui/AppLayout';
 import Homepage from './pages/Homepage';
 import PageNotFound from './pages/PageNotFound';
 import Notes from './pages/Notes';
+import Account from './pages/Account';
 import Lectures from './pages/Lectures';
 import Resources from './pages/Resources';
 import Sections from './pages/Sections';
@@ -43,6 +44,7 @@ function App() {
             <Route path="/lectures" element={<Lectures />} />
             <Route path="/sections" element={<Sections />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/account" element={<Account />} />
           </Route>
 
           <Route path="*" element={<PageNotFound />} />

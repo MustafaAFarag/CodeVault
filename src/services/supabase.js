@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { createClient } from '@supabase/supabase-js';
-const supabaseUrl = 'https://vgbfbajsepobgszdnpic.supabase.co';
+export const supabaseUrl = 'https://vgbfbajsepobgszdnpic.supabase.co';
 // const supabaseServiceRole =
 //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnYmZiYWpzZXBvYmdzemRucGljIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyMzQ1MDAyOSwiZXhwIjoyMDM5MDI2MDI5fQ.SBdJa3CedO-Wf5ivgRO9KwGJ8_8hDTDnO72RulcPaMo';
 const supabaseKey =
