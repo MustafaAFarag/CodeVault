@@ -1,12 +1,13 @@
 import supabase, { supabaseUrl } from './supabase';
 
 // Function to create a new user in the 'users' table after signing up
-async function createUserInDatabase(userId, fullName) {
+async function createUserInDatabase(userId, fullName, email) {
   const { data, error } = await supabase.from('users').insert([
     {
       id: userId,
       full_name: fullName,
-      role: 'ordinary',
+      email: email,
+      role: 'basic',
       avatar: '',
     },
   ]);
@@ -24,7 +25,7 @@ export async function signup({ fullName, email, password }) {
 
   if (error) throw new Error(error.message);
 
-  await createUserInDatabase(data.user.id, fullName);
+  await createUserInDatabase(data.user.id, fullName, email);
 
   return data;
 }
@@ -133,6 +134,40 @@ export async function updateCurrentUser({ password, fullName, avatar }) {
 
 export async function fetchAllUsers() {
   const { data, error } = await supabase.from('users').select('*');
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export async function updateUserRole({ userId, newRole }) {
+  const validRoles = ['basic', 'verified', 'admin'];
+  if (!validRoles.includes(newRole)) {
+    throw new Error('Invalid role');
+  }
+
+  const { data: currentUser, error: fetchError } = await supabase
+    .from('users')
+    .select('role')
+    .eq('id', userId)
+    .single();
+
+  if (fetchError) throw new Error(fetchError.message);
+
+  const currentRole = currentUser.role;
+
+  if (newRole === 'admin' && currentRole !== 'super_admin') {
+    throw new Error('Insufficient permissions');
+  }
+
+  if (currentRole === 'admin' && newRole === 'super_admin') {
+    throw new Error('Admins cannot promote to super_admin');
+  }
+
+  const { data, error } = await supabase
+    .from('users')
+    .update({ role: newRole })
+    .eq('id', userId);
 
   if (error) throw new Error(error.message);
 

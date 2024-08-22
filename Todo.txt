@@ -13,9 +13,6 @@
 - Online panel
 - Dark Mode
 
--View User Details: Display more detailed information about each user, such as their role, and account creation date.
-
-
 Assign Roles: Enable the admin or super_admin to change a user's role (Enable the super_admin to promote to admin but admins can only demote to basic or promote to verified).
 
 Assign Badges: Allow the admin to manually assign badges to users. he can also remove it 

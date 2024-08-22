@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { fetchAllUsers } from '../services/apiAuth';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { fetchAllUsers, updateUserRole } from '../services/apiAuth';
+import { useUser } from '../features/authentication/useUser';
 
 function AdminPanel() {
+  const { user } = useUser();
   const [search, setSearch] = useState('');
+
+  const queryClient = useQueryClient();
 
   const {
     data: users = [],
@@ -14,13 +18,44 @@ function AdminPanel() {
     queryFn: fetchAllUsers,
   });
 
-  // Filter users based on the search query only if at least 3 characters are typed
+  const mutation = useMutation({
+    mutationFn: updateUserRole,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['users']);
+    },
+    onError: (error) => {
+      console.error('Role update error:', error.message);
+    },
+  });
+
+  const handleRoleChange = (userId, newRole) => {
+    mutation.mutate({ userId, newRole });
+  };
+
+  // Determine available roles based on current user's role
+  const getAvailableRoles = (currentRole) => {
+    if (currentRole === 'super_admin') {
+      return ['basic', 'verified', 'admin'];
+    }
+    if (currentRole === 'admin') {
+      return ['basic', 'verified'];
+    }
+    return []; // For basic users, no role changes allowed
+  };
+
+  const currentUserRole = users.find(
+    (userData) => userData.id === user.id,
+  )?.role;
+
+  // Filter users based on the search query and exclude those with 'super_admin' role
   const filteredUsers =
     search.length >= 3
-      ? users.filter((user) =>
-          user.full_name.toLowerCase().includes(search.toLowerCase()),
-        )
-      : users;
+      ? users
+          .filter((user) =>
+            user.full_name.toLowerCase().includes(search.toLowerCase()),
+          )
+          .filter((user) => user.role !== 'super_admin')
+      : users.filter((user) => user.role !== 'super_admin');
 
   if (isLoading)
     return <div className="text-center text-gray-500">Loading...</div>;
@@ -51,17 +86,26 @@ function AdminPanel() {
                     <div className="font-semibold text-lg">
                       {user.full_name}
                     </div>
-                    <div className="text-gray-600">{user.role}</div>
+                    <div className="text-gray-600">
+                      {user.role} - {user.email}
+                    </div>
                     <div className="text-gray-500 text-sm">
                       {new Date(user.created_at).toLocaleDateString()}
                     </div>
                   </div>
                   <div className="space-x-4">
-                    <select className="border border-gray-300 rounded px-2 py-1 bg-white">
-                      <option>basic</option>
-                      <option>verified</option>
-                      <option>admin</option>
-                      <option>super_admin</option>
+                    <select
+                      value={user.role}
+                      onChange={(e) =>
+                        handleRoleChange(user.id, e.target.value)
+                      }
+                      className="border border-gray-300 rounded px-2 py-1 bg-white"
+                    >
+                      {getAvailableRoles(currentUserRole).map((role) => (
+                        <option key={role} value={role}>
+                          {role.charAt(0).toUpperCase() + role.slice(1)}
+                        </option>
+                      ))}
                     </select>
                     <input
                       type="text"
