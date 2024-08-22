@@ -130,3 +130,11 @@ export async function updateCurrentUser({ password, fullName, avatar }) {
 
   return updatedUser;
 }
+
+export async function fetchAllUsers() {
+  const { data, error } = await supabase.from('users').select('*');
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}

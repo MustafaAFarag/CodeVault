@@ -15,6 +15,7 @@ import ProtectedRoute from './ui/ProtectedRoute';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import About from './pages/about';
+import AdminPanel from './pages/AdminPanel';
 import HomeLayout from './ui/HomeLayout';
 
 const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ function App() {
             <Route path="/sections" element={<Sections />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/account" element={<Account />} />
+            <Route path="/admin" element={<AdminPanel />} />
           </Route>
 
           <Route path="*" element={<PageNotFound />} />
