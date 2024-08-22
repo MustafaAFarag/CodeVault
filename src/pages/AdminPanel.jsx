@@ -32,13 +32,13 @@ function AdminPanel() {
     mutation.mutate({ userId, newRole });
   };
 
-  // Determine available roles based on current user's role
-  const getAvailableRoles = (currentRole) => {
+  // Determine available roles based on the current user's role
+  const getAvailableRoles = (currentRole, userRole) => {
     if (currentRole === 'super_admin') {
       return ['basic', 'verified', 'admin'];
     }
     if (currentRole === 'admin') {
-      return ['basic', 'verified'];
+      return userRole === 'admin' ? ['admin'] : ['basic', 'verified'];
     }
     return []; // For basic users, no role changes allowed
   };
@@ -47,7 +47,7 @@ function AdminPanel() {
     (userData) => userData.id === user.id,
   )?.role;
 
-  // Filter users based on the search query and exclude those with 'super_admin' role
+  // Filter users based on the search query and exclude those with the 'super_admin' role
   const filteredUsers =
     search.length >= 3
       ? users
@@ -76,6 +76,18 @@ function AdminPanel() {
           className="border border-gray-300 rounded px-4 py-2 w-full mb-4"
         />
         <ul className="space-y-4">
+          {!search && (
+            <li
+              key={user.id}
+              className="flex items-center justify-between p-4 border-b border-gray-300"
+            >
+              <div className="flex-1">
+                <div className="font-semibold text-lg">Mustafa Ashraf</div>
+                <div className="text-gray-600">Owner</div>
+              </div>
+              <p>mustafa.ashraf.saad@gmail.com</p>
+            </li>
+          )}
           {filteredUsers.length > 0
             ? filteredUsers.map((user) => (
                 <li
@@ -100,12 +112,15 @@ function AdminPanel() {
                         handleRoleChange(user.id, e.target.value)
                       }
                       className="border border-gray-300 rounded px-2 py-1 bg-white"
+                      disabled={user.role === 'admin'} // Disable dropdown if the role is 'admin'
                     >
-                      {getAvailableRoles(currentUserRole).map((role) => (
-                        <option key={role} value={role}>
-                          {role.charAt(0).toUpperCase() + role.slice(1)}
-                        </option>
-                      ))}
+                      {getAvailableRoles(currentUserRole, user.role).map(
+                        (role) => (
+                          <option key={role} value={role}>
+                            {role.charAt(0).toUpperCase() + role.slice(1)}
+                          </option>
+                        ),
+                      )}
                     </select>
                     <input
                       type="text"
