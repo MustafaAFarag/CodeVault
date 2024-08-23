@@ -52,6 +52,16 @@ function MainNav() {
         ) : (
           ''
         )}
+        {user.role === 'super_admin' ? (
+          <li>
+            <StyledNavLink to="/logs">
+              <HiOutlineHome />
+              Logs
+            </StyledNavLink>
+          </li>
+        ) : (
+          ''
+        )}
       </ul>
     </nav>
   );

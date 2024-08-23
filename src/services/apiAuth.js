@@ -1,4 +1,5 @@
 import supabase, { supabaseUrl } from './supabase';
+import { addLog } from './apiLogs';
 
 // Function to create a new user in the 'users' table after signing up
 async function createUserInDatabase(userId, fullName, email) {
@@ -140,7 +141,8 @@ export async function fetchAllUsers() {
   return data;
 }
 
-export async function updateUserRole({ userId, newRole }) {
+export async function updateUserRole({ userId, newRole, adminId }) {
+  // add adminId to capture who made the change
   const validRoles = ['basic', 'verified', 'admin'];
   if (!validRoles.includes(newRole)) {
     throw new Error('Invalid role');
@@ -171,10 +173,13 @@ export async function updateUserRole({ userId, newRole }) {
 
   if (error) throw new Error(error.message);
 
+  // Log the role change action
+  await addLog('Role Change', adminId); // Add a log entry for the action
+
   return data;
 }
 
-export async function suspendUser({ userId, isSuspended }) {
+export async function suspendUser({ userId, isSuspended, adminId }) {
   if (typeof userId !== 'string') {
     throw new Error('Invalid user ID type.');
   }
@@ -192,5 +197,7 @@ export async function suspendUser({ userId, isSuspended }) {
   }
 
   console.log('Updated user data:', data);
+
+  await addLog(isSuspended ? 'User Suspended' : 'User Unsuspended', adminId);
   return data;
 }

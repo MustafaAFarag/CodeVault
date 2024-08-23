@@ -44,14 +44,15 @@ function AdminPanel() {
   });
 
   const handleRoleChange = (userId, newRole) => {
-    // Prevent admins from changing the role of other admins or themselves
     if (user.role === 'admin' && newRole === 'admin') return;
     if (
       user.role === 'admin' &&
       users.find((u) => u.id === userId)?.role === 'admin'
     )
       return;
-    roleMutation.mutate({ userId, newRole });
+
+    // Pass the current user's ID (admin ID) when changing a role
+    roleMutation.mutate({ userId, newRole, adminId: user.id });
   };
 
   const handleSuspendUser = (userId, isSuspended) => {
@@ -61,7 +62,7 @@ function AdminPanel() {
       users.find((u) => u.id === userId)?.role === 'admin'
     )
       return;
-    suspendMutation.mutate({ userId, isSuspended });
+    suspendMutation.mutate({ userId, isSuspended, adminId: user.id });
   };
 
   const getAvailableRoles = (currentRole) => {
@@ -160,7 +161,7 @@ function AdminPanel() {
                         onClick={() =>
                           handleSuspendUser(user.id, !user.suspended)
                         }
-                        className={`border px-2 py-1 rounded ${user.suspended ? 'bg-red-500 text-white cursor-not-allowed' : 'bg-green-500 text-white'}`}
+                        className={`border px-2 py-1 rounded ${user.suspended ? 'bg-red-500 text-white ' : 'bg-green-500 text-white'}`}
                         disabled={!canSuspend}
                       >
                         {user.suspended ? 'Unsuspend' : 'Suspend'}

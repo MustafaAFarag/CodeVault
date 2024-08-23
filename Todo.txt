@@ -14,7 +14,21 @@
 - Dark Mode
 
 
-Assign Badges: Allow the admin to manually assign badges to users. he can also remove it 
+I was thinking to let admin have the ability add / create or remove tags from users
 
+there will be some default tags like the role tags ( verified - ordinary - admin - Owner ( super_adminn ) 
 
-Super Admin will have Logs of all actions made 
+there will be tags automatically given by completing like daily/weekly tasks 
+
+also another tags will be automatically given to the user with the most uploaded notes , to the user with the most average rated notes
+any other ideas
+
+Milestone Achievements: Tags for reaching specific milestones, such as a certain number of notes uploaded or a certain number of ratings given.
+
+Activity-Based Tags: Tags based on user activity patterns, like "Early Bird" for users who are consistently active early in the day or "Night Owl" for those who are active late at night.
+
+Expert Tags: Tags for users who are recognized as experts in specific subjects or fields based on their notes or ratings, such as "Math Expert" or "Programming Guru."
+
+Peer Recognition: Tags given based on peer recognition or votes, like "Most Helpful" or "Best Note Giver," where other users can nominate or vote for their peers.
+
+Supportive Tags: Tags for users who assist others frequently, like "Mentor" or "Helper," to recognize those who support the community

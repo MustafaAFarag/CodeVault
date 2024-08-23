@@ -16,6 +16,7 @@ import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import About from './pages/about';
 import AdminPanel from './pages/AdminPanel';
+import Logs from './pages/Logs';
 import HomeLayout from './ui/HomeLayout';
 
 const queryClient = new QueryClient();
@@ -47,6 +48,7 @@ function App() {
             <Route path="/resources" element={<Resources />} />
             <Route path="/account" element={<Account />} />
             <Route path="/admin" element={<AdminPanel />} />
+            <Route path="/logs" element={<Logs />} />
           </Route>
 
           <Route path="*" element={<PageNotFound />} />
