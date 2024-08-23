@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchAllUsers } from '../../services/apiAuth';
+import { fetchUsers } from '../../services/apiAuth';
 
 export function useUsers() {
   const {
@@ -8,7 +8,7 @@ export function useUsers() {
     isLoading,
   } = useQuery({
     queryKey: ['users'],
-    queryFn: fetchAllUsers,
+    queryFn: fetchUsers,
   });
 
   return { users, error, isLoading };

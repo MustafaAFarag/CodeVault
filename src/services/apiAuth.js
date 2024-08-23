@@ -133,12 +133,40 @@ export async function updateCurrentUser({ password, fullName, avatar }) {
   return updatedUser;
 }
 
-export async function fetchAllUsers() {
-  const { data, error } = await supabase.from('users').select('*');
+export async function fetchUsers() {
+  // Fetch users
+  const { data: users, error: usersError } = await supabase
+    .from('users')
+    .select('*');
 
-  if (error) throw new Error(error.message);
+  if (usersError) throw new Error(usersError.message);
 
-  return data;
+  console.log('Fetched Users:', users);
+
+  // Fetch notes and filter out those with null user_id
+  const { data: notes, error: notesError } = await supabase
+    .from('notes')
+    .select('user_id');
+
+  if (notesError) throw new Error(notesError.message);
+
+  // Filter out notes with null user_id and count notes per user
+  const noteCounts = notes.reduce((acc, note) => {
+    acc[note.user_id] = (acc[note.user_id] || 0) + 1;
+    return acc;
+  }, {});
+
+  console.log('Filtered Note Counts:', noteCounts);
+
+  // Add note counts to users
+  const usersWithNoteCounts = users.map((user) => ({
+    ...user,
+    uploadedNotesCount: noteCounts[user.id] || 0,
+  }));
+
+  console.log('Users with Note Counts:', usersWithNoteCounts);
+
+  return usersWithNoteCounts;
 }
 
 export async function updateUserRole({ userId, newRole, adminId }) {
