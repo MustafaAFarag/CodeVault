@@ -142,12 +142,13 @@ export async function fetchAllUsers() {
 }
 
 export async function updateUserRole({ userId, newRole, adminId }) {
-  // add adminId to capture who made the change
+  // Validate the new role
   const validRoles = ['basic', 'verified', 'admin'];
   if (!validRoles.includes(newRole)) {
     throw new Error('Invalid role');
   }
 
+  // Fetch the current role of the user
   const { data: currentUser, error: fetchError } = await supabase
     .from('users')
     .select('role')
@@ -158,14 +159,27 @@ export async function updateUserRole({ userId, newRole, adminId }) {
 
   const currentRole = currentUser.role;
 
-  if (newRole === 'admin' && currentRole !== 'super_admin') {
-    throw new Error('Insufficient permissions');
-  }
-
+  // Super admin can promote to admin, while admin cannot promote to super_admin
   if (currentRole === 'admin' && newRole === 'super_admin') {
     throw new Error('Admins cannot promote to super_admin');
   }
 
+  // Check if the admin making the change has sufficient permissions
+  const { data: adminData, error: adminFetchError } = await supabase
+    .from('users')
+    .select('role')
+    .eq('id', adminId)
+    .single();
+
+  if (adminFetchError) throw new Error(adminFetchError.message);
+
+  const adminRole = adminData.role;
+
+  if (newRole === 'admin' && adminRole !== 'super_admin') {
+    throw new Error('Insufficient permissions');
+  }
+
+  // Update the user's role
   const { data, error } = await supabase
     .from('users')
     .update({ role: newRole })

@@ -1,98 +1,40 @@
 import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-  fetchAllUsers,
-  updateUserRole,
-  suspendUser,
-} from '../services/apiAuth';
+import { useUsers } from '../features/Admin/useUsers';
+import { useRoleMutation } from '../features/Admin/useRoleMutation';
+import { useSuspendMutation } from '../features/Admin/useSuspendMutation';
+import { UserList } from '../features/Admin/UserList';
 import { useUser } from '../features/authentication/useUser';
 
 function AdminPanel() {
   const { user } = useUser();
   const [search, setSearch] = useState('');
 
-  const queryClient = useQueryClient();
-
-  const {
-    data: users = [],
-    error,
-    isLoading,
-  } = useQuery({
-    queryKey: ['users'],
-    queryFn: fetchAllUsers,
-  });
-
-  const roleMutation = useMutation({
-    mutationFn: updateUserRole,
-    onSuccess: () => {
-      queryClient.invalidateQueries(['users']);
-    },
-    onError: (error) => {
-      console.error('Role update error:', error.message);
-    },
-  });
-
-  const suspendMutation = useMutation({
-    mutationFn: suspendUser,
-    onSuccess: (updatedUser) => {
-      console.log('Suspension mutation succeeded. Updated user:', updatedUser);
-      queryClient.invalidateQueries(['users']);
-    },
-    onError: (error) => {
-      console.error('Suspend user error:', error);
-    },
-  });
+  const { users, error, isLoading } = useUsers();
+  const roleMutation = useRoleMutation();
+  const suspendMutation = useSuspendMutation();
 
   const handleRoleChange = (userId, newRole) => {
-    if (user.role === 'admin' && newRole === 'admin') return;
-    if (
-      user.role === 'admin' &&
-      users.find((u) => u.id === userId)?.role === 'admin'
-    )
-      return;
-
-    // Pass the current user's ID (admin ID) when changing a role
-    roleMutation.mutate({ userId, newRole, adminId: user.id });
+    const targetUser = users.find((u) => u.id === userId);
+    if (user.role === 'super_admin') {
+      roleMutation.mutate({ userId, newRole, adminId: user.id });
+    } else if (user.role === 'admin') {
+      if (targetUser.role === 'admin') return;
+      if (newRole === 'basic' || newRole === 'verified') {
+        roleMutation.mutate({ userId, newRole, adminId: user.id });
+      }
+    }
   };
 
   const handleSuspendUser = (userId, isSuspended) => {
-    // Prevent admins from suspending other admins or themselves
-    if (
-      user.role === 'admin' &&
-      users.find((u) => u.id === userId)?.role === 'admin'
-    )
-      return;
-    suspendMutation.mutate({ userId, isSuspended, adminId: user.id });
-  };
-
-  const getAvailableRoles = (currentRole) => {
-    if (currentRole === 'super_admin') {
-      return ['basic', 'verified', 'admin'];
+    const targetUser = users.find((u) => u.id === userId);
+    if (user.role === 'super_admin') {
+      suspendMutation.mutate({ userId, isSuspended, adminId: user.id });
+    } else if (user.role === 'admin') {
+      if (targetUser.role !== 'admin') {
+        suspendMutation.mutate({ userId, isSuspended, adminId: user.id });
+      }
     }
-    if (currentRole === 'admin') {
-      return ['basic', 'verified'];
-    }
-    return [];
   };
-
-  const currentUserRole = users.find(
-    (userData) => userData.id === user.id,
-  )?.role;
-
-  const roleOrder = { admin: 1, verified: 2, basic: 3 };
-
-  const filteredUsers =
-    search.length >= 3
-      ? users
-          .filter((user) =>
-            user.full_name.toLowerCase().includes(search.toLowerCase()),
-          )
-          .filter((user) => user.role !== 'super_admin')
-      : users.filter((user) => user.role !== 'super_admin');
-
-  const sortedUsers = filteredUsers.sort((a, b) => {
-    return roleOrder[a.role] - roleOrder[b.role];
-  });
 
   if (isLoading)
     return <div className="text-center text-gray-500">Loading...</div>;
@@ -112,68 +54,13 @@ function AdminPanel() {
           onChange={(e) => setSearch(e.target.value)}
           className="border border-gray-300 rounded px-4 py-2 w-full mb-4"
         />
-        <ul className="space-y-4">
-          {sortedUsers.length > 0
-            ? sortedUsers.map((user) => {
-                const isAdmin = user.role === 'admin';
-
-                const canChangeRole =
-                  user.role !== 'super_admin' &&
-                  (user.role !== 'admin' || user.role !== 'admin');
-                const canSuspend = !isAdmin;
-
-                return (
-                  <li
-                    key={user.id}
-                    className="flex items-center justify-between p-4 border-b border-gray-300"
-                  >
-                    <div className="flex-1">
-                      <div className="font-semibold text-lg">
-                        {user.full_name}
-                      </div>
-                      <div className="text-gray-600">
-                        {user.role} - {user.email}
-                      </div>
-                      <div className="text-gray-500 text-sm">
-                        Created :{' '}
-                        {new Date(user.created_at).toLocaleDateString()}
-                      </div>
-                      {user.suspended && (
-                        <div className="text-red-500 text-sm">Suspended</div>
-                      )}
-                    </div>
-                    <div className="space-x-4">
-                      <select
-                        value={user.role}
-                        onChange={(e) =>
-                          handleRoleChange(user.id, e.target.value)
-                        }
-                        className={`border border-gray-300 rounded px-2 py-1 bg-white ${!canChangeRole ? 'cursor-not-allowed opacity-50' : ''}`}
-                        disabled={!canChangeRole}
-                      >
-                        {getAvailableRoles(currentUserRole).map((role) => (
-                          <option key={role} value={role}>
-                            {role.charAt(0).toUpperCase() + role.slice(1)}
-                          </option>
-                        ))}
-                      </select>
-                      <button
-                        onClick={() =>
-                          handleSuspendUser(user.id, !user.suspended)
-                        }
-                        className={`border px-2 py-1 rounded ${user.suspended ? 'bg-red-500 text-white ' : 'bg-green-500 text-white'}`}
-                        disabled={!canSuspend}
-                      >
-                        {user.suspended ? 'Unsuspend' : 'Suspend'}
-                      </button>
-                    </div>
-                  </li>
-                );
-              })
-            : search.length >= 3 && (
-                <li className="text-gray-500">No users found</li>
-              )}
-        </ul>
+        <UserList
+          users={users}
+          search={search}
+          currentUserRole={user.role}
+          onRoleChange={handleRoleChange}
+          onSuspendToggle={handleSuspendUser}
+        />
       </div>
     </div>
   );
