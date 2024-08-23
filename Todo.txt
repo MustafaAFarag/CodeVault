@@ -16,6 +16,5 @@
 
 Assign Badges: Allow the admin to manually assign badges to users. he can also remove it 
 
-Suspend Users: Temporarily suspend users who violate rules or guidelines.
 
 Super Admin will have Logs of all actions made 
