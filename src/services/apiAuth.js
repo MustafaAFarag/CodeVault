@@ -43,7 +43,6 @@ export async function login({ email, password }) {
 
 // Fetch the current user and their details from the 'users' table
 export async function getCurrentUser() {
-  // Fetch the current session
   const {
     data: { session },
     error: sessionError,
@@ -55,15 +54,16 @@ export async function getCurrentUser() {
 
   const userId = session.user.id;
 
-  // Fetch user details from the 'users' table using the user ID
   const { data: userDetails, error } = await supabase
     .from('users')
     .select('*')
     .eq('id', userId)
-    .single(); // Fetch a single user record
+    .single();
 
-  if (error) {
-    throw new Error(error.message);
+  if (error) throw new Error(error.message);
+
+  if (userDetails.suspended) {
+    throw new Error('Your account has been suspended.');
   }
 
   return userDetails;
@@ -171,5 +171,26 @@ export async function updateUserRole({ userId, newRole }) {
 
   if (error) throw new Error(error.message);
 
+  return data;
+}
+
+export async function suspendUser({ userId, isSuspended }) {
+  if (typeof userId !== 'string') {
+    throw new Error('Invalid user ID type.');
+  }
+
+  const { data, error } = await supabase
+    .from('users')
+    .update({ suspended: isSuspended })
+    .eq('id', userId) // Ensure this ID is a valid string
+    .select('*')
+    .single();
+
+  if (error) {
+    console.error('Full error object:', error);
+    throw new Error(error.message);
+  }
+
+  console.log('Updated user data:', data);
   return data;
 }

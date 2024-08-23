@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchAllUsers, updateUserRole } from '../services/apiAuth';
+import {
+  fetchAllUsers,
+  updateUserRole,
+  suspendUser,
+} from '../services/apiAuth';
 import { useUser } from '../features/authentication/useUser';
 
 function AdminPanel() {
@@ -18,7 +22,7 @@ function AdminPanel() {
     queryFn: fetchAllUsers,
   });
 
-  const mutation = useMutation({
+  const roleMutation = useMutation({
     mutationFn: updateUserRole,
     onSuccess: () => {
       queryClient.invalidateQueries(['users']);
@@ -28,11 +32,33 @@ function AdminPanel() {
     },
   });
 
+  const suspendMutation = useMutation({
+    mutationFn: suspendUser,
+    onSuccess: (updatedUser) => {
+      console.log('Suspension mutation succeeded. Updated user:', updatedUser);
+      queryClient.invalidateQueries(['users']);
+    },
+    onError: (error) => {
+      console.error('Suspend user error:', error);
+    },
+  });
+
   const handleRoleChange = (userId, newRole) => {
-    mutation.mutate({ userId, newRole });
+    roleMutation.mutate({ userId, newRole });
   };
 
-  // Determine available roles based on the current user's role
+  const handleSuspendUser = (userId, isSuspended) => {
+    console.log('Suspending user:', userId, 'New suspend state:', isSuspended);
+    suspendMutation.mutate(
+      { userId, isSuspended },
+      {
+        onSuccess: (data) => {
+          console.log('User suspended successfully:', data);
+        },
+      },
+    );
+  };
+
   const getAvailableRoles = (currentRole, userRole) => {
     if (currentRole === 'super_admin') {
       return ['basic', 'verified', 'admin'];
@@ -40,14 +66,13 @@ function AdminPanel() {
     if (currentRole === 'admin') {
       return userRole === 'admin' ? ['admin'] : ['basic', 'verified'];
     }
-    return []; // For basic users, no role changes allowed
+    return [];
   };
 
   const currentUserRole = users.find(
     (userData) => userData.id === user.id,
   )?.role;
 
-  // Filter users based on the search query and exclude those with the 'super_admin' role
   const filteredUsers =
     search.length >= 3
       ? users
@@ -76,18 +101,6 @@ function AdminPanel() {
           className="border border-gray-300 rounded px-4 py-2 w-full mb-4"
         />
         <ul className="space-y-4">
-          {!search && (
-            <li
-              key={user.id}
-              className="flex items-center justify-between p-4 border-b border-gray-300"
-            >
-              <div className="flex-1">
-                <div className="font-semibold text-lg">Mustafa Ashraf</div>
-                <div className="text-gray-600">Owner</div>
-              </div>
-              <p>mustafa.ashraf.saad@gmail.com</p>
-            </li>
-          )}
           {filteredUsers.length > 0
             ? filteredUsers.map((user) => (
                 <li
@@ -104,6 +117,9 @@ function AdminPanel() {
                     <div className="text-gray-500 text-sm">
                       {new Date(user.created_at).toLocaleDateString()}
                     </div>
+                    {user.suspended && (
+                      <div className="text-red-500 text-sm">Suspended</div>
+                    )}
                   </div>
                   <div className="space-x-4">
                     <select
@@ -112,7 +128,10 @@ function AdminPanel() {
                         handleRoleChange(user.id, e.target.value)
                       }
                       className="border border-gray-300 rounded px-2 py-1 bg-white"
-                      disabled={user.role === 'admin'} // Disable dropdown if the role is 'admin'
+                      disabled={
+                        currentUserRole !== 'super_admin' &&
+                        user.role === 'admin'
+                      }
                     >
                       {getAvailableRoles(currentUserRole, user.role).map(
                         (role) => (
@@ -122,11 +141,18 @@ function AdminPanel() {
                         ),
                       )}
                     </select>
-                    <input
-                      type="text"
-                      placeholder="Additional Info"
-                      className="border border-gray-300 rounded px-2 py-1 bg-white"
-                    />
+                    <button
+                      onClick={() =>
+                        handleSuspendUser(user.id, !user.suspended)
+                      }
+                      className={`border px-2 py-1 rounded ${
+                        user.suspended
+                          ? 'bg-red-500 text-white'
+                          : 'bg-green-500 text-white'
+                      }`}
+                    >
+                      {user.suspended ? 'Unsuspend' : 'Suspend'}
+                    </button>
                   </div>
                 </li>
               ))
