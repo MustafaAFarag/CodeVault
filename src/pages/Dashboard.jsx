@@ -5,9 +5,8 @@ import { fetchUsers } from '../services/apiAuth';
 import { useUser } from '../features/authentication/useUser';
 
 function Dashboard() {
-  const { user } = useUser(); // Assuming this hook provides the current user
+  const { user } = useUser();
 
-  // Fetch data
   const {
     data: users = [],
     isLoading: isUsersLoading,
@@ -16,6 +15,8 @@ function Dashboard() {
     queryKey: ['users'],
     queryFn: fetchUsers,
   });
+
+  console.log('USERSSS', users);
 
   const {
     data: notes = [],
@@ -48,23 +49,13 @@ function Dashboard() {
     );
   }
 
-  // Calculate note counts
-  const noteCounts = notes.reduce((acc, note) => {
-    acc[note.user_id] = (acc[note.user_id] || 0) + 1;
-    return acc;
-  }, {});
-
-  // Assign note counts to users
-  const usersWithNoteCounts = users.map((user) => ({
-    ...user,
-    uploadedNotesCount: noteCounts[user.id] || 0,
-  }));
-
   // Prepare data
-  const topUsers = usersWithNoteCounts.slice(0, 100);
-  const top5Users = usersWithNoteCounts
+  const topUsers = users.slice(0, 100);
+
+  const top5Users = users
     .sort((a, b) => b.uploadedNotesCount - a.uploadedNotesCount)
     .slice(0, 5);
+
   const top5Notes = notes
     .sort((a, b) => b.average_rating - a.average_rating)
     .slice(0, 5);
@@ -113,7 +104,7 @@ function Dashboard() {
         <ul>
           {top5Users.map((user) => (
             <li key={user.id} className="py-2 border-b border-gray-300">
-              {user.full_name} - {user.uploadedNotesCount} notes
+              {user.full_name} - {user.uploadedNotesCount}
             </li>
           ))}
         </ul>
@@ -127,7 +118,7 @@ function Dashboard() {
             <li key={note.id} className="py-2 border-b border-gray-300">
               <div className="font-semibold">{note.title}</div>
               <div className="text-gray-600">
-                Average Rating: {note.average_rating}
+                Average Rating: {note.average_rating} - {note.users.full_name}
               </div>
             </li>
           ))}

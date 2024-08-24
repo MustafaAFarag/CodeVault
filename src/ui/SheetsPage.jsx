@@ -1,15 +1,41 @@
 /* eslint-disable react/prop-types */
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import Spinner from './Spinner';
 import SubjectDropdown from '../features/Sheets/SubjectDropdown';
 import SheetList from '../features/Sheets/SheetList';
 import NoSheetsMessage from '../features/Sheets/NoSheetsMessage';
+import { useSheetsForm } from '../features/Sheets/useSheetsForm';
+import { useUser } from '../features/authentication/useUser';
+import UploadSheetsModal from './UploadSheetsModal';
 
-function SheetsPage({ title, queryKey, queryFn }) {
+function SheetsPage({ title, queryKey, queryFn, uploadFn }) {
+  const { user } = useUser();
+  const queryClient = useQueryClient();
+  const {
+    formValues,
+    handleChange,
+    handleSubmit,
+    isModalOpen,
+    handleUploadClick,
+    handleCloseModal,
+  } = useSheetsForm();
+
   const { data, error, isLoading } = useQuery({
     queryKey: [queryKey],
     queryFn,
+  });
+
+  const uploadMutation = useMutation({
+    mutationFn: uploadFn,
+    onSuccess: () => {
+      queryClient.invalidateQueries([queryKey]);
+      handleCloseModal();
+    },
+    onError: (error) => {
+      console.error('Upload failed:', error.message);
+      alert('There was an error uploading the sheet. Please try again.');
+    },
   });
 
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -49,6 +75,28 @@ function SheetsPage({ title, queryKey, queryFn }) {
       {selectedSubject && !sheetsBySubject[selectedSubject] && (
         <NoSheetsMessage />
       )}
+
+      {/* Conditionally render the upload button for admins or super admins */}
+      {user?.role === 'admin' || user?.role === 'super_admin' ? (
+        <div className="flex justify-end mt-4">
+          <button
+            onClick={handleUploadClick}
+            className="bg-accent text-white px-4 py-2 rounded-md shadow-md hover:bg-opacity-80 transition-all"
+          >
+            Upload New Sheet
+          </button>
+        </div>
+      ) : null}
+
+      <UploadSheetsModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={(e) => handleSubmit(e, uploadMutation)}
+        formValues={formValues}
+        subjects={subjectsData}
+        handleChange={handleChange}
+        isUploading={uploadMutation.isLoading}
+      />
     </div>
   );
 }

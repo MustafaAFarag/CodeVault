@@ -1,4 +1,7 @@
-import { fetchLecturesAndSheets } from '../services/apiSheets';
+import {
+  fetchLecturesAndSheets,
+  uploadLectureSheet,
+} from '../services/apiSheets';
 import SheetsPage from '../ui/SheetsPage';
 
 function Lectures() {
@@ -7,6 +10,7 @@ function Lectures() {
       title="Lectures"
       queryKey="lecturesAndSheets"
       queryFn={fetchLecturesAndSheets}
+      uploadFn={uploadLectureSheet}
     />
   );
 }

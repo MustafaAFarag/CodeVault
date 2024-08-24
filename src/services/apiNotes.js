@@ -12,6 +12,7 @@ export async function fetchNotes() {
   const { data, error } = await supabase.from('notes').select(`
       *,
       note_rating(*),
+      users(*),
       subjects(*)
     `);
 

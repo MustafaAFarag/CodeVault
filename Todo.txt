@@ -6,19 +6,21 @@
 
 -----Dashboard will contain : 
 - Leaderboard based on some system
-- To-Do List ( Assigments / projects / upcoming quizzes ) 
+- To-Do List ( Assigments / projects / upcoming quizzes )
 
 - Add Login with Google , github ( Mahmoud ) 
 
 - Online panel
 - Dark Mode
-- Dashboard
-- BookMark
+
+- To do list add and remove for admins
+- BookMark the notes
 - Showcase
 
 -- Edit Sections ( add upload to only admins )
 -- Edit Lectures ( add upload to only admins )
 
+-User Notifications: Implement a notification system for important updates or reminders, such as deadlines for tasks or new notes. ( later )
 --------------------------------Hard-----------------------------
 I was thinking to let admin have the ability add / create or remove tags from users
 
