@@ -64,13 +64,13 @@ export async function updateNote(noteId, updatedNote) {
 }
 
 // Function to generate a random letter
-function getRandomLetter() {
+export function getRandomLetter() {
   const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   return letters.charAt(Math.floor(Math.random() * letters.length));
 }
 
 // Function to sanitize the file name
-function sanitizeFileName(fileName) {
+export function sanitizeFileName(fileName) {
   return fileName
     .split('')
     .map((char) => (char.match(/[^a-zA-Z0-9.\-_]/) ? getRandomLetter() : char))

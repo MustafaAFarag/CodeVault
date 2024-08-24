@@ -16,7 +16,7 @@ function UploadSheetsModal({
         <h2 className="text-3xl font-bold text-secondary mb-6 text-center">
           Upload a Section Sheet
         </h2>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={(e) => onSubmit(e)}>
           <div className="mb-5">
             <label htmlFor="title" className="block text-secondary mb-2">
               Title
@@ -95,5 +95,4 @@ function UploadSheetsModal({
     </div>
   );
 }
-
 export default UploadSheetsModal;

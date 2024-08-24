@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -40,15 +41,11 @@ export function useSheetsForm() {
       return;
     }
     try {
-      // Pass the file object to the upload function
       await uploadMutation.mutateAsync({
         title: formValues.title,
         subject_id: formValues.subject_id,
         file: formValues.url,
       });
-      // Clear form values and close the modal on success
-      clearFormValues();
-      setIsModalOpen(false);
     } catch (error) {
       toast.error(`Error: ${error.message}`);
     }

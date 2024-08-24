@@ -7,7 +7,8 @@ import SheetList from '../features/Sheets/SheetList';
 import NoSheetsMessage from '../features/Sheets/NoSheetsMessage';
 import { useSheetsForm } from '../features/Sheets/useSheetsForm';
 import { useUser } from '../features/authentication/useUser';
-import UploadSheetsModal from './UploadSheetsModal';
+import UploadSheetsModal from '../features/Sheets/UploadSheetsModal';
+import { toast } from 'react-hot-toast';
 
 function SheetsPage({ title, queryKey, queryFn, uploadFn }) {
   const { user } = useUser();
@@ -21,6 +22,8 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn }) {
     handleCloseModal,
   } = useSheetsForm();
 
+  const [isUploading, setIsUploading] = useState(false);
+
   const { data, error, isLoading } = useQuery({
     queryKey: [queryKey],
     queryFn,
@@ -28,13 +31,18 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn }) {
 
   const uploadMutation = useMutation({
     mutationFn: uploadFn,
+    onMutate: () => {
+      setIsUploading(true);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries([queryKey]);
       handleCloseModal();
+      setIsUploading(false);
     },
     onError: (error) => {
       console.error('Upload failed:', error.message);
-      alert('There was an error uploading the sheet. Please try again.');
+      toast.error('There was an error uploading the sheet. Please try again.');
+      setIsUploading(false);
     },
   });
 
@@ -57,25 +65,20 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn }) {
       <h1 className="text-4xl font-bold text-primary mb-6 text-center">
         {title}
       </h1>
-
       <SubjectDropdown subjects={subjectsData} onChange={handleSubjectChange} />
-
       {!selectedSubject && (
         <p className="text-center text-text">
           Please select a subject to view {title.toLowerCase()}
         </p>
       )}
-
       {selectedSubject &&
         sheetsBySubject[selectedSubject] &&
         sheetsBySubject[selectedSubject].length > 0 && (
           <SheetList sheets={sheetsBySubject[selectedSubject]} />
         )}
-
       {selectedSubject && !sheetsBySubject[selectedSubject] && (
         <NoSheetsMessage />
       )}
-
       {/* Conditionally render the upload button for admins or super admins */}
       {user?.role === 'admin' || user?.role === 'super_admin' ? (
         <div className="flex justify-end mt-4">
@@ -95,7 +98,7 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn }) {
         formValues={formValues}
         subjects={subjectsData}
         handleChange={handleChange}
-        isUploading={uploadMutation.isLoading}
+        isUploading={isUploading}
       />
     </div>
   );

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import supabase, { supabaseUrl } from './supabase';
+import { getRandomLetter, sanitizeFileName } from './apiNotes';
 
 async function fetchSheets(table) {
   const { data: subjectsData, error: subjectsError } = await supabase
@@ -31,21 +32,25 @@ export async function fetchSectionsAndSheets() {
   return fetchSheets('sectionSheets');
 }
 
-async function uploadFile(file) {
-  const fileName = `${Date.now()}-${file.name}`;
+async function uploadFile(file, bucket) {
+  // Sanitize the file name
+  const sanitizedFileName = sanitizeFileName(`${Date.now()}-${file.name}`);
+
+  // Upload the file to the specified bucket
   const { data, error } = await supabase.storage
-    .from('lectures')
-    .upload(fileName, file);
+    .from(bucket)
+    .upload(sanitizedFileName, file);
 
   if (error) {
     console.error('Upload error:', error.message);
     throw new Error('Failed to upload file');
   }
 
+  // Get the public URL of the uploaded file
   const {
     data: { publicUrl },
     error: urlError,
-  } = supabase.storage.from('lectures').getPublicUrl(fileName);
+  } = supabase.storage.from(bucket).getPublicUrl(sanitizedFileName);
 
   if (urlError) {
     console.error('URL fetch error:', urlError.message);
@@ -56,9 +61,9 @@ async function uploadFile(file) {
 }
 
 // Updated uploadSheet function
-async function uploadSheet({ table, title, subject_id, file }) {
+async function uploadSheet({ table, title, subject_id, file, bucket }) {
   // Upload the file and get the URL
-  const url = await uploadFile(file);
+  const url = await uploadFile(file, bucket);
 
   // Insert the sheet info into the database
   const { data, error } = await supabase
@@ -78,6 +83,7 @@ export async function uploadLectureSheet({ title, subject_id, file }) {
     title,
     subject_id,
     file,
+    bucket: 'lectures', // Specify the lectures bucket
   });
 }
 
@@ -87,7 +93,6 @@ export async function uploadSectionSheet({ title, subject_id, file }) {
     title,
     subject_id,
     file,
+    bucket: 'sections', // Specify the sections bucket
   });
 }
-
-// 71siqy
