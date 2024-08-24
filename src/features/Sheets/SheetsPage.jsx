@@ -1,16 +1,16 @@
 /* eslint-disable react/prop-types */
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import Spinner from './Spinner';
-import SubjectDropdown from '../features/Sheets/SubjectDropdown';
-import SheetList from '../features/Sheets/SheetList';
-import NoSheetsMessage from '../features/Sheets/NoSheetsMessage';
-import { useSheetsForm } from '../features/Sheets/useSheetsForm';
-import { useUser } from '../features/authentication/useUser';
-import UploadSheetsModal from '../features/Sheets/UploadSheetsModal';
+import Spinner from '../../ui/Spinner';
+import SubjectDropdown from './SubjectDropdown';
+import SheetList from './SheetList';
+import NoSheetsMessage from './NoSheetsMessage';
+import { useSheetsForm } from './useSheetsForm';
+import { useUser } from '../authentication/useUser';
+import UploadSheetsModal from './UploadSheetsModal';
 import { toast } from 'react-hot-toast';
 
-function SheetsPage({ title, queryKey, queryFn, uploadFn }) {
+function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
   const { user } = useUser();
   const queryClient = useQueryClient();
   const {
@@ -46,6 +46,22 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn }) {
     },
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: deleteFn,
+    onSuccess: () => {
+      queryClient.invalidateQueries([queryKey]);
+      toast.success('Sheet deleted successfully.');
+    },
+    onError: (error) => {
+      console.error('Delete failed:', error.message);
+      toast.error('There was an error deleting the sheet. Please try again.');
+    },
+  });
+
+  function handleDelete(sheetId) {
+    deleteMutation.mutate(sheetId);
+  }
+
   const [selectedSubject, setSelectedSubject] = useState(null);
 
   if (isLoading) return <Spinner />;
@@ -74,7 +90,11 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn }) {
       {selectedSubject &&
         sheetsBySubject[selectedSubject] &&
         sheetsBySubject[selectedSubject].length > 0 && (
-          <SheetList sheets={sheetsBySubject[selectedSubject]} />
+          <SheetList
+            sheets={sheetsBySubject[selectedSubject]}
+            onDelete={handleDelete}
+            user={user}
+          />
         )}
       {selectedSubject && !sheetsBySubject[selectedSubject] && (
         <NoSheetsMessage />
@@ -99,6 +119,7 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn }) {
         subjects={subjectsData}
         handleChange={handleChange}
         isUploading={isUploading}
+        title={title}
       />
     </div>
   );

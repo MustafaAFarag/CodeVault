@@ -1,8 +1,9 @@
 import {
   fetchLecturesAndSheets,
   uploadLectureSheet,
+  deleteLectureSheet,
 } from '../services/apiSheets';
-import SheetsPage from '../ui/SheetsPage';
+import SheetsPage from '../features/Sheets/SheetsPage';
 
 function Lectures() {
   return (
@@ -11,6 +12,7 @@ function Lectures() {
       queryKey="lecturesAndSheets"
       queryFn={fetchLecturesAndSheets}
       uploadFn={uploadLectureSheet}
+      deleteFn={deleteLectureSheet}
     />
   );
 }

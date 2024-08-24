@@ -96,3 +96,57 @@ export async function uploadSectionSheet({ title, subject_id, file }) {
     bucket: 'sections', // Specify the sections bucket
   });
 }
+
+async function deleteSheet({ table, sheetId, bucket }) {
+  // Fetch the sheet from the database to get the URL or file name
+  const { data: sheetData, error: fetchError } = await supabase
+    .from(table)
+    .select('url')
+    .eq('id', sheetId)
+    .single();
+
+  if (fetchError) {
+    console.error('Fetch error:', fetchError.message);
+    throw new Error('Failed to fetch sheet details');
+  }
+
+  // Delete the sheet from the database
+  const { error: deleteError } = await supabase
+    .from(table)
+    .delete()
+    .eq('id', sheetId);
+
+  if (deleteError) {
+    console.error('Delete error:', deleteError.message);
+    throw new Error('Failed to delete the sheet from the database');
+  }
+
+  // Extract the file name from the URL
+  const fileName = sheetData.url.split('/').pop();
+
+  // Delete the file from the storage
+  const { error: storageError } = await supabase.storage
+    .from(bucket)
+    .remove([fileName]);
+
+  if (storageError) {
+    console.error('Storage delete error:', storageError.message);
+    throw new Error('Failed to delete the file from storage');
+  }
+}
+
+export async function deleteLectureSheet(sheetId) {
+  return deleteSheet({
+    table: 'lecturesSheets',
+    sheetId,
+    bucket: 'lectures', // Specify the lectures bucket
+  });
+}
+
+export async function deleteSectionSheet(sheetId) {
+  return deleteSheet({
+    table: 'sectionSheets',
+    sheetId,
+    bucket: 'sections', // Specify the sections bucket
+  });
+}

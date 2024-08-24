@@ -17,8 +17,7 @@
 - BookMark the notes
 - Showcase
 
--- Edit Sections ( add upload to only admins )
--- Edit Lectures ( add upload to only admins )
+
 
 -User Notifications: Implement a notification system for important updates or reminders, such as deadlines for tasks or new notes. ( later )
 --------------------------------Hard-----------------------------

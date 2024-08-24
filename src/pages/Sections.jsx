@@ -1,8 +1,9 @@
 import {
   fetchSectionsAndSheets,
   uploadSectionSheet,
+  deleteSectionSheet,
 } from '../services/apiSheets';
-import SheetsPage from '../ui/SheetsPage';
+import SheetsPage from '../features/Sheets/SheetsPage';
 
 function Sections() {
   return (
@@ -11,6 +12,7 @@ function Sections() {
       queryKey="sectionsAndSheets"
       queryFn={fetchSectionsAndSheets}
       uploadFn={uploadSectionSheet}
+      deleteFn={deleteSectionSheet}
     />
   );
 }

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-function SheetList({ sheets }) {
+function SheetList({ sheets, onDelete, user }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {sheets.map((sheet) => (
@@ -15,6 +15,16 @@ function SheetList({ sheets }) {
           >
             {sheet.title}
           </a>
+          <div className="mt-4 flex justify-end">
+            {user?.role === 'admin' || user?.role === 'super_admin' ? (
+              <button
+                onClick={() => onDelete(sheet.id)}
+                className="bg-red-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-600 transition-all"
+              >
+                Delete
+              </button>
+            ) : null}
+          </div>
         </div>
       ))}
     </div>
