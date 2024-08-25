@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function LogoLink({ to, children }) {
   return (
-    <Link to={to} className=" z-50 flex items-center gap-4 ">
+    <Link to={to} className=" z-50 flex items-center  ">
       {children}
     </Link>
   );

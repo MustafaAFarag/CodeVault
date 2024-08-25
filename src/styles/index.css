@@ -1,13 +1,15 @@
 @layer base {
   :root {
-    --color-primary: #3b82f6;
-    --color-secondary: #1e3a8a;
-    --color-background: #f3f4f6;
-    --color-sidebar-background: #e5e7eb;
-    --color-text-primary: #1f2937;
+    --color-primary: #002e5d; /* Deep Blue */
+    --color-secondary: #f2f2f2; /* Soft Gray */
+    --color-background: #ffffff; /* White */
+    --color-sidebar-background: #dcdcdc; /* Light Gray */
+    --color-text-primary: #333333; /* Charcoal Gray */
     --color-text-secondary: #6b7280;
-    --color-accent: #f59e0b;
-    --color-border: #d1d5db;
+    --color-accent: #1abc9c; /* Vibrant Teal */
+    --color-border: #dcdcdc; /* Light Gray for borders */
+    --color-error: #e74c3c; /* Error Red */
+    --color-success: #2ecc71; /* Success Green */
   }
 }
 
@@ -15,9 +17,19 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  font-size: 62.5%;
+}
+
 body {
   background-color: var(--color-background);
+  transition:
+    color 0.3s,
+    background-color 0.3s;
+  min-height: 100vh;
+  line-height: 1.5;
   color: var(--color-text-primary);
+  font-size: 62.5%;
   font-family: 'Poppins', sans-serif;
 }
 

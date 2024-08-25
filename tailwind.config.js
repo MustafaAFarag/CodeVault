@@ -9,14 +9,16 @@ export default {
     },
     extend: {
       colors: {
-        primary: '#4B5563', // Darker shade for primary text
-        secondary: '#1F2937', // Darker background and highlight color
-        background: '#F9FAFB', // Light background for main content
-        'background-secondary': '#E5E7EB', // New lighter background for active nav links
-        accent: '#4B9CD3', // Calmer blue for interactive elements
-        text: '#374151', // Standard text color
-        sidebarBg: '#F3F4F6', // Light gray for sidebar background
-        border: '#E5E7EB', // Light border color
+        primary: '#002e5d', // Deep Blue
+        secondary: '#f2f2f2', // Soft Gray
+        background: '#ffffff', // White
+        'background-secondary': '#dcdcdc', // Light Gray
+        text: '#333333', // Charcoal Gray
+        'text-secondary': '#6b7280', // Text secondary
+        accent: '#1abc9c', // Vibrant Teal
+        border: '#dcdcdc', // Light Gray for borders
+        error: '#e74c3c', // Error Red
+        success: '#2ecc71', // Success Green
       },
     },
   },
