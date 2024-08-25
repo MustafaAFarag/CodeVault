@@ -4,22 +4,19 @@
 - Daily Challenges: Offer daily or weekly study challenges, such as “Review last week’s notes” or “Complete a practice quiz,” to keep students engaged
 - Streaks & Rewards: Encourage continuous study with streaks for completing daily challenges and offer rewards like badges or points.
 
------Dashboard will contain : 
-- Leaderboard based on some system
-- To-Do List ( Assigments / projects / upcoming quizzes )
 
-- Add Login with Google , github ( Mahmoud ) 
 
-- Online panel
-- Dark Mode
 
-- BookMark page for the notes
+
+
+-- Later --
+
 - Showcase instead of resources
-
+- Dark Mode
+- Online panel
+- Add Login with Google , github ( Mahmoud ) 
 -User Notifications: Implement a notification system for important updates or reminders, such as deadlines for tasks or new notes. ( later )
 
-SubjectDropdown
-favorite
 
 --------------------------------Hard-----------------------------
 I was thinking to let admin have the ability add / create or remove tags from users

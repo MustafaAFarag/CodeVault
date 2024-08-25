@@ -11,6 +11,7 @@ import Sections from './pages/Sections';
 import Login from './pages/Login';
 import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './ui/ProtectedRoute';
+import ProtectedAdminRoute from './ui/ProtectedAdminRoute';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import About from './pages/about';
@@ -47,8 +48,10 @@ function App() {
             <Route path="/sections" element={<Sections />} />
             <Route path="/account" element={<Account />} />
             <Route path="/favorites" element={<Favorites />} />
-            <Route path="/admin" element={<AdminPanel />} />
-            <Route path="/logs" element={<Logs />} />
+            <Route element={<ProtectedAdminRoute />}>
+              <Route path="/admin" element={<AdminPanel />} />
+              <Route path="/logs" element={<Logs />} />
+            </Route>
           </Route>
 
           <Route path="*" element={<PageNotFound />} />

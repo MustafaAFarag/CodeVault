@@ -7,7 +7,7 @@ import {
   addFavorite,
   removeFavorite,
   fetchFavorites,
-} from '../../services/apiFavorites';
+} from '../../services/apiFavoritesNotes';
 import CustomRating from '../Notes/CustomRating';
 
 const NoteItem = memo(({ note, onRatingChange, user, isBestNote }) => {
