@@ -1,14 +1,31 @@
-import { fetchFavorites } from '../services/apiFavorites';
-import { FaBookmark } from 'react-icons/fa';
-import { useQuery } from '@tanstack/react-query';
+import { fetchFavorites, removeFavorite } from '../services/apiFavorites';
+import { FaBookmark, FaHeart } from 'react-icons/fa';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { useUser } from '../features/authentication/useUser';
 import SubjectDropdown from '../features/Sheets/SubjectDropdown';
 import { fetchSubjects } from '../services/apiNotes';
 import { useSelectedSubject } from '../features/Notes/useSelectedSubject';
+import { toast } from 'react-hot-toast';
 
 function Favorites() {
   const { user } = useUser();
   const { selectedSubject, handleSubjectChange } = useSelectedSubject();
+  const queryClient = useQueryClient();
+
+  const removeFavoriteMutation = useMutation({
+    mutationFn: removeFavorite,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['favorites', user.id]);
+      toast.success('Favorite removed successfully');
+    },
+    onError: (error) => {
+      toast.error(`Error removing favorite: ${error.message}`);
+    },
+  });
+
+  const handleRemoveFavorite = (favoriteId) => {
+    removeFavoriteMutation.mutate(favoriteId);
+  };
 
   const {
     data: subjectsData = [],
@@ -45,12 +62,7 @@ function Favorites() {
     );
   }
 
-  console.log('Favorites:', favorites);
-  console.log('Selected Subject:', selectedSubject);
-
   const filteredFavorites = favorites.filter((favorite) => {
-    console.log('Favorite subject ID:', favorite.notes.subjects.id);
-    console.log('Selected subject:', selectedSubject);
     return (
       !selectedSubject ||
       favorite.notes.subjects.id === parseInt(selectedSubject, 10)
@@ -74,8 +86,16 @@ function Favorites() {
           filteredFavorites.map((favorite) => (
             <div
               key={favorite.id}
-              className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow"
+              className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow relative"
             >
+              <div className="absolute top-2 right-2">
+                <button
+                  onClick={() => handleRemoveFavorite(favorite.id)}
+                  className="text-accent hover:text-secondary transition-colors"
+                >
+                  <FaHeart size={24} />
+                </button>
+              </div>
               <div className="text-lg font-semibold text-gray-900">
                 {favorite.notes.title}
               </div>

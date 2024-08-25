@@ -11,11 +11,11 @@ export const addFavorite = async (userId, noteId) => {
   return data;
 };
 
-export const removeFavorite = async (userId, noteId) => {
+export const removeFavorite = async (favoriteId) => {
   const { data, error } = await supabase
     .from('favorites')
     .delete()
-    .match({ user_id: userId, note_id: noteId });
+    .match({ id: favoriteId });
 
   if (error) {
     throw new Error(error.message);
