@@ -35,13 +35,6 @@ function MainNav() {
           </StyledNavLink>
         </li>
 
-        <li>
-          <StyledNavLink to="/resources">
-            <HiOutlineHome />
-            Resources
-          </StyledNavLink>
-        </li>
-
         {user.role === 'super_admin' || user.role === 'admin' ? (
           <li>
             <StyledNavLink to="/admin">

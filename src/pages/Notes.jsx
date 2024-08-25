@@ -143,6 +143,7 @@ function Notes() {
         <SubjectDropdown
           subjects={subjectsData}
           onChange={handleSubjectChange}
+          title="-- Select a Subject --"
           className="flex-1"
         />
         <button
@@ -178,7 +179,7 @@ function Notes() {
         isOpen={isModalOpen}
         onClose={() => {
           handleCloseModal();
-          clearFormValues(); // Clear form values when closing modal
+          clearFormValues();
         }}
         onSubmit={handleSubmit}
         formValues={formValues}

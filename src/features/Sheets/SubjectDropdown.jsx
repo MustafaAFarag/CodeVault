@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-function SubjectDropdown({ subjects, onChange }) {
+function SubjectDropdown({ subjects, onChange, title }) {
   return (
     <div className="mb-6">
       <label className="text-primary font-semibold mr-4">Select Subject:</label>
@@ -7,7 +7,7 @@ function SubjectDropdown({ subjects, onChange }) {
         onChange={onChange}
         className="bg-white text-text px-4 py-2 rounded-md border border-border shadow-sm"
       >
-        <option value="">-- Select a Subject --</option>
+        <option value="">{title}</option>
         {subjects.map((subject) => (
           <option key={subject.id} value={subject.id}>
             {subject.name}

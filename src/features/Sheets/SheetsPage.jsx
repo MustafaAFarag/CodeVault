@@ -81,7 +81,23 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
       <h1 className="text-4xl font-bold text-primary mb-6 text-center">
         {title}
       </h1>
-      <SubjectDropdown subjects={subjectsData} onChange={handleSubjectChange} />
+      <div className="flex items-center justify-between">
+        <SubjectDropdown
+          subjects={subjectsData}
+          onChange={handleSubjectChange}
+          title="-- Select a Subject --"
+        />
+        {user?.role === 'admin' || user?.role === 'super_admin' ? (
+          <div className="flex justify-end mt-4">
+            <button
+              onClick={handleUploadClick}
+              className="bg-accent text-white px-4 py-2 rounded-md shadow-md hover:bg-opacity-80 transition-all"
+            >
+              Upload
+            </button>
+          </div>
+        ) : null}
+      </div>
       {!selectedSubject && (
         <p className="text-center text-text">
           Please select a subject to view {title.toLowerCase()}
@@ -99,17 +115,6 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
       {selectedSubject && !sheetsBySubject[selectedSubject] && (
         <NoSheetsMessage />
       )}
-      {/* Conditionally render the upload button for admins or super admins */}
-      {user?.role === 'admin' || user?.role === 'super_admin' ? (
-        <div className="flex justify-end mt-4">
-          <button
-            onClick={handleUploadClick}
-            className="bg-accent text-white px-4 py-2 rounded-md shadow-md hover:bg-opacity-80 transition-all"
-          >
-            Upload New Sheet
-          </button>
-        </div>
-      ) : null}
 
       <UploadSheetsModal
         isOpen={isModalOpen}

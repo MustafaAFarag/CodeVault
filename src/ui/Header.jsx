@@ -1,12 +1,16 @@
 import HeaderMenu from './HeaderMenu';
+import FavoriteHeader from './FavoriteHeader';
 import UserAvatar from '../features/authentication/UserAvatar';
 
 function Header() {
   return (
-    <header className="py-4 px-8 border-b-2 border-border flex justify-end items-center gap-4 text-text bg-background">
-      <UserAvatar />
-      <HeaderMenu />
-    </header>
+    <div className="py-4 px-8 border-b-2 border-border flex justify-between items-center text-text bg-background">
+      <FavoriteHeader />
+      <header className="flex gap-4">
+        <UserAvatar />
+        <HeaderMenu />
+      </header>
+    </div>
   );
 }
 

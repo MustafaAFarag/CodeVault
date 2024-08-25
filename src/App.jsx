@@ -7,7 +7,6 @@ import PageNotFound from './pages/PageNotFound';
 import Notes from './pages/Notes';
 import Account from './pages/Account';
 import Lectures from './pages/Lectures';
-import Resources from './pages/Resources';
 import Sections from './pages/Sections';
 import Login from './pages/Login';
 import { Toaster } from 'react-hot-toast';
@@ -17,6 +16,7 @@ import Dashboard from './pages/Dashboard';
 import About from './pages/about';
 import AdminPanel from './pages/AdminPanel';
 import Logs from './pages/Logs';
+import Favorites from './pages/Favorites';
 import HomeLayout from './ui/HomeLayout';
 
 const queryClient = new QueryClient();
@@ -45,8 +45,8 @@ function App() {
             <Route path="/notes" element={<Notes />} />
             <Route path="/lectures" element={<Lectures />} />
             <Route path="/sections" element={<Sections />} />
-            <Route path="/resources" element={<Resources />} />
             <Route path="/account" element={<Account />} />
+            <Route path="/favorites" element={<Favorites />} />
             <Route path="/admin" element={<AdminPanel />} />
             <Route path="/logs" element={<Logs />} />
           </Route>

@@ -26,11 +26,12 @@ export const removeFavorite = async (userId, noteId) => {
 export const fetchFavorites = async (userId) => {
   const { data, error } = await supabase
     .from('favorites')
-    .select('note_id')
+    .select('*,notes(*,subjects(*))')
     .eq('user_id', userId);
 
   if (error) {
     throw new Error(error.message);
   }
-  return data.map((fav) => fav.note_id);
+
+  return data;
 };
