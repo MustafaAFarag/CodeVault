@@ -19,8 +19,12 @@ const NoteItem = memo(({ note, onRatingChange, user, isBestNote }) => {
   useEffect(() => {
     const checkFavorite = async () => {
       if (user) {
-        const favoriteNotes = await fetchFavorites(user.id);
-        setIsFavorite(favoriteNotes.includes(note.note_id));
+        try {
+          const favoriteNotes = await fetchFavorites(user.id);
+          setIsFavorite(favoriteNotes.includes(note.note_id));
+        } catch (error) {
+          console.error('Error fetching favorites:', error);
+        }
       }
     };
     checkFavorite();

@@ -1,4 +1,4 @@
-import { fetchFavorites, removeFavorite } from '../services/apiFavorites';
+import { fetchFavorites, removeFavorite } from '../services/apiFavoritesFav';
 import { FaBookmark, FaHeart } from 'react-icons/fa';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { useUser } from '../features/authentication/useUser';

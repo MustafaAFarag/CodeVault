@@ -11,11 +11,11 @@ export const addFavorite = async (userId, noteId) => {
   return data;
 };
 
-export const removeFavorite = async (userId, noteId) => {
+export const removeFavorite = async (favoriteId) => {
   const { data, error } = await supabase
     .from('favorites')
     .delete()
-    .match({ user_id: userId, note_id: noteId });
+    .match({ id: favoriteId });
 
   if (error) {
     throw new Error(error.message);
@@ -26,12 +26,12 @@ export const removeFavorite = async (userId, noteId) => {
 export const fetchFavorites = async (userId) => {
   const { data, error } = await supabase
     .from('favorites')
-    .select('note_id')
+    .select('*,notes(*,subjects(*))')
     .eq('user_id', userId);
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return data.map((favorite) => favorite.note_id);
+  return data;
 };
