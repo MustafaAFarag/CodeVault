@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useLogin } from './useLogin';
 import SpinnerMini from '../../ui/SpinnerMini';
@@ -30,16 +31,24 @@ function LoginForm() {
   }
 
   return (
-    <form
-      className="bg-gray-800 border border-gray-700 rounded-md p-6 max-w-sm w-full fade-in-up"
+    <motion.form
+      className="bg-gray-50 p-6 rounded-lg shadow-md"
       onSubmit={handleSubmit}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
     >
-      <div className="flex flex-col gap-4 mb-6">
-        <label htmlFor="email" className="text-lg font-semibold text-white">
+      <motion.div
+        className="flex flex-col gap-4 mb-6"
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <label htmlFor="email" className="text-2xl font-semibold text-gray-700">
           Email Address
         </label>
         <input
-          className="bg-gray-700 border border-gray-600 rounded-md py-2 px-4 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+          className="border border-gray-300 rounded-md py-3 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 text-xl"
           type="email"
           id="email"
           autoComplete="username"
@@ -48,14 +57,22 @@ function LoginForm() {
           onChange={(e) => setEmail(e.target.value)}
           disabled={isLoading}
         />
-      </div>
+      </motion.div>
 
-      <div className="flex flex-col gap-4 mb-6">
-        <label htmlFor="password" className="text-lg font-semibold text-white">
+      <motion.div
+        className="flex flex-col gap-4 mb-6"
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        <label
+          htmlFor="password"
+          className="text-2xl font-semibold text-gray-700"
+        >
           Password
         </label>
         <input
-          className="bg-gray-700 border border-gray-600 rounded-md py-2 px-4 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+          className="border border-gray-300 rounded-md py-3 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 text-xl"
           type="password"
           id="password"
           autoComplete="current-password"
@@ -64,16 +81,19 @@ function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
           disabled={isLoading}
         />
-      </div>
+      </motion.div>
 
-      <button
-        className="w-full py-3 text-lg font-semibold bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      <motion.button
+        className="w-full py-3 text-lg font-semibold bg-blue-600 text-white rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300"
         type="submit"
         disabled={isLoading}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
       >
         {isLoading ? <SpinnerMini /> : 'Log in'}
-      </button>
-    </form>
+      </motion.button>
+    </motion.form>
   );
 }
 

@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { animate } from 'motion';
 import BackgroundImage from '../ui/BackgroundImage';
-import { Button } from 'primereact/button';
-import { Link } from 'react-router-dom';
+import LinkButton from '../ui/LinkButton';
 
 function Homepage() {
   const headlineRef = useRef(null);
@@ -25,12 +24,7 @@ function Homepage() {
         >
           Welcome to EduData
         </h1>
-        <Link to="/dashboard">
-          <Button
-            label="Get Started"
-            className="px-8 py-4 bg-secondary rounded-full font-semibold text-3xl text-text hover:bg-accent transition-all duration-300 shadow-lg"
-          />
-        </Link>
+        <LinkButton to="/dashboard" label="Get Started" />
       </div>
     </>
   );

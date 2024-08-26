@@ -6,7 +6,7 @@ function MainNav() {
   const { user } = useUser();
   return (
     <nav>
-      <ul className="flex flex-col gap-[1.2rem]">
+      <ul className="flex flex-col gap-[1.2rem] text-xl">
         <li>
           <StyledNavLink to="/dashboard">
             <HiOutlineHome />

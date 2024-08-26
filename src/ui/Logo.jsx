@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useRef } from 'react';
 import { animate } from 'motion';
 import LogoLink from './LogoLink';
 
-function Logo({ children }) {
+function Logo({ children, width, height }) {
   const logoRef = useRef(null);
 
   useEffect(() => {
@@ -21,8 +22,8 @@ function Logo({ children }) {
           alt="EduData Logo"
           loading="lazy"
           src="./Logo.png"
-          width="90"
-          height="90"
+          width={width}
+          height={height}
           ref={logoRef}
         />
         <span className="text-3xl md:text-4xl font-bold text-accent hover:text-accent transition-all duration-300 ml-3">

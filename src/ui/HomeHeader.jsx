@@ -1,20 +1,29 @@
 import { useEffect, useRef } from 'react';
 import { animate } from 'motion';
 import Logo from './Logo';
-import { Button } from 'primereact/button';
-import { Link } from 'react-router-dom';
+import LinkButton from './LinkButton';
+import { Link, useLocation } from 'react-router-dom';
 
 function HomeHeader() {
   const navRef = useRef(null);
+  const location = useLocation();
 
   useEffect(() => {
     animate(navRef.current, { opacity: [0, 1] }, { duration: 1 });
   }, []);
 
+  const isHomePage = location.pathname === '/';
+
   return (
-    <header className="border-b border-secondary px-6 md:px-10 bg-white">
+    <header
+      className={`sticky top-0 z-50 border-b border-secondary px-6 md:px-10 ${
+        isHomePage ? 'bg-transparent border-b-0' : 'bg-white'
+      }`}
+    >
       <div className="flex justify-between items-center max-w-[105rem] mx-auto">
-        <Logo>EduData</Logo>
+        <Logo width={90} height={90}>
+          EduData
+        </Logo>
         <nav ref={navRef} className="text-xl z-10">
           <ul className="flex gap-8 md:gap-16 items-center">
             <li>
@@ -34,12 +43,7 @@ function HomeHeader() {
               </Link>
             </li>
             <li>
-              <Link to="/signup">
-                <Button
-                  label="Sign Up"
-                  className="px-6 py-3 md:px-8 md:py-4 bg-secondary rounded-full font-semibold text-lg md:text-3xl text-text hover:bg-accent transition-all duration-300 shadow-lg"
-                />
-              </Link>
+              <LinkButton to="/signup" label="Sign Up" />
             </li>
           </ul>
         </nav>
