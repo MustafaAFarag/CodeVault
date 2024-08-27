@@ -18,10 +18,10 @@ function StyledNavLink({ children, to }) {
       to={to}
       className={({ isActive }) => `
         flex items-center gap-3 
-        ${isActive ? 'text-accent bg-teal-100' : 'text-text'}
-        hover:text-accent
+        ${isActive ? 'text-text bg-accent' : 'text-text'}
+       
         transition-all duration-300 
-        hover:bg-teal-100
+        hover:bg-accent
         p-3 rounded-md
       `}
       onMouseEnter={handleMouseEnter}

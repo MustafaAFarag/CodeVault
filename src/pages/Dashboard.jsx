@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { fetchTodos, deleteTodo, createTodo } from '../services/apiTodos';
 import { fetchNotes } from '../services/apiNotes';
 import { fetchUsers } from '../services/apiAuth';
@@ -8,6 +8,10 @@ import UploadTodoModal from '../features/Dashboard/UploadTodoModal';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import supabase from '../services/supabase';
 import { toast } from 'react-hot-toast';
+import { capitalizeFirstLetter } from '../utils/helpers';
+import { Link } from 'react-router-dom';
+import ErrorMessage from '../ui/ErrorMessage';
+import { Skeleton } from 'primereact/skeleton';
 
 function Dashboard() {
   const { user } = useUser();
@@ -68,15 +72,18 @@ function Dashboard() {
     },
   });
 
-  function handleDeleteTodo(id) {
-    confirmDialog({
-      message: 'Are you sure you want to delete this assignment?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => deleteMutation.mutate(id),
-      reject: () => toast.error('Delete action canceled'),
-    });
-  }
+  const handleDeleteTodo = useCallback(
+    (id) => {
+      confirmDialog({
+        message: 'Are you sure you want to delete this assignment?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => deleteMutation.mutate(id),
+        reject: () => toast.error('Delete action canceled'),
+      });
+    },
+    [deleteMutation],
+  );
 
   const createMutation = useMutation({
     mutationFn: createTodo,
@@ -89,9 +96,12 @@ function Dashboard() {
     },
   });
 
-  function handleCreateToDo(newToDo) {
-    return createMutation.mutateAsync(newToDo);
-  }
+  const handleCreateToDo = useCallback(
+    (newToDo) => {
+      return createMutation.mutateAsync(newToDo);
+    },
+    [createMutation],
+  );
 
   // Prepare data
   const filteredUsers = useMemo(() => {
@@ -115,35 +125,72 @@ function Dashboard() {
   }, [notes]);
 
   if (isUsersLoading || isNotesLoading || isToDosLoading) {
-    return <div className="text-center text-gray-500">Loading...</div>;
-  }
-
-  if (usersError || notesError || toDosError) {
     return (
-      <div className="text-center text-red-500">
-        Error:{' '}
-        {usersError?.message || notesError?.message || toDosError?.message}
+      <div className="p-6 bg-gray-200 2xl:min-h-screen">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+          {/* Users Loader */}
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <div className="flex justify-between items-center mb-4">
+              <Skeleton height="2rem" width="70%" />
+              <Skeleton height="2rem" width="30%" />
+            </div>
+            <div>
+              <Skeleton height="10rem" className="mb-2" />
+              <Skeleton height="10rem" className="mb-2" />
+              <Skeleton height="10rem" className="mb-2" />
+              <Skeleton height="10rem" className="mb-2" />
+            </div>
+          </div>
+
+          {/* To-Do List Loader */}
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <Skeleton height="10rem" width="50%" className="mb-4" />
+            <Skeleton height="10rem" className="mb-2" />
+            <Skeleton height="10rem" className="mb-2" />
+            <Skeleton height="10rem" className="mb-2" />
+          </div>
+
+          {/* Top 5 Users Loader */}
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <Skeleton height="10rem" width="50%" className="mb-4" />
+            <Skeleton height="10rem" className="mb-2" />
+            <Skeleton height="10rem" className="mb-2" />
+            <Skeleton height="10rem" className="mb-2" />
+          </div>
+
+          {/* Top 5 Notes Loader */}
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <Skeleton height="2rem" width="50%" className="mb-4" />
+            <Skeleton height="2rem" className="mb-2" />
+            <Skeleton height="2rem" className="mb-2" />
+            <Skeleton height="2rem" className="mb-2" />
+          </div>
+        </div>
       </div>
     );
   }
 
+  if (usersError || notesError || toDosError) {
+    return <ErrorMessage message={'Error Retreviving Data'} />;
+  }
+  console.log(capitalizeFirstLetter('hello'));
+
   return (
-    <div className="p-6 bg-teal-100 2xl:min-h-screen">
+    <div className="p-6 bg-gray-200 2xl:min-h-screen">
       {/* Confirmation Dialog */}
       <ConfirmDialog acceptClassName="ml-3" />
 
       {/* Welcome Message */}
-      <div className=" p-6 mb-6">
-        <h1 className="text-3xl font-bold">Welcome, {user?.full_name}</h1>
+      <div className="p-6 mb-6">
+        <h1 className="text-5xl font-bold text-text">
+          Welcome, {user?.full_name}!
+        </h1>
       </div>
 
       {/* Dashboard Content */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
         {/* First 100 Users */}
-        <div
-          className="bg-white shadow-md rounded-lg p-6 overflow-y-auto row-span-2 max-h-[605px]"
-          // style={{ width: '300px' }}
-        >
+        <div className="bg-white shadow-md rounded-lg p-6 overflow-y-auto row-span-2 max-h-[605px]">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-semibold">First 100 Users</h2>
             <input
@@ -151,31 +198,31 @@ function Dashboard() {
               placeholder="Search by name"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="border border-gray-300 rounded px-2 py-1"
+              className="border border-gray-300 rounded-lg px-2 py-1"
             />
           </div>
           <ul style={{ overflowY: 'auto' }}>
             {filteredUsers.slice(0, 15).map((user) => (
-              <>
-                <li key={user.id} className="py-2 border-b border-gray-300">
-                  {user.full_name} - {user.email}
-                </li>
-                <li key={user.id} className="py-2 border-b border-gray-300">
-                  {user.full_name} - {user.email}
-                </li>
-                <li key={user.id} className="py-2 border-b border-gray-300">
-                  {user.full_name} - {user.email}
-                </li>
-                <li key={user.id} className="py-2 border-b border-gray-300">
-                  {user.full_name} - {user.email}
-                </li>
-                <li key={user.id} className="py-2 border-b border-gray-300">
-                  {user.full_name} - {user.email}
-                </li>
-                <li key={user.id} className="py-2 border-b border-gray-300">
-                  {user.full_name} - {user.email}
-                </li>
-              </>
+              <li
+                key={user.id}
+                className="py-2 border-b border-gray-300 flex items-center gap-4"
+              >
+                <span className="w-1/2 truncate text-xl">
+                  {capitalizeFirstLetter(user.full_name.toLowerCase())}
+                </span>
+                <span className="w-1/4 text-gray-500 text-lg">
+                  {capitalizeFirstLetter(
+                    user.role === 'super_admin'
+                      ? 'Owner'
+                      : user.role.toLowerCase(),
+                  )}
+                </span>
+                <img
+                  className="w-12 h-12 aspect-square object-cover object-center rounded-full outline-2 outline-teal-500"
+                  src={user.avatar || 'default-user.jpg'}
+                  alt={`Avatar of ${user.full_name}`}
+                />
+              </li>
             ))}
           </ul>
         </div>
@@ -187,10 +234,10 @@ function Dashboard() {
             {(user.role === 'admin' || user.role === 'super_admin') && (
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-all duration-300"
+                className="bg-secondary text-text px-6 py-3 rounded hover:bg-accent transition-all  shadow-lg font-semibold text-lg duration-300 mb-2"
                 disabled={createMutation.isLoading}
               >
-                {createMutation.isLoading ? 'Creating...' : 'Create To-Do'}
+                Create To-Do
               </button>
             )}
           </div>
@@ -242,9 +289,12 @@ function Dashboard() {
               </li>
             ))}
           </ul>
-          <button className="mt-4 bg-blue-500 text-white p-4 rounded hover:bg-blue-600 transition-all duration-300 text-xl">
+          <Link
+            className="mt-4 bg-secondary text-text text-center p-4 rounded hover:bg-accent transition-all duration-300 text-xl shadow-lg font-semibold"
+            to="/notes"
+          >
             Upload your Notes!
-          </button>
+          </Link>
         </div>
 
         {/* Top 5 Most Rated Notes */}

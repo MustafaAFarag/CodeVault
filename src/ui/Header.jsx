@@ -18,7 +18,7 @@ function Header() {
   return (
     <div
       ref={headerRef}
-      className="py-6 px-8 border-b border-gray-300 flex justify-between items-center text-text bg-teal-50"
+      className="py-6 px-8 border-b border-gray-300 flex justify-between items-center text-text bg-teal-600"
     >
       <FavoriteHeader />
       <header className="flex gap-3 items-center">

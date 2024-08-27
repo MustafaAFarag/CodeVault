@@ -18,7 +18,7 @@ function FavoriteHeader() {
       onClick={() => navigate('/favorites')}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="text-gray-800 hover:text-teal-600 focus:outline-none transition-all duration-300"
+      className="text-text hover:bg-teal-200 p-3 rounded-lg focus:outline-none transition-all duration-300"
       aria-label="Favorites"
     >
       <FaBookmark className="h-6 w-6" />
