@@ -1,36 +1,44 @@
 import StyledNavLink from '../StyledContainers/StyledNavLink';
-import { HiOutlineHome } from 'react-icons/hi2';
+import {
+  HiOutlineHome,
+  HiOutlineDocumentText,
+  HiOutlinePlay,
+  HiOutlineCollection,
+  HiOutlineCog,
+  HiOutlineClipboard,
+} from 'react-icons/hi';
 import { useUser } from '../features/authentication/useUser';
 
 function MainNav() {
   const { user } = useUser();
+
   return (
     <nav>
-      <ul className="flex flex-col gap-[1.2rem] text-xl">
+      <ul className="flex flex-col gap-10 text-xl font-semibold pl-5">
         <li>
           <StyledNavLink to="/dashboard">
-            <HiOutlineHome />
+            <HiOutlineHome className="text-teal-600" />
             Home
           </StyledNavLink>
         </li>
 
         <li>
           <StyledNavLink to="/notes">
-            <HiOutlineHome />
+            <HiOutlineDocumentText className="text-teal-600" />
             Notes
           </StyledNavLink>
         </li>
 
         <li>
           <StyledNavLink to="/lectures">
-            <HiOutlineHome />
+            <HiOutlinePlay className="text-teal-600" />
             Lectures
           </StyledNavLink>
         </li>
 
         <li>
           <StyledNavLink to="/sections">
-            <HiOutlineHome />
+            <HiOutlineCollection className="text-teal-600" />
             Sections
           </StyledNavLink>
         </li>
@@ -38,23 +46,20 @@ function MainNav() {
         {user.role === 'super_admin' || user.role === 'admin' ? (
           <li>
             <StyledNavLink to="/admin">
-              <HiOutlineHome />
+              <HiOutlineCog className="text-teal-600" />
               Admin Panel
             </StyledNavLink>
           </li>
-        ) : (
-          ''
-        )}
+        ) : null}
+
         {user.role === 'super_admin' ? (
           <li>
             <StyledNavLink to="/logs">
-              <HiOutlineHome />
+              <HiOutlineClipboard className="text-teal-600" />
               Logs
             </StyledNavLink>
           </li>
-        ) : (
-          ''
-        )}
+        ) : null}
       </ul>
     </nav>
   );
