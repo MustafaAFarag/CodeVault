@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import { useOutsideClick } from '../hooks/useOutsideClick';
+
 function Modal({
   isOpen,
   onClose,
@@ -8,24 +10,29 @@ function Modal({
   isSubmitting,
   submitText = 'Submit',
 }) {
+  const modalRef = useOutsideClick(onClose);
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
-      <div className="bg-background p-8 rounded-lg shadow-lg max-w-lg w-full">
-        <h2 className="text-3xl font-bold text-secondary mb-6 text-center">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm z-50">
+      {/* Attach the ref to the modal container */}
+      <div
+        ref={modalRef}
+        className="bg-white p-8 rounded-lg shadow-xl max-w-lg w-full"
+      >
+        <h2 className="text-3xl font-semibold text-teal-700 mb-6 text-center">
           {title}
         </h2>
         <form onSubmit={onSubmit}>
           {children}
-          <div className="flex justify-end">
+          <div className="flex justify-end mt-4">
             <button
               type="button"
               onClick={onClose}
-              className={`bg-error px-5 py-2 rounded-md shadow-md transition-all mr-3 ${
+              className={`bg-gray-300 text-gray-700 px-4 py-2 rounded-md transition-all mr-3 text-xl ${
                 isSubmitting
-                  ? 'bg-opacity-50 cursor-not-allowed'
-                  : 'hover:bg-opacity-80'
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'hover:bg-gray-400'
               }`}
               disabled={isSubmitting}
             >
@@ -33,10 +40,10 @@ function Modal({
             </button>
             <button
               type="submit"
-              className={`bg-accent text-white px-5 py-2 rounded-md shadow-md transition-all ${
+              className={`bg-teal-500 text-white text-xl px-4 py-2 rounded-md shadow-md transition-all ${
                 isSubmitting
-                  ? 'bg-opacity-50 cursor-not-allowed'
-                  : 'hover:bg-opacity-80'
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'hover:bg-teal-600'
               }`}
               disabled={isSubmitting}
             >

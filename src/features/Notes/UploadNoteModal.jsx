@@ -18,8 +18,12 @@ function UploadNoteModal({
       isSubmitting={isUploading}
       submitText="Upload"
     >
+      {/* Title Input */}
       <div className="mb-5">
-        <label htmlFor="title" className="block text-secondary mb-2">
+        <label
+          htmlFor="title"
+          className="block text-sm font-semibold text-teal-600 mb-2"
+        >
           Title
         </label>
         <input
@@ -28,13 +32,18 @@ function UploadNoteModal({
           name="title"
           value={formValues.title}
           onChange={handleChange}
-          className="w-full px-4 py-2 rounded-md bg-input-background text-text border border-border focus:ring-2 focus:ring-accent focus:outline-none"
+          className="w-full px-4 py-2 rounded-md bg-gray-50 border border-gray-300 text-gray-700 focus:ring-2 focus:ring-teal-500 focus:outline-none transition duration-200"
           placeholder="Enter the title"
           disabled={isUploading}
         />
       </div>
+
+      {/* Description Input */}
       <div className="mb-5">
-        <label htmlFor="description" className="block text-secondary mb-2">
+        <label
+          htmlFor="description"
+          className="block text-sm font-semibold text-teal-600 mb-2"
+        >
           Description
         </label>
         <textarea
@@ -42,14 +51,19 @@ function UploadNoteModal({
           name="description"
           value={formValues.description}
           onChange={handleChange}
-          className="w-full px-4 py-2 rounded-md bg-input-background text-text border border-border focus:ring-2 focus:ring-accent focus:outline-none"
+          className="w-full px-4 py-2 rounded-md bg-gray-50 border border-gray-300 text-gray-700 focus:ring-2 focus:ring-teal-500 focus:outline-none transition duration-200"
           placeholder="Enter the description"
           disabled={isUploading}
           rows="4"
         ></textarea>
       </div>
+
+      {/* File Input */}
       <div className="mb-5">
-        <label htmlFor="pdf" className="block text-secondary mb-2">
+        <label
+          htmlFor="pdf"
+          className="block text-sm font-semibold text-teal-600 mb-2"
+        >
           Upload PDF
         </label>
         <input
@@ -57,7 +71,7 @@ function UploadNoteModal({
           id="pdf"
           name="pdf"
           onChange={handleChange}
-          className="w-full px-4 py-2 rounded-md bg-input-background text-text border border-border focus:ring-2 focus:ring-accent focus:outline-none"
+          className="w-full px-4 py-2 rounded-md bg-gray-50 border border-gray-300 text-gray-700 focus:ring-2 focus:ring-teal-500 focus:outline-none transition duration-200"
           disabled={isUploading}
         />
       </div>

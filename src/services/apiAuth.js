@@ -141,8 +141,6 @@ export async function fetchUsers() {
 
   if (usersError) throw new Error(usersError.message);
 
-  console.log('Fetched Users:', users);
-
   // Fetch notes and filter out those with null user_id
   const { data: notes, error: notesError } = await supabase
     .from('notes')
@@ -156,15 +154,11 @@ export async function fetchUsers() {
     return acc;
   }, {});
 
-  console.log('Filtered Note Counts:', noteCounts);
-
   // Add note counts to users
   const usersWithNoteCounts = users.map((user) => ({
     ...user,
     uploadedNotesCount: noteCounts[user.id] || 0,
   }));
-
-  console.log('Users with Note Counts:', usersWithNoteCounts);
 
   return usersWithNoteCounts;
 }
@@ -237,8 +231,6 @@ export async function suspendUser({ userId, isSuspended, adminId }) {
     console.error('Full error object:', error);
     throw new Error(error.message);
   }
-
-  console.log('Updated user data:', data);
 
   await addLog(isSuspended ? 'User Suspended' : 'User Unsuspended', adminId);
   return data;

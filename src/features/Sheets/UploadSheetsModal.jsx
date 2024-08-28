@@ -15,13 +15,17 @@ function UploadSheetsModal({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={(e) => onSubmit(e)}
+      onSubmit={onSubmit}
       title={`Upload a ${title} Sheet`}
       isSubmitting={isUploading}
       submitText="Upload"
     >
+      {/* Title Input */}
       <div className="mb-5">
-        <label htmlFor="title" className="block text-secondary mb-2">
+        <label
+          htmlFor="title"
+          className="block text-sm font-semibold text-teal-600 mb-2"
+        >
           Title
         </label>
         <input
@@ -30,13 +34,18 @@ function UploadSheetsModal({
           name="title"
           value={formValues.title}
           onChange={handleChange}
-          className="w-full px-4 py-2 rounded-md bg-input-background text-text border border-border focus:ring-2 focus:ring-accent focus:outline-none"
+          className="w-full px-4 py-2 rounded-md bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:outline-none transition duration-200"
           placeholder="Enter the title"
           disabled={isUploading}
         />
       </div>
+
+      {/* Subject Dropdown */}
       <div className="mb-5">
-        <label htmlFor="subject_id" className="block text-secondary mb-2">
+        <label
+          htmlFor="subject_id"
+          className="block text-sm font-semibold text-teal-600 mb-2"
+        >
           Subject
         </label>
         <select
@@ -44,7 +53,7 @@ function UploadSheetsModal({
           name="subject_id"
           value={formValues.subject_id}
           onChange={handleChange}
-          className="w-full px-4 py-2 rounded-md bg-input-background text-text border border-border focus:ring-2 focus:ring-accent focus:outline-none"
+          className="w-full px-4 py-2 rounded-md bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:outline-none transition duration-200"
           disabled={isUploading}
         >
           <option value="">Select a subject</option>
@@ -55,8 +64,13 @@ function UploadSheetsModal({
           ))}
         </select>
       </div>
+
+      {/* File Input */}
       <div className="mb-5">
-        <label htmlFor="pdf" className="block text-secondary mb-2">
+        <label
+          htmlFor="pdf"
+          className="block text-sm font-semibold text-teal-600 mb-2"
+        >
           Upload {title} PDF
         </label>
         <input
@@ -64,7 +78,7 @@ function UploadSheetsModal({
           id="pdf"
           name="url"
           onChange={handleChange}
-          className="w-full px-4 py-2 rounded-md bg-input-background text-text border border-border focus:ring-2 focus:ring-accent focus:outline-none"
+          className="w-full px-4 py-2 rounded-md bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-teal-500  focus:outline-none transition duration-200"
           disabled={isUploading}
         />
       </div>
