@@ -15,10 +15,6 @@ import { useFilteredNotes } from '../features/Notes/useFilteredNotes';
 import { toast } from 'react-hot-toast';
 
 function Notes() {
-  // useEffect(() => {
-  //   throw new Error('Testing error boundary!');
-  // }, []);
-
   const [isUploading, setIsUploading] = useState(false);
   const [pagination, setPagination] = useState({
     first: 0,
@@ -44,7 +40,7 @@ function Notes() {
     handleUploadClick,
     handleCloseModal,
     clearFormValues,
-  } = useNoteForm();
+  } = useNoteForm(user);
 
   const { data, error, isLoading } = useQuery({
     queryKey: ['notes'],
@@ -67,7 +63,6 @@ function Notes() {
 
   const { filteredNotes } = useFilteredNotes(data, selectedSubject);
 
-  // Filter notes based on search query
   const searchedNotes = useMemo(() => {
     return filteredNotes.filter(
       (note) =>
@@ -76,17 +71,14 @@ function Notes() {
     );
   }, [filteredNotes, searchQuery]);
 
-  // Sort notes by average_rating in descending order
   const sortedNotes = useMemo(() => {
     return searchedNotes.sort((a, b) => b.average_rating - a.average_rating);
   }, [searchedNotes]);
 
-  // Calculate the best note globally
   const bestNote = useMemo(() => {
     return sortedNotes.length > 0 ? sortedNotes[0] : null;
   }, [sortedNotes]);
 
-  // Paginate notes
   const totalRecords = sortedNotes.length;
   const notesToDisplay = sortedNotes.slice(
     pagination.first,
@@ -109,7 +101,12 @@ function Notes() {
     setIsUploading(true);
 
     try {
-      await uploadMutation.mutateAsync(formValues);
+      const noteData = {
+        ...formValues,
+        user_id: user.id,
+        author: user.full_name, // Assuming the user object has a full_name property
+      };
+      await uploadMutation.mutateAsync(noteData);
       toast.success('Note uploaded successfully!');
       clearFormValues();
       handleCloseModal();
@@ -124,31 +121,29 @@ function Notes() {
   if (subjectsError) return <ErrorMessage message={subjectsError.message} />;
 
   return (
-    <div className="p-6 bg-background min-h-screen">
-      <h1 className="text-4xl font-bold text-secondary mb-6 text-center">
+    <div className="p-8 bg-gray-50 min-h-screen">
+      <h1 className="text-7xl font-bold text-teal-600 mb-6 mt-10 text-center">
         Notes
       </h1>
 
-      <div className="mb-6">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+        <SubjectDropdown
+          subjects={subjectsData}
+          onChange={handleSubjectChange}
+          title="-- Select a Subject --"
+        />
+
         <input
           type="text"
           value={searchQuery}
           onChange={handleSearchChange}
           placeholder="Search notes..."
-          className="border rounded-md p-2 w-full md:w-1/3 mb-4"
+          className="border border-gray-300 rounded-lg p-3 w-full md:w-1/2 mb-4 text-text translate-y-5 text-xl -translate-x-2"
         />
-      </div>
 
-      <div className="flex flex-col md:flex-row justify-between items-center mb-6">
-        <SubjectDropdown
-          subjects={subjectsData}
-          onChange={handleSubjectChange}
-          title="-- Select a Subject --"
-          className="flex-1"
-        />
         <button
           onClick={handleUploadClick}
-          className="bg-accent text-white px-4 py-2 rounded-md shadow-md hover:bg-secondary transition-all"
+          className="bg-secondary text-text px-5 py-3 rounded-lg hover:bg-accent transition-all shadow-lg font-semibold text-xl duration-300 translate-y-3"
         >
           Upload
         </button>
@@ -161,14 +156,14 @@ function Notes() {
           notes={notesToDisplay}
           onRatingChange={handleRatingChange}
           user={user}
-          bestNoteId={bestNote?.note_id} // Pass the ID of the best note
-          totalRecords={totalRecords} // Total number of records
+          bestNoteId={bestNote?.note_id}
+          totalRecords={totalRecords}
           first={pagination.first}
           rows={pagination.rows}
           onPageChange={handlePageChange}
         />
       ) : (
-        <p className="text-center text-text">
+        <p className="text-center text-gray-600">
           {selectedSubject
             ? 'No notes available for this subject.'
             : 'Please select a subject to view notes.'}
@@ -183,9 +178,10 @@ function Notes() {
         }}
         onSubmit={handleSubmit}
         formValues={formValues}
-        subjects={subjectsData}
         handleChange={handleChange}
         isUploading={isUploading}
+        user={user}
+        subjects={subjectsData}
       />
     </div>
   );

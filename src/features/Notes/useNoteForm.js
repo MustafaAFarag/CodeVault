@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 
-export function useNoteForm() {
+export function useNoteForm(user) {
   const [formValues, setFormValues] = useState({
     title: '',
     description: '',
     subject_id: '',
     pdf: null,
+    author: user ? user.full_name : '',
   });
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleChange = (e) => {

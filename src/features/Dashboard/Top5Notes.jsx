@@ -31,7 +31,8 @@ const Top5Notes = ({ top5Notes }) => (
           <div className="flex-grow">
             <div className="font-semibold text-xl">{note.title}</div>
             <div className="text-text text-lg">
-              Average Rating: {note.average_rating} - {note.users.full_name}
+              Average Rating: {note.average_rating} -{' '}
+              {note.users?.full_name || ''}
             </div>
           </div>
         </li>

@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-// NoteList.jsx
 import { Paginator } from 'primereact/paginator';
 import NoteItem from './NoteItem';
 
@@ -14,9 +13,9 @@ function NoteList({
   onPageChange,
 }) {
   return (
-    <div>
+    <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
       {/* Grid Container */}
-      <div className="grid grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
         {notes.map((note) => (
           <NoteItem
             key={note.note_id}
@@ -32,7 +31,7 @@ function NoteList({
         rows={rows}
         totalRecords={totalRecords}
         onPageChange={onPageChange}
-        className="mt-4"
+        className="mt-6"
       />
     </div>
   );

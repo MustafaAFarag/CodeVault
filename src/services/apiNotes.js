@@ -73,13 +73,20 @@ export function getRandomLetter() {
 export function sanitizeFileName(fileName) {
   return fileName
     .split('')
-    .map((char) => (char.match(/[^a-zA-Z0-9.\-_]/) ? getRandomLetter() : char))
+    .map((char) => (char.match(/[^a-zA-Z0-9.\-]/) ? getRandomLetter() : char))
     .join('')
     .replace(/_+/g, '_') // Replace multiple underscores with a single underscore
-    .replace(/^_|_$/g, ''); // Remove leading or trailing underscores
+    .replace(/^_+|_+$/g, ''); // Remove leading or trailing underscores
 }
 
-export async function uploadNote({ title, description, subject_id, pdf }) {
+export async function uploadNote({
+  title,
+  description,
+  subject_id,
+  pdf,
+  user_id,
+  author,
+}) {
   // Sanitize the file name
   const sanitizedFileName = sanitizeFileName(pdf.name);
   const uploadFolder = 'user_uploads';
@@ -100,7 +107,9 @@ export async function uploadNote({ title, description, subject_id, pdf }) {
       title,
       description,
       subject_id,
-      pdf_url: pdfUrl, // Use the constructed pdf_url
+      pdf_url: pdfUrl,
+      user_id,
+      author,
     },
   ]);
 

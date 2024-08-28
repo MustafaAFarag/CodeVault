@@ -5,7 +5,7 @@
 - Streaks & Rewards: Encourage continuous study with streaks for completing daily challenges and offer rewards like badges or points.
 
 
-
+notes table author and user_id isn't getting inserted 
 
 
 
