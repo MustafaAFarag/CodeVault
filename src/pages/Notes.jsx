@@ -1,17 +1,20 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNotes, fetchSubjects } from '../services/apiNotes';
 import { useUser } from '../features/authentication/useUser';
 import NotesLoader from '../ui/NotesLoader';
 import SubjectDropdown from '../features/Sheets/SubjectDropdown';
 import NoteList from '../features/Notes/NoteList';
+
 import UploadNoteModal from '../features/Notes/UploadNoteModal';
 import { useUploadNote } from '../features/Notes/useUploadNote';
 import { useRateNote } from '../features/Notes/useRateNote';
 import { useNoteForm } from '../features/Notes/useNoteForm';
+import { useNotes } from '../features/Notes/useNotes';
 import { useSelectedSubject } from '../features/Notes/useSelectedSubject';
 import ErrorMessage from '../ui/ErrorMessage';
 import { useFilteredNotes } from '../features/Notes/useFilteredNotes';
+
 import { toast } from 'react-hot-toast';
 
 function Notes() {
@@ -21,6 +24,19 @@ function Notes() {
     rows: 6, // Show 6 notes per page
   });
   const [searchQuery, setSearchQuery] = useState('');
+
+  const { deleteMutation } = useNotes();
+
+  const handleDeleteNote = useCallback(
+    (noteId) => {
+      deleteMutation.mutate(noteId, {
+        onError: (error) => {
+          toast.error(`Failed to delete note: ${error.message}`);
+        },
+      });
+    },
+    [deleteMutation],
+  );
 
   const {
     data: subjectsData,
@@ -161,6 +177,7 @@ function Notes() {
           first={pagination.first}
           rows={pagination.rows}
           onPageChange={handlePageChange}
+          handleDeleteNote={handleDeleteNote}
         />
       ) : (
         <p className="text-center text-gray-600">

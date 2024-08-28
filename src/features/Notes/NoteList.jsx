@@ -11,10 +11,10 @@ function NoteList({
   first,
   rows,
   onPageChange,
+  handleDeleteNote,
 }) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-      {/* Grid Container */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
         {notes.map((note) => (
           <NoteItem
@@ -23,6 +23,7 @@ function NoteList({
             onRatingChange={onRatingChange}
             user={user}
             isBestNote={note.note_id === bestNoteId}
+            handleDeleteNote={() => handleDeleteNote(note.note_id)}
           />
         ))}
       </div>

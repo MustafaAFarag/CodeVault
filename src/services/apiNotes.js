@@ -73,10 +73,10 @@ export function getRandomLetter() {
 export function sanitizeFileName(fileName) {
   return fileName
     .split('')
-    .map((char) => (char.match(/[^a-zA-Z0-9.\-]/) ? getRandomLetter() : char))
+    .map((char) => (char.match(/[^a-zA-Z0-9.-]/) ? getRandomLetter() : char))
     .join('')
-    .replace(/_+/g, '_') // Replace multiple underscores with a single underscore
-    .replace(/^_+|_+$/g, ''); // Remove leading or trailing underscores
+    .replace(/_+/g, '_')
+    .replace(/^_+|_+$/g, '');
 }
 
 export async function uploadNote({
