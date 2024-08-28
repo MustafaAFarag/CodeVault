@@ -1,11 +1,16 @@
 /* eslint-disable react/prop-types */
-function SubjectDropdown({ subjects, onChange, title }) {
+
+function SubjectDropdown({ subjects, onChange, title, required }) {
   return (
-    <div className="mb-6">
-      <label className="text-primary font-semibold mr-4">Select Subject:</label>
+    <div className="mb-4">
+      <label className="text-teal-600 text-2xl font-semibold mb-1 block">
+        Select Subject:
+        {required && <span className="text-red-500">*</span>}
+      </label>
       <select
         onChange={onChange}
-        className="bg-white text-text px-4 py-2 rounded-md border border-border shadow-sm"
+        className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-3 text-text text-xl font-medium focus:ring-teal-500 focus:border-teal-500 transition duration-200"
+        required={required}
       >
         <option value="">{title}</option>
         {subjects.map((subject) => (

@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 export function useSelectedSubject() {
-  const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState(null);
 
-  const handleSubjectChange = (e) => {
-    setSelectedSubject(e.target.value);
-  };
+  const handleSubjectChange = useCallback((event) => {
+    setSelectedSubject(event.target.value); // Handle event target value
+  }, []);
 
   return {
     selectedSubject,
