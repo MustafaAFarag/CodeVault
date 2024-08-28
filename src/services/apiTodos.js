@@ -1,7 +1,12 @@
 import supabase from './supabase';
 
 export async function fetchTodos() {
-  const { data, error } = await supabase.from('todos').select('*');
+  const { data, error } = await supabase.from('todos').select(`
+      *,
+      subjects (
+        name
+      )
+    `);
 
   if (error) throw new Error(error.message);
 

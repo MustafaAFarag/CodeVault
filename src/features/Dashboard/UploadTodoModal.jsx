@@ -31,6 +31,7 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
     const newTodo = {
       title,
       deadline: new Date(deadline).toISOString(),
+      subject_id: selectedSubject, // Include subject_id
     };
 
     try {
@@ -71,6 +72,7 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
 
       <SubjectDropdown
         subjects={subjectsData}
+        selectedSubject={selectedSubject} // Pass selectedSubject
         onChange={handleSubjectChange}
         title="-- Select a Subject --"
         className="flex-1"

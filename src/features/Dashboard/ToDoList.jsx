@@ -32,10 +32,11 @@ const ToDoList = ({
             className="py-2 border-b border-gray-300 flex justify-between items-center"
           >
             <div>
-              <div className="font-semibold text-lg">{todo.title}</div>
-              <div className="text-gray-600 text-lg">
+              <p className="font-semibold text-lg">{todo.title}</p>
+              <p className="text-gray-600 text-lg">
                 Deadline: {new Date(todo.deadline).toLocaleDateString()}
-              </div>
+              </p>
+              <p>{todo.subjects.name}</p>
             </div>
             {(user.role === 'admin' || user.role === 'super_admin') && (
               <button
