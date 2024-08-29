@@ -116,7 +116,7 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
   const { subjectsData } = data;
 
   return (
-    <div className="h-[780px] bg-gray-50 p-8">
+    <div className="bg-gray-50 p-8 lg:h-[780px]">
       <h1 className="mb-6 mt-10 text-center text-4xl font-bold text-teal-600 sm:text-5xl md:text-6xl lg:text-7xl">
         {title}
       </h1>

@@ -7,8 +7,8 @@ const ToDoList = ({
   createMutation,
   user,
 }) => (
-  <div className="col-span-2 col-start-2 row-start-1 max-h-[300px] overflow-y-auto rounded-lg bg-white p-6 shadow-md">
-    <div className="mb-4 flex items-center justify-between">
+  <div className="row-start-3 overflow-y-auto rounded-lg bg-white p-6 shadow-md md:col-span-2 xl:col-span-2 xl:col-start-2 xl:row-start-1">
+    <div className="mb-4 items-center justify-between lg:flex">
       <h2 className="text-3xl font-semibold">To-Do List</h2>
       {(user.role === 'admin' || user.role === 'super_admin') && (
         <button
@@ -25,14 +25,14 @@ const ToDoList = ({
         No assignments are due. Enjoy your day!
       </div>
     ) : (
-      <ul className="space-y-4">
+      <ul className="max-h-[300px] space-y-4">
         {toDos.map((todo) => (
           <li
             key={todo.id}
             className="flex items-center justify-between border-b border-gray-300 py-4"
           >
             <div className="flex-1">
-              <div className="flex items-center gap-4">
+              <div className="items-center gap-4 lg:flex">
                 <p className="text-xl font-semibold">{todo.title}</p>
                 <p className="text-lg text-gray-600">
                   Deadline: {new Date(todo.deadline).toLocaleDateString()}
