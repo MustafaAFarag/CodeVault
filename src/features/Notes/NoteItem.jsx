@@ -72,8 +72,11 @@ const NoteItem = memo(
       }
     };
 
-    const isAdmin =
-      user && (user.role === 'admin' || user.role === 'super_admin');
+    const canDelete =
+      user &&
+      (user.role === 'admin' ||
+        user.role === 'super_admin' ||
+        note.user_id === user.id);
 
     return (
       <div className="bg-white p-4 rounded-lg shadow-md border border-gray-200 transition-all duration-300 relative flex flex-col h-full">
@@ -88,18 +91,30 @@ const NoteItem = memo(
           {note.title}
         </h2>
 
-        <div className="flex items-center mb-2 text-xl">
-          {note.average_rating !== null && (
-            <FaStar className="text-yellow-400 mr-1 -translate-y-[0.15rem]" />
+        <div className="flex justify-between items-center mb-2">
+          <div className="flex items-center mb-2 text-xl">
+            {note.average_rating !== null && (
+              <FaStar className="text-yellow-400 mr-1 -translate-y-[0.15rem]" />
+            )}
+            <p className="text-md text-gray-600">
+              {note.average_rating !== null
+                ? note.average_rating
+                : 'No ratings yet'}
+            </p>
+            <p className="text-md text-gray-500 ml-2">
+              ({note.note_rating.length} ratings)
+            </p>
+          </div>
+
+          {canDelete && (
+            <button
+              onClick={() => handleDeleteNote(note.note_id)}
+              className=" z-20 p-2 bg-red-50 text-red-500 rounded-full shadow-md border border-red-300 transition-all duration-300 hover:bg-red-100"
+              aria-label="Delete note"
+            >
+              <FaTrash />
+            </button>
           )}
-          <p className="text-md text-gray-600">
-            {note.average_rating !== null
-              ? note.average_rating
-              : 'No ratings yet'}
-          </p>
-          <p className="text-md text-gray-500 ml-2">
-            ({note.note_rating.length} ratings)
-          </p>
         </div>
 
         <p className="text-gray-700 mb-4 text-xl">{note.description}</p>
@@ -138,17 +153,6 @@ const NoteItem = memo(
             <FaRegHeart className="text-gray-400" />
           )}
         </button>
-
-        {/* Delete Button for Admins */}
-        {isAdmin && (
-          <button
-            onClick={() => handleDeleteNote(note.note_id)}
-            className="absolute top-4 right-4 z-20 p-2 bg-red-50 text-red-500 rounded-full shadow-md border border-red-300 transition-all duration-300 hover:bg-red-100"
-            aria-label="Delete note"
-          >
-            <FaTrash />
-          </button>
-        )}
       </div>
     );
   },

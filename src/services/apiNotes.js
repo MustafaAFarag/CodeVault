@@ -45,10 +45,22 @@ export async function rateNote(noteId, ratingValue, userId) {
 }
 
 export async function deleteNote(noteId) {
-  const { error } = await supabase.from('notes').delete().eq('note_id', noteId);
+  const { error: ratingError } = await supabase
+    .from('note_rating')
+    .delete()
+    .eq('note_id', noteId);
 
-  if (error) {
-    throw new Error(error.message);
+  if (ratingError) {
+    throw new Error(ratingError.message);
+  }
+
+  const { error: noteError } = await supabase
+    .from('notes')
+    .delete()
+    .eq('note_id', noteId);
+
+  if (noteError) {
+    throw new Error(noteError.message);
   }
 }
 

@@ -34,6 +34,7 @@ export function useNoteForm(user) {
       description: '',
       subject_id: '',
       pdf: null,
+      author: user ? user.full_name : '',
     });
   };
 

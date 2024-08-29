@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { useOutsideClick } from '../hooks/useOutsideClick';
 
 function Modal({
   isOpen,
@@ -10,16 +9,12 @@ function Modal({
   isSubmitting,
   submitText = 'Submit',
 }) {
-  const modalRef = useOutsideClick(onClose);
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm z-50">
       {/* Attach the ref to the modal container */}
-      <div
-        ref={modalRef}
-        className="bg-white p-8 rounded-lg shadow-xl max-w-lg w-full"
-      >
+      <div className="bg-white p-8 rounded-lg shadow-xl max-w-lg w-full">
         <h2 className="text-3xl font-semibold text-teal-700 mb-6 text-center">
           {title}
         </h2>
