@@ -22,7 +22,7 @@ html {
 }
 
 body {
-  background-color: var(--color-background);
+  background-color: gray;
   transition:
     color 0.3s,
     background-color 0.3s;

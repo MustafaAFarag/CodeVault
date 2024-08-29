@@ -82,26 +82,26 @@ const NoteItem = memo(
       <div className="bg-white p-4 rounded-lg shadow-md border border-gray-200 transition-all duration-300 relative flex flex-col h-full">
         {/* Best Note Banner */}
         {isBestNote && (
-          <div className="absolute top-0 right-0 bg-teal-400 text-white font-bold px-2 py-1 rounded-bl-lg text-xl z-10">
+          <div className="absolute top-0 right-0 bg-teal-400 text-white font-bold px-2 py-1 rounded-bl-lg text-sm md:text-xl z-10">
             Best Note
           </div>
         )}
 
-        <h2 className="text-2xl font-semibold text-teal-600 mb-2">
+        <h2 className="text-lg md:text-2xl font-semibold text-teal-600 mb-2 sm:mt-3">
           {note.title}
         </h2>
 
         <div className="flex justify-between items-center mb-2">
-          <div className="flex items-center mb-2 text-xl">
+          <div className="flex items-center mb-2 text-md md:text-xl">
             {note.average_rating !== null && (
               <FaStar className="text-yellow-400 mr-1 -translate-y-[0.15rem]" />
             )}
-            <p className="text-md text-gray-600">
+            <p className="text-sm md:text-md text-gray-600">
               {note.average_rating !== null
                 ? note.average_rating
                 : 'No ratings yet'}
             </p>
-            <p className="text-md text-gray-500 ml-2">
+            <p className="text-sm md:text-md text-gray-500 ml-2">
               ({note.note_rating.length} ratings)
             </p>
           </div>
@@ -109,7 +109,7 @@ const NoteItem = memo(
           {canDelete && (
             <button
               onClick={() => handleDeleteNote(note.note_id)}
-              className=" z-20 p-2 bg-red-50 text-red-500 rounded-full shadow-md border border-red-300 transition-all duration-300 hover:bg-red-100"
+              className="z-20 p-2 bg-red-50 text-red-500 rounded-full shadow-md border border-red-300 transition-all duration-300 hover:bg-red-100"
               aria-label="Delete note"
             >
               <FaTrash />
@@ -117,16 +117,18 @@ const NoteItem = memo(
           )}
         </div>
 
-        <p className="text-gray-700 mb-4 text-xl">{note.description}</p>
+        <p className="text-gray-700 mb-4 text-sm md:text-xl">
+          {note.description}
+        </p>
 
-        <p className="text-xl text-gray-500 mb-4 mt-auto">
+        <p className="text-sm md:text-xl text-gray-500 mb-4 mt-auto">
           Author: {note.author || 'Unknown'}
         </p>
 
         <a
           href={note.pdf_url}
           target="_blank"
-          className="mt-auto block text-text bg-secondary hover:bg-accent rounded-lg py-3 px-5 font-semibold text-xl text-center transition-all duration-300 mb-5"
+          className="mt-auto block text-text bg-secondary hover:bg-accent rounded-lg py-2 px-3 md:py-3 md:px-5 font-semibold text-sm md:text-xl text-center transition-all duration-300 mb-5"
           rel="noreferrer"
         >
           View PDF
@@ -140,7 +142,7 @@ const NoteItem = memo(
 
         <button
           onClick={handleFavoriteToggle}
-          className={`absolute bottom-4 right-4 z-20 p-3 text-lg rounded-full shadow-md  transition-all duration-300  ${
+          className={`absolute bottom-4 right-4 z-20 p-2 md:p-3 text-lg rounded-full shadow-md transition-all duration-300 ${
             isFavorite
               ? 'bg-red-50 border-red-300 hover:bg-red-100'
               : 'bg-teal-50 border-gray-300 hover:bg-teal-100'

@@ -3,7 +3,7 @@
 function SubjectDropdown({ subjects, onChange, title, required }) {
   return (
     <div className="mb-4">
-      <label className="text-teal-600 text-2xl font-semibold mb-1 block">
+      <label className="text-teal-600 text-2xl font-semibold text-center lg:text-left mb-1 block">
         Select Subject:
         {required && <span className="text-red-500">*</span>}
       </label>

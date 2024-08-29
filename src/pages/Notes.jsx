@@ -137,8 +137,8 @@ function Notes() {
   if (subjectsError) return <ErrorMessage message={subjectsError.message} />;
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
-      <h1 className="text-7xl font-bold text-teal-600 mb-6 mt-10 text-center">
+    <div className="p-8 bg-gray-50 h-[780px]">
+      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-teal-600 mb-6 mt-10 text-center">
         Notes
       </h1>
 
@@ -154,17 +154,18 @@ function Notes() {
           value={searchQuery}
           onChange={handleSearchChange}
           placeholder="Search notes..."
-          className="border border-gray-300 rounded-lg p-3 w-full md:w-1/2 mb-4 text-text translate-y-5 text-xl -translate-x-2"
+          className="border border-gray-300 rounded-lg p-3 md:translate-y-5 w-full md:w-1/2 mb-4 text-xl"
         />
 
         <button
           onClick={handleUploadClick}
-          className="bg-secondary text-text px-5 py-3 rounded-lg hover:bg-accent transition-all shadow-lg font-semibold text-xl duration-300 translate-y-3"
+          className="bg-secondary text-text px-4 py-2 md:px-5 md:py-3 rounded-lg hover:bg-accent w-full lg:translate-y-3 lg:w-auto transition-all shadow-lg font-semibold text-lg lg:text-2xl"
         >
           Upload
         </button>
       </div>
 
+      {/* Content of Notes */}
       {error ? (
         <ErrorMessage message={error.message} />
       ) : selectedSubject && notesToDisplay.length > 0 ? (
@@ -180,7 +181,7 @@ function Notes() {
           handleDeleteNote={handleDeleteNote}
         />
       ) : (
-        <p className="text-center text-gray-600">
+        <p className="text-center text-gray-600 font-semibold md:text-xl">
           {selectedSubject
             ? 'No notes available for this subject.'
             : 'Please select a subject to view notes.'}

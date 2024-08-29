@@ -17,7 +17,7 @@ function Sidebar() {
   return (
     <aside
       ref={sidebarRef}
-      className="p-4 border-r border-solid border-border row-span-full flex flex-col gap-8 h-full w-80 bg-teal-100 text-gray-800"
+      className="p-4 border-r border-solid border-border row-span-full h-full flex flex-col gap-8 w-60 md:w-80 bg-teal-100  text-gray-800"
     >
       <Logo height={110} width={90} />
       <MainNav />

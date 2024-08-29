@@ -4,7 +4,7 @@ import Sidebar from './Sidebar';
 
 function AppLayout() {
   return (
-    <div className="grid grid-cols-[20rem,1fr] grid-rows-[auto,1fr] bg-gray-50">
+    <div className="grid grid-cols-[15rem,1fr] md:grid-cols-[20rem,1fr] grid-rows-[auto,1fr] bg-gray-50 h-screen">
       <Sidebar />
       <Header />
       <main className="col-start-2 row-start-2 pt-[4rem] px-[4.8rem] pb-[6.4rem] bg-gray-200">
