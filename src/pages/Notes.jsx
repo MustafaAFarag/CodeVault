@@ -137,12 +137,12 @@ function Notes() {
   if (subjectsError) return <ErrorMessage message={subjectsError.message} />;
 
   return (
-    <div className="p-8 bg-gray-50 h-[780px]">
-      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-teal-600 mb-6 mt-10 text-center">
+    <div className="h-full bg-gray-50 p-4 md:p-8">
+      <h1 className="mb-6 mt-10 text-center text-3xl font-bold text-teal-600 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
         Notes
       </h1>
 
-      <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+      <div className="mb-8 flex flex-col items-center justify-between md:flex-row">
         <SubjectDropdown
           subjects={subjectsData}
           onChange={handleSubjectChange}
@@ -154,12 +154,12 @@ function Notes() {
           value={searchQuery}
           onChange={handleSearchChange}
           placeholder="Search notes..."
-          className="border border-gray-300 rounded-lg p-3 md:translate-y-5 w-full md:w-1/2 mb-4 text-xl"
+          className="mb-4 w-full rounded-lg border border-gray-300 p-3 text-xl md:w-1/2"
         />
 
         <button
           onClick={handleUploadClick}
-          className="bg-secondary text-text px-4 py-2 md:px-5 md:py-3 rounded-lg hover:bg-accent w-full lg:translate-y-3 lg:w-auto transition-all shadow-lg font-semibold text-lg lg:text-2xl"
+          className="w-full rounded-lg bg-secondary px-4 py-2 text-lg font-semibold text-text shadow-lg transition-all hover:bg-accent md:w-auto md:px-5 md:py-3 lg:text-2xl"
         >
           Upload
         </button>
@@ -181,7 +181,7 @@ function Notes() {
           handleDeleteNote={handleDeleteNote}
         />
       ) : (
-        <p className="text-center text-gray-600 font-semibold md:text-xl">
+        <p className="text-center font-semibold text-gray-600 md:text-xl">
           {selectedSubject
             ? 'No notes available for this subject.'
             : 'Please select a subject to view notes.'}

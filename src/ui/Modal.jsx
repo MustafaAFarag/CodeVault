@@ -12,21 +12,21 @@ function Modal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm z-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
       {/* Attach the ref to the modal container */}
-      <div className="bg-white p-8 rounded-lg  shadow-xl max-w-lg w-full">
-        <h2 className="text-3xl font-semibold text-teal-700 mb-6 text-center">
+      <div className="w-full max-w-lg rounded-lg bg-white p-8 shadow-xl">
+        <h2 className="mb-6 text-center text-3xl font-semibold text-teal-700">
           {title}
         </h2>
         <form onSubmit={onSubmit}>
           {children}
-          <div className="flex justify-end mt-4">
+          <div className="mt-4 flex justify-end">
             <button
               type="button"
               onClick={onClose}
-              className={`bg-gray-300 text-gray-700 px-4 py-2 rounded-md transition-all mr-3 text-xl ${
+              className={`mr-3 rounded-md bg-gray-300 px-4 py-2 text-xl text-gray-700 transition-all ${
                 isSubmitting
-                  ? 'opacity-50 cursor-not-allowed'
+                  ? 'cursor-not-allowed opacity-50'
                   : 'hover:bg-gray-400'
               }`}
               disabled={isSubmitting}
@@ -35,9 +35,9 @@ function Modal({
             </button>
             <button
               type="submit"
-              className={`bg-teal-500 text-white text-xl px-4 py-2 rounded-md shadow-md transition-all ${
+              className={`rounded-md bg-teal-500 px-4 py-2 text-xl text-white shadow-md transition-all ${
                 isSubmitting
-                  ? 'opacity-50 cursor-not-allowed'
+                  ? 'cursor-not-allowed opacity-50'
                   : 'hover:bg-teal-600'
               }`}
               disabled={isSubmitting}

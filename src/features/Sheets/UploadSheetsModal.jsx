@@ -24,7 +24,7 @@ function UploadSheetsModal({
       <div className="mb-5">
         <label
           htmlFor="title"
-          className="block text-sm font-semibold text-teal-600 mb-2"
+          className="mb-2 block text-sm font-semibold text-teal-600"
         >
           Title
         </label>
@@ -34,7 +34,7 @@ function UploadSheetsModal({
           name="title"
           value={formValues.title}
           onChange={handleChange}
-          className="w-full px-4 py-2 rounded-md bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:outline-none transition duration-200"
+          className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 transition duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
           placeholder="Enter the title"
           disabled={isUploading}
         />
@@ -44,7 +44,7 @@ function UploadSheetsModal({
       <div className="mb-5">
         <label
           htmlFor="subject_id"
-          className="block text-sm font-semibold text-teal-600 mb-2"
+          className="mb-2 block text-sm font-semibold text-teal-600"
         >
           Subject
         </label>
@@ -53,7 +53,7 @@ function UploadSheetsModal({
           name="subject_id"
           value={formValues.subject_id}
           onChange={handleChange}
-          className="w-full px-4 py-2 rounded-md bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:outline-none transition duration-200"
+          className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 transition duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
           disabled={isUploading}
         >
           <option value="">Select a subject</option>
@@ -69,7 +69,7 @@ function UploadSheetsModal({
       <div className="mb-5">
         <label
           htmlFor="pdf"
-          className="block text-sm font-semibold text-teal-600 mb-2"
+          className="mb-2 block text-sm font-semibold text-teal-600"
         >
           Upload {title} PDF
         </label>
@@ -78,7 +78,7 @@ function UploadSheetsModal({
           id="pdf"
           name="url"
           onChange={handleChange}
-          className="w-full px-4 py-2 rounded-md bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-teal-500  focus:outline-none transition duration-200"
+          className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 transition duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
           disabled={isUploading}
         />
       </div>

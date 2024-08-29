@@ -26,24 +26,24 @@ export function UserListItem({
   };
 
   return (
-    <li className="flex items-center justify-between p-4 border-b border-gray-300">
+    <li className="flex items-center justify-between border-b border-gray-300 p-4">
       <div className="flex-1">
-        <div className="font-semibold text-lg">{user.full_name}</div>
+        <div className="text-lg font-semibold">{user.full_name}</div>
         <div className="text-gray-600">
           {user.role} - {user.email}
         </div>
-        <div className="text-gray-500 text-sm">
+        <div className="text-sm text-gray-500">
           Created: {new Date(user.created_at).toLocaleDateString()}
         </div>
         {user.suspended && (
-          <div className="text-red-500 text-sm">Suspended</div>
+          <div className="text-sm text-red-500">Suspended</div>
         )}
       </div>
       <div className="space-x-4">
         <select
           value={user.role}
           onChange={(e) => onRoleChange(user.id, e.target.value)}
-          className={`border border-gray-300 rounded px-2 py-1 bg-white ${!canChangeRole ? 'cursor-not-allowed opacity-50' : ''}`}
+          className={`rounded border border-gray-300 bg-white px-2 py-1 ${!canChangeRole ? 'cursor-not-allowed opacity-50' : ''}`}
           disabled={!canChangeRole}
         >
           {getAvailableRoles(currentUserRole).map((role) => (
@@ -54,7 +54,7 @@ export function UserListItem({
         </select>
         <button
           onClick={() => onSuspendToggle(user.id, !user.suspended)}
-          className={`border px-2 py-1 rounded ${user.suspended ? 'bg-red-500 text-white ' : 'bg-green-500 text-white'} ${!canSuspend ? 'cursor-not-allowed opacity-50' : ''}`}
+          className={`rounded border px-2 py-1 ${user.suspended ? 'bg-red-500 text-white' : 'bg-green-500 text-white'} ${!canSuspend ? 'cursor-not-allowed opacity-50' : ''}`}
           disabled={!canSuspend}
         >
           {user.suspended ? 'Unsuspend' : 'Suspend'}

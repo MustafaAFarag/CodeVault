@@ -5,7 +5,7 @@ function BackgroundImage({ src, alt }) {
       alt={alt}
       loading="lazy"
       decoding="async"
-      className="absolute  h-full w-full inset-0 object-top object-cover"
+      className="absolute inset-0 h-full w-full object-cover object-top"
       src={src}
     />
   );

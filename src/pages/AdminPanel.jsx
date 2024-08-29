@@ -44,15 +44,15 @@ function AdminPanel() {
     );
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-center">Admin Panel</h1>
-      <div className="bg-white shadow-md rounded-lg p-6 mb-4">
+    <div className="min-h-screen bg-gray-100 p-6">
+      <h1 className="mb-6 text-center text-3xl font-bold">Admin Panel</h1>
+      <div className="mb-4 rounded-lg bg-white p-6 shadow-md">
         <input
           type="text"
           placeholder="Search by full name..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border border-gray-300 rounded px-4 py-2 w-full mb-4"
+          className="mb-4 w-full rounded border border-gray-300 px-4 py-2"
         />
         <UserList
           users={users}

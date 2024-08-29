@@ -18,10 +18,10 @@ function Header() {
   return (
     <div
       ref={headerRef}
-      className="py-6 px-8 border-b border-gray-300 flex justify-between items-center text-text bg-teal-600"
+      className="flex items-center justify-between gap-12 border-b border-gray-300 bg-teal-600 px-6 py-4 text-text md:px-8 md:py-6"
     >
       <FavoriteHeader />
-      <header className="flex gap-3 items-center">
+      <header className="flex items-center gap-2 md:gap-3">
         <UserAvatar />
         <HeaderMenu />
       </header>

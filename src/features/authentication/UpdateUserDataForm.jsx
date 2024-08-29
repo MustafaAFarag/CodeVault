@@ -34,7 +34,7 @@ function UpdateUserDataForm() {
   return (
     <form onSubmit={handleSubmit}>
       {/* Full Name Row */}
-      <div className="grid items-center grid-cols-[24rem_1fr_1.2fr] gap-6 py-4 border-b border-gray-300">
+      <div className="grid grid-cols-[24rem_1fr_1.2fr] items-center gap-6 border-b border-gray-300 py-4">
         <label htmlFor="fullName" className="font-semibold">
           Full Name
         </label>
@@ -48,7 +48,7 @@ function UpdateUserDataForm() {
       </div>
 
       {/* Avatar Row */}
-      <div className="grid items-center grid-cols-[24rem_1fr_1.2fr] gap-6 py-4 border-b border-gray-300">
+      <div className="grid grid-cols-[24rem_1fr_1.2fr] items-center gap-6 border-b border-gray-300 py-4">
         <label htmlFor="avatar" className="font-semibold">
           Avatar
         </label>

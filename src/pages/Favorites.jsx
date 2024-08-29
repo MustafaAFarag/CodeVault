@@ -48,7 +48,7 @@ function Favorites() {
 
   if (isLoading || subjectsLoading) {
     return (
-      <div className="text-center text-gray-500 py-6">
+      <div className="py-6 text-center text-gray-500">
         <p>Loading...</p>
       </div>
     );
@@ -56,7 +56,7 @@ function Favorites() {
 
   if (error || subjectsError) {
     return (
-      <div className="text-center text-red-500 py-6">
+      <div className="py-6 text-center text-red-500">
         <p>Failed to load data</p>
       </div>
     );
@@ -70,28 +70,28 @@ function Favorites() {
   });
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="min-h-screen bg-gray-100 p-6">
       <SubjectDropdown
         subjects={subjectsData}
         onChange={handleSubjectChange}
         title="-- All Bookmarks --"
         className="mb-6"
       />
-      <div className="bg-white shadow-md rounded-lg p-6 mb-6 flex items-center">
-        <FaBookmark className="text-accent mr-2" size={24} />
+      <div className="mb-6 flex items-center rounded-lg bg-white p-6 shadow-md">
+        <FaBookmark className="mr-2 text-accent" size={24} />
         <h1 className="text-3xl font-bold text-gray-800">Your Favorites</h1>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filteredFavorites.length > 0 ? (
           filteredFavorites.map((favorite) => (
             <div
               key={favorite.id}
-              className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow relative"
+              className="relative rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg"
             >
-              <div className="absolute top-2 right-2">
+              <div className="absolute right-2 top-2">
                 <button
                   onClick={() => handleRemoveFavorite(favorite.id)}
-                  className="text-accent hover:text-secondary transition-colors"
+                  className="text-accent transition-colors hover:text-secondary"
                 >
                   <FaHeart size={24} />
                 </button>
@@ -99,22 +99,22 @@ function Favorites() {
               <div className="text-lg font-semibold text-gray-900">
                 {favorite.notes.title}
               </div>
-              <p className="text-gray-600 mt-2">{favorite.notes.description}</p>
-              <p className="text-gray-500 text-sm mt-1">
+              <p className="mt-2 text-gray-600">{favorite.notes.description}</p>
+              <p className="mt-1 text-sm text-gray-500">
                 Subject: {favorite.notes.subjects.name}
               </p>
               <a
                 href={favorite.notes.pdf_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block mt-4 text-accent hover:underline"
+                className="mt-4 block text-accent hover:underline"
               >
                 View PDF
               </a>
             </div>
           ))
         ) : (
-          <div className="text-center text-gray-500 mt-10">
+          <div className="mt-10 text-center text-gray-500">
             <p>You have no favorite notes yet.</p>
           </div>
         )}

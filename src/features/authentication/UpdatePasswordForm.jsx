@@ -14,7 +14,7 @@ function UpdatePasswordForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* Password Row */}
-      <div className="grid items-center grid-cols-[24rem_1fr_1.2fr] gap-6 py-4 border-b border-gray-300">
+      <div className="grid grid-cols-[24rem_1fr_1.2fr] items-center gap-6 border-b border-gray-300 py-4">
         <label htmlFor="password" className="font-semibold">
           New Password (min 8 chars)
         </label>
@@ -32,14 +32,14 @@ function UpdatePasswordForm() {
           })}
         />
         {errors.password && (
-          <span className="text-red-700 text-base">
+          <span className="text-base text-red-700">
             {errors.password.message}
           </span>
         )}
       </div>
 
       {/* Confirm Password Row */}
-      <div className="grid items-center grid-cols-[24rem_1fr_1.2fr] gap-6 py-4 border-b border-gray-300">
+      <div className="grid grid-cols-[24rem_1fr_1.2fr] items-center gap-6 border-b border-gray-300 py-4">
         <label htmlFor="passwordConfirm" className="font-semibold">
           Confirm Password
         </label>
@@ -55,7 +55,7 @@ function UpdatePasswordForm() {
           })}
         />
         {errors.passwordConfirm && (
-          <span className="text-red-700 text-base">
+          <span className="text-base text-red-700">
             {errors.passwordConfirm.message}
           </span>
         )}

@@ -25,14 +25,14 @@ function Logout() {
   return (
     <button
       ref={buttonRef}
-      className="flex items-center justify-center p-3 text-text rounded-lg hover:bg-teal-200 hover:text-text focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 transition-transform duration-300"
+      className="flex items-center justify-center rounded-lg p-3 text-text transition-transform duration-300 hover:bg-teal-200 hover:text-text focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
       disabled={isLoading}
       onClick={logout}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {!isLoading ? (
-        <HiArrowRightOnRectangle className="w-6 h-6" />
+        <HiArrowRightOnRectangle className="h-6 w-6" />
       ) : (
         <SpinnerMini />
       )}

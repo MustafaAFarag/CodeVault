@@ -15,12 +15,12 @@ function SignupForm() {
   return (
     <motion.form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-gray-50 p-6 rounded-lg shadow-md"
+      className="rounded-lg bg-gray-50 p-6 shadow-md"
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Full Name */}
         <motion.div
           className="flex flex-col gap-4"
@@ -35,7 +35,7 @@ function SignupForm() {
             Full Name
           </label>
           <input
-            className="border border-gray-300 rounded-md py-3 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 text-xl"
+            className="rounded-md border border-gray-300 px-4 py-3 text-xl text-gray-800 placeholder-gray-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             type="text"
             id="fullName"
             placeholder="Enter your full name"
@@ -43,7 +43,7 @@ function SignupForm() {
             disabled={isLoading}
           />
           {errors.fullName && (
-            <span className="text-red-500 text-sm">
+            <span className="text-sm text-red-500">
               {errors.fullName.message}
             </span>
           )}
@@ -63,7 +63,7 @@ function SignupForm() {
             Email Address
           </label>
           <input
-            className="border border-gray-300 rounded-md py-3 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 text-xl"
+            className="rounded-md border border-gray-300 px-4 py-3 text-xl text-gray-800 placeholder-gray-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             type="email"
             id="email"
             placeholder="Enter your email"
@@ -77,12 +77,12 @@ function SignupForm() {
             disabled={isLoading}
           />
           {errors.email && (
-            <span className="text-red-500 text-sm">{errors.email.message}</span>
+            <span className="text-sm text-red-500">{errors.email.message}</span>
           )}
         </motion.div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Password */}
         <motion.div
           className="flex flex-col gap-4"
@@ -97,7 +97,7 @@ function SignupForm() {
             Password (min 8 characters)
           </label>
           <input
-            className="border border-gray-300 rounded-md py-3 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 text-xl"
+            className="rounded-md border border-gray-300 px-4 py-3 text-xl text-gray-800 placeholder-gray-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             type="password"
             id="password"
             placeholder="Enter your password"
@@ -111,7 +111,7 @@ function SignupForm() {
             disabled={isLoading}
           />
           {errors.password && (
-            <span className="text-red-500 text-sm">
+            <span className="text-sm text-red-500">
               {errors.password.message}
             </span>
           )}
@@ -131,7 +131,7 @@ function SignupForm() {
             Confirm Password
           </label>
           <input
-            className="border border-gray-300 rounded-md py-3 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 text-xl"
+            className="rounded-md border border-gray-300 px-4 py-3 text-xl text-gray-800 placeholder-gray-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             type="password"
             id="passwordConfirm"
             placeholder="Confirm your password"
@@ -143,7 +143,7 @@ function SignupForm() {
             disabled={isLoading}
           />
           {errors.passwordConfirm && (
-            <span className="text-red-500 text-sm">
+            <span className="text-sm text-red-500">
               {errors.passwordConfirm.message}
             </span>
           )}
@@ -152,7 +152,7 @@ function SignupForm() {
 
       {/* Submit Button */}
       <motion.button
-        className="w-full py-3 mt-6 text-lg font-semibold bg-blue-600 text-white rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300"
+        className="mt-6 w-full rounded-md bg-blue-600 py-3 text-lg font-semibold text-white transition-all duration-300 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
         type="submit"
         disabled={isLoading}
         initial={{ opacity: 0, y: 10 }}

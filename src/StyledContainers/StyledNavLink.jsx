@@ -16,14 +16,9 @@ function StyledNavLink({ children, to }) {
   return (
     <NavLink
       to={to}
-      className={({ isActive }) => `
-        flex items-center gap-3 
-        ${isActive ? 'text-text bg-accent' : 'text-text'}
-       
-        transition-all duration-300 
-        hover:bg-accent
-        p-3 rounded-md
-      `}
+      className={({ isActive }) =>
+        `flex items-center gap-3 ${isActive ? 'bg-accent text-text' : 'text-text'} rounded-md p-3 transition-all duration-300 hover:bg-accent`
+      }
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

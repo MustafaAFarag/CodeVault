@@ -1,7 +1,7 @@
 function NoSheetsMessage() {
   return (
-    <p className="text-center text-white">
-      No sheets avilable for this subject
+    <p className="text-center text-lg text-text md:text-xl">
+      No sheets available for this subject.
     </p>
   );
 }

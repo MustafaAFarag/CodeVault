@@ -25,14 +25,13 @@ function CustomRating({ value, onChange, max = 5 }) {
               className="hidden"
             />
             <FaStar
-              className={`w-7 h-7 mr-1 transition-colors duration-200 
-                ${
-                  ratingValue <= (hover || value)
-                    ? hover
-                      ? 'text-yellow-300' // Hover color
-                      : 'text-yellow-400' // Submitted rating color
-                    : 'text-gray-300' // Unrated color
-                }`}
+              className={`mr-1 h-7 w-7 transition-colors duration-200 ${
+                ratingValue <= (hover || value)
+                  ? hover
+                    ? 'text-yellow-300' // Hover color
+                    : 'text-yellow-400' // Submitted rating color
+                  : 'text-gray-300' // Unrated color
+              }`}
               onMouseEnter={() => setHover(ratingValue)}
               onMouseLeave={() => setHover(null)}
             />

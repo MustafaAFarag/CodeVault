@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { animate } from 'motion';
 import LogoLink from './LogoLink';
 
-function Logo({ children, width, height }) {
+function Logo({ children, width, height, className }) {
   const logoRef = useRef(null);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ function Logo({ children, width, height }) {
   }, []);
 
   return (
-    <div className="flex items-center justify-center">
+    <div className={`flex items-center justify-center ${className}`}>
       <LogoLink to="/">
         <img
           alt="EduData Logo"
@@ -26,7 +26,7 @@ function Logo({ children, width, height }) {
           height={height}
           ref={logoRef}
         />
-        <span className="text-3xl md:text-4xl font-bold text-accent hover:text-accent transition-all duration-300 ml-3">
+        <span className="ml-3 text-3xl font-bold text-accent transition-all duration-300 hover:text-accent md:text-4xl">
           {children}
         </span>
       </LogoLink>

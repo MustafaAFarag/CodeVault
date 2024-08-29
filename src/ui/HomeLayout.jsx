@@ -3,7 +3,7 @@ import HomeHeader from './HomeHeader';
 
 function HomeLayout() {
   return (
-    <div className="flex flex-col min-h-screen relative">
+    <div className="relative flex min-h-screen flex-col">
       <HomeHeader />
       <Outlet />
     </div>

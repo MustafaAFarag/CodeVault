@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 const Top5Notes = ({ top5Notes }) => (
-  <div className="bg-white shadow-md rounded-lg p-6 max-h-[300px] overflow-y-auto">
-    <h2 className="text-2xl font-semibold mb-4">Top 5 Most Rated Notes</h2>
+  <div className="max-h-[300px] overflow-y-auto rounded-lg bg-white p-6 shadow-md">
+    <h2 className="mb-4 text-2xl font-semibold">Top 5 Most Rated Notes</h2>
     <ul>
       {top5Notes.map((note, index) => (
         <li
           key={note.id}
-          className="py-2 border-b border-gray-300 flex items-start"
+          className="flex items-start border-b border-gray-300 py-2"
         >
           <div className="mr-2 mt-1">
             {index === 0 && (
@@ -29,8 +29,8 @@ const Top5Notes = ({ top5Notes }) => (
             )}
           </div>
           <div className="flex-grow">
-            <div className="font-semibold text-xl">{note.title}</div>
-            <div className="text-text text-lg">
+            <div className="text-xl font-semibold">{note.title}</div>
+            <div className="text-lg text-text">
               Average Rating: {note.average_rating} -{' '}
               {note.users?.full_name || ''}
             </div>

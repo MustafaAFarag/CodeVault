@@ -1,32 +1,38 @@
 /* eslint-disable react/prop-types */
-function SheetList({ sheets, onDelete, user }) {
+import { Paginator } from 'primereact/paginator';
+import SheetItem from './SheetItem';
+
+function SheetList({
+  sheets,
+  onDelete,
+  user,
+  totalRecords,
+  first,
+  rows,
+  onPageChange,
+}) {
+  const bestSheetId = sheets.length > 0 ? sheets[0].id : null;
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {sheets.map((sheet) => (
-        <div
-          key={sheet.id}
-          className="bg-white p-4 rounded-lg shadow-md border border-border transition-all duration-300 hover:shadow-lg"
-        >
-          <a
-            href={sheet.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block transition-all duration-300 text-white bg-accent hover:bg-blue-600 rounded-lg py-2 text-center"
-          >
-            {sheet.title}
-          </a>
-          <div className="mt-4 flex justify-end">
-            {user?.role === 'admin' || user?.role === 'super_admin' ? (
-              <button
-                onClick={() => onDelete(sheet.id)}
-                className="bg-red-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-600 transition-all"
-              >
-                Delete
-              </button>
-            ) : null}
-          </div>
-        </div>
-      ))}
+    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md">
+      <div className="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {sheets.map((sheet) => (
+          <SheetItem
+            key={sheet.id}
+            sheet={sheet}
+            user={user}
+            isBestSheet={sheet.id === bestSheetId}
+            handleDeleteSheet={() => onDelete(sheet.id)}
+          />
+        ))}
+      </div>
+      <Paginator
+        first={first}
+        rows={rows}
+        totalRecords={totalRecords}
+        onPageChange={onPageChange}
+        className="mt-6"
+      />
     </div>
   );
 }

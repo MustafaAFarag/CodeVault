@@ -40,14 +40,14 @@ function About() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-text px-4 py-12 md:px-8">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
+    <div className="min-h-screen bg-background px-4 py-12 text-text md:px-8">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 md:grid-cols-2 md:gap-20">
         {/* First Row */}
         <div className="flex flex-col gap-10" ref={titleRef}>
-          <h1 className="text-5xl md:text-5xl font-bold text-primary">
+          <h1 className="text-5xl font-bold text-primary md:text-5xl">
             Welcome to EduData
           </h1>
-          <p className="leading-relaxed text-lg md:text-2xl" ref={textRef}>
+          <p className="text-lg leading-relaxed md:text-2xl" ref={textRef}>
             Edudata is a community-driven platform designed to help students
             excel in their studies by providing easy access to high-quality
             notes and lecture materials. Our mission is to create a
@@ -76,7 +76,7 @@ function About() {
 
         {/* Second Row */}
         <div
-          className="order-last md:order-none flex items-center justify-center md:justify-start"
+          className="order-last flex items-center justify-center md:order-none md:justify-start"
           ref={img2Ref}
         >
           <img
@@ -89,10 +89,10 @@ function About() {
           />
         </div>
         <div className="flex flex-col items-start gap-10">
-          <h1 className="text-3xl md:text-5xl font-bold text-primary">
+          <h1 className="text-3xl font-bold text-primary md:text-5xl">
             Why EduData
           </h1>
-          <p className="leading-relaxed text-lg md:text-2xl">
+          <p className="text-lg leading-relaxed md:text-2xl">
             At Edudata, we understand the importance of having well-organized
             and easily accessible study materials. Our platform allows you to
             find notes tailored to your specific courses, helping you focus on
@@ -107,7 +107,7 @@ function About() {
           <Link to="/dashboard">
             <Button
               label="Explore Materials"
-              className="px-6 py-3 md:px-8 md:py-4 bg-secondary rounded-full font-semibold text-lg md:text-3xl text-text hover:bg-accent transition-all duration-300 shadow-lg"
+              className="rounded-full bg-secondary px-6 py-3 text-lg font-semibold text-text shadow-lg transition-all duration-300 hover:bg-accent md:px-8 md:py-4 md:text-3xl"
             />
           </Link>
         </div>

@@ -76,7 +76,7 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
         <input
           type="text"
           id="title"
-          className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-3 text-text text-xl font-medium focus:ring-teal-500 focus:border-teal-500 transition duration-200"
+          className="mt-1 block w-full rounded-lg border border-gray-300 p-3 text-xl font-medium text-text shadow-sm transition duration-200 focus:border-teal-500 focus:ring-teal-500"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
@@ -93,14 +93,14 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
       <div className="mb-4">
         <label
           htmlFor="deadline"
-          className="block font-semibold text-2xl text-teal-600"
+          className="block text-2xl font-semibold text-teal-600"
         >
           Deadline
         </label>
         <input
           type="date"
           id="deadline"
-          className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-3 text-text text-xl font-medium focus:ring-teal-500 focus:border-teal-500 transition duration-200"
+          className="mt-1 block w-full rounded-lg border border-gray-300 p-3 text-xl font-medium text-text shadow-sm transition duration-200 focus:border-teal-500 focus:ring-teal-500"
           value={deadline}
           onChange={(e) => setDeadline(e.target.value)}
           required

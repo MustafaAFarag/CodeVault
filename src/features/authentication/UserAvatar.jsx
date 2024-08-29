@@ -15,16 +15,16 @@ function UserAvatar() {
 
   return (
     <div
-      className="flex gap-3 items-center font-semibold"
+      className="flex items-center gap-3 font-semibold"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <img
-        className="block w-12 h-12 aspect-square object-cover object-center rounded-full outline-2 outline-teal-500"
+        className="hidden aspect-square h-12 w-12 rounded-full object-cover object-center outline-2 outline-teal-500 sm:block"
         src={avatar || 'default-user.jpg'}
         alt={`Avatar of ${full_name}`}
       />
-      <span className="text-text text-xl">{full_name}</span>
+      <span className="text-xl text-text">{full_name}</span>
     </div>
   );
 }

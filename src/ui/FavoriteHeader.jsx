@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { FaBookmark } from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa';
 import { animate } from 'motion';
 
 function FavoriteHeader() {
@@ -18,10 +18,10 @@ function FavoriteHeader() {
       onClick={() => navigate('/favorites')}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="text-text hover:bg-teal-200 p-3 rounded-lg focus:outline-none transition-all duration-300"
+      className="rounded-lg p-3 text-text transition-all duration-300 hover:bg-teal-200 focus:outline-none"
       aria-label="Favorites"
     >
-      <FaBookmark className="h-6 w-6" />
+      <FaHeart className="h-6 w-6 text-red-500" />
     </button>
   );
 }

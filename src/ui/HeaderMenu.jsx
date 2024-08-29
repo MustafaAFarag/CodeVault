@@ -15,13 +15,13 @@ function HeaderMenu() {
   };
 
   return (
-    <ul className="flex gap-3 items-center">
+    <ul className="flex items-center gap-3">
       <li>
         <button
           onClick={() => navigate('/account')}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className="flex items-center justify-center p-3 text-gray-800 rounded-lg hover:bg-teal-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 transition-all duration-300"
+          className="flex items-center justify-center rounded-lg p-3 text-gray-800 transition-all duration-300 hover:bg-teal-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
         >
           <HiOutlineUser className="h-6 w-6" />
         </button>

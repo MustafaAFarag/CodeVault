@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
-import Spinner from '../../ui/Spinner';
+import { useState, useMemo } from 'react';
+import { toast } from 'react-hot-toast';
 import SubjectDropdown from './SubjectDropdown';
 import SheetList from './SheetList';
-import NoSheetsMessage from './NoSheetsMessage';
 import { useSheetsForm } from './useSheetsForm';
 import { useUser } from '../authentication/useUser';
 import UploadSheetsModal from './UploadSheetsModal';
-import { toast } from 'react-hot-toast';
+import NotesLoader from '../../ui/NotesLoader';
+import ErrorMessage from '../../ui/ErrorMessage';
 
 function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
   const { user } = useUser();
@@ -20,9 +20,16 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
     isModalOpen,
     handleUploadClick,
     handleCloseModal,
+    clearFormValues,
   } = useSheetsForm();
 
   const [isUploading, setIsUploading] = useState(false);
+  const [selectedSubject, setSelectedSubject] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [pagination, setPagination] = useState({
+    first: 0,
+    rows: 6,
+  });
 
   const { data, error, isLoading } = useQuery({
     queryKey: [queryKey],
@@ -38,6 +45,8 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
       queryClient.invalidateQueries([queryKey]);
       handleCloseModal();
       setIsUploading(false);
+      toast.success('Sheet uploaded successfully!');
+      clearFormValues();
     },
     onError: (error) => {
       console.error('Upload failed:', error.message);
@@ -62,63 +71,103 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
     deleteMutation.mutate(sheetId);
   }
 
-  const [selectedSubject, setSelectedSubject] = useState(null);
-
-  if (isLoading) return <Spinner />;
-
-  if (error)
-    return <p className="text-center text-red-500">Error: {error.message}</p>;
-
-  const { subjectsData, sheetsBySubject } = data;
-
   function handleSubjectChange(event) {
     const subjectId = event.target.value;
     setSelectedSubject(subjectId);
+    setPagination({ first: 0, rows: 6 });
   }
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+    setPagination({ first: 0, rows: 6 });
+  };
+
+  const handlePageChange = (event) => {
+    setPagination({
+      first: event.first,
+      rows: event.rows,
+    });
+  };
+
+  const filteredSheets = useMemo(() => {
+    if (!data || !data.sheetsBySubject || !selectedSubject) return [];
+
+    return (
+      data.sheetsBySubject[selectedSubject]?.filter((sheet) =>
+        sheet.title.toLowerCase().includes(searchQuery.toLowerCase()),
+      ) || []
+    );
+  }, [data, selectedSubject, searchQuery]);
+
+  const sortedSheets = useMemo(() => {
+    return [...filteredSheets].sort(
+      (a, b) => b.average_rating - a.average_rating,
+    );
+  }, [filteredSheets]);
+
+  const sheetsToDisplay = sortedSheets.slice(
+    pagination.first,
+    pagination.first + pagination.rows,
+  );
+
+  if (isLoading) return <NotesLoader />;
+  if (error) return <ErrorMessage message={error.message} />;
+
+  const { subjectsData } = data;
+
   return (
-    <div className="p-6 bg-background min-h-screen">
-      <h1 className="text-4xl font-bold text-primary mb-6 text-center">
+    <div className="h-[780px] bg-gray-50 p-8">
+      <h1 className="mb-6 mt-10 text-center text-4xl font-bold text-teal-600 sm:text-5xl md:text-6xl lg:text-7xl">
         {title}
       </h1>
-      <div className="flex items-center justify-between">
+
+      <div className="mb-8 flex flex-col items-center justify-between md:flex-row">
         <SubjectDropdown
           subjects={subjectsData}
           onChange={handleSubjectChange}
           title="-- Select a Subject --"
         />
-        {user?.role === 'admin' || user?.role === 'super_admin' ? (
-          <div className="flex justify-end mt-4">
-            <button
-              onClick={handleUploadClick}
-              className="bg-accent text-white px-4 py-2 rounded-md shadow-md hover:bg-opacity-80 transition-all"
-            >
-              Upload
-            </button>
-          </div>
-        ) : null}
+
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          placeholder="Search sheets..."
+          className="mb-4 w-full rounded-lg border border-gray-300 p-3 text-xl md:w-1/2 md:translate-y-5"
+        />
+
+        <button
+          onClick={handleUploadClick}
+          className="w-full rounded-lg bg-secondary px-4 py-2 text-lg font-semibold text-text shadow-lg transition-all hover:bg-accent md:px-5 md:py-3 lg:w-auto lg:translate-y-3 lg:text-2xl"
+        >
+          Upload
+        </button>
       </div>
-      {!selectedSubject && (
-        <p className="text-center text-text">
-          Please select a subject to view {title.toLowerCase()}
+
+      {selectedSubject && sheetsToDisplay.length > 0 ? (
+        <SheetList
+          sheets={sheetsToDisplay}
+          onDelete={handleDelete}
+          user={user}
+          totalRecords={sortedSheets.length}
+          first={pagination.first}
+          rows={pagination.rows}
+          onPageChange={handlePageChange}
+        />
+      ) : (
+        <p className="text-center font-semibold text-gray-600 md:text-xl">
+          {selectedSubject
+            ? 'No sheets available for this subject.'
+            : 'Please select a subject to view sheets.'}
         </p>
-      )}
-      {selectedSubject &&
-        sheetsBySubject[selectedSubject] &&
-        sheetsBySubject[selectedSubject].length > 0 && (
-          <SheetList
-            sheets={sheetsBySubject[selectedSubject]}
-            onDelete={handleDelete}
-            user={user}
-          />
-        )}
-      {selectedSubject && !sheetsBySubject[selectedSubject] && (
-        <NoSheetsMessage />
       )}
 
       <UploadSheetsModal
         isOpen={isModalOpen}
-        onClose={handleCloseModal}
+        onClose={() => {
+          handleCloseModal();
+          clearFormValues();
+        }}
         onSubmit={(e) => handleSubmit(e, uploadMutation)}
         formValues={formValues}
         subjects={subjectsData}

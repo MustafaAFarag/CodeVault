@@ -7,7 +7,7 @@ function LinkButton({ to, label }) {
     <Link to={to}>
       <Button
         label={label}
-        className="px-6 py-3 md:px-8 md:py-4 bg-secondary rounded-full font-semibold text-lg md:text-3xl text-text hover:bg-accent transition-all duration-300 shadow-lg"
+        className="w-full rounded-full bg-secondary px-4 py-2 text-base font-semibold text-text shadow-lg transition-all duration-300 hover:bg-accent md:w-auto md:px-6 md:py-3 md:text-2xl lg:px-8 lg:py-4 lg:text-3xl"
       />
     </Link>
   );

@@ -2,10 +2,10 @@
 function SubjectDropdown({ subjects, onChange }) {
   return (
     <div className="mb-6">
-      <label className="text-white font-semibold mr-4"> Select Subject:</label>
+      <label className="mr-4 font-semibold text-white"> Select Subject:</label>
       <select
         onChange={onChange}
-        className="bg-gray-800 text-white px-4 py-2 rounded-md"
+        className="rounded-md bg-gray-800 px-4 py-2 text-white"
       >
         <option value="">-- Select a Subject --</option>
         {subjects.map((subject) => (

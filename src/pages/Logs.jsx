@@ -39,19 +39,19 @@ function Logs() {
   const paginatedLogs = logs.slice(page * rows, (page + 1) * rows);
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-center">Activity Logs</h1>
-      <div className="bg-white shadow-md rounded-lg p-6">
+    <div className="min-h-screen bg-gray-100 p-6">
+      <h1 className="mb-6 text-center text-3xl font-bold">Activity Logs</h1>
+      <div className="rounded-lg bg-white p-6 shadow-md">
         {paginatedLogs.length > 0 ? (
           <ul className="space-y-4">
             {paginatedLogs.map((log) => (
               <li
                 key={log.id}
-                className="p-4 border-b border-gray-300 flex flex-col"
+                className="flex flex-col border-b border-gray-300 p-4"
               >
-                <div className="font-semibold text-lg">{log.action_type}</div>
+                <div className="text-lg font-semibold">{log.action_type}</div>
                 <div className="text-gray-600">{log.description}</div>
-                <div className="text-gray-500 text-sm">
+                <div className="text-sm text-gray-500">
                   {new Date(log.created_at).toLocaleString()} - Done By:{' '}
                   {log.users.full_name}
                 </div>
@@ -59,7 +59,7 @@ function Logs() {
             ))}
           </ul>
         ) : (
-          <div className="text-gray-500 text-center">No logs found</div>
+          <div className="text-center text-gray-500">No logs found</div>
         )}
         <Paginator
           first={page * rows}

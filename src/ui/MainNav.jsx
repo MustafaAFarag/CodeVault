@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import StyledNavLink from '../StyledContainers/StyledNavLink';
 import {
   HiOutlineHome,
@@ -9,52 +10,53 @@ import {
 } from 'react-icons/hi';
 import { useUser } from '../features/authentication/useUser';
 
-function MainNav() {
+function MainNav({ toggleSidebar }) {
   const { user } = useUser();
+
+  const handleLinkClick = () => {
+    if (window.innerWidth < 768) {
+      toggleSidebar();
+    }
+  };
 
   return (
     <nav>
-      <ul className="flex flex-col gap-10 text-xl font-semibold pl-5">
+      <ul className="flex flex-col gap-6 pl-2 text-lg font-semibold md:gap-10 md:pl-5 md:text-xl">
         <li>
-          <StyledNavLink to="/dashboard">
+          <StyledNavLink to="/dashboard" onClick={handleLinkClick}>
             <HiOutlineHome className="text-teal-600" />
             Home
           </StyledNavLink>
         </li>
-
         <li>
-          <StyledNavLink to="/notes">
+          <StyledNavLink to="/notes" onClick={handleLinkClick}>
             <HiOutlineDocumentText className="text-teal-600" />
             Notes
           </StyledNavLink>
         </li>
-
         <li>
-          <StyledNavLink to="/lectures">
+          <StyledNavLink to="/lectures" onClick={handleLinkClick}>
             <HiOutlinePlay className="text-teal-600" />
             Lectures
           </StyledNavLink>
         </li>
-
         <li>
-          <StyledNavLink to="/sections">
+          <StyledNavLink to="/sections" onClick={handleLinkClick}>
             <HiOutlineCollection className="text-teal-600" />
             Sections
           </StyledNavLink>
         </li>
-
         {user.role === 'super_admin' || user.role === 'admin' ? (
           <li>
-            <StyledNavLink to="/admin">
+            <StyledNavLink to="/admin" onClick={handleLinkClick}>
               <HiOutlineCog className="text-teal-600" />
               Admin Panel
             </StyledNavLink>
           </li>
         ) : null}
-
         {user.role === 'super_admin' ? (
           <li>
-            <StyledNavLink to="/logs">
+            <StyledNavLink to="/logs" onClick={handleLinkClick}>
               <HiOutlineClipboard className="text-teal-600" />
               Logs
             </StyledNavLink>
