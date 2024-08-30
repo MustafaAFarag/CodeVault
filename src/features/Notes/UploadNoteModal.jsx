@@ -74,7 +74,7 @@ function UploadNoteModal({
           name="subject_id"
           value={formValues.subject_id}
           onChange={handleChange}
-          className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 transition duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
+          className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 text-xl transition duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
           disabled={isUploading}
           required
         >
@@ -121,7 +121,7 @@ function UploadNoteModal({
           id="pdf"
           name="pdf"
           onChange={handleChange}
-          className="block w-full rounded-lg border border-gray-300 p-3 text-gray-700 shadow-sm transition duration-200 focus:border-teal-500 focus:ring-teal-500"
+          className="block w-full rounded-lg border border-gray-300 p-3 text-xl text-gray-700 shadow-sm transition duration-200 focus:border-teal-500 focus:ring-teal-500"
           disabled={isUploading}
           required
         />

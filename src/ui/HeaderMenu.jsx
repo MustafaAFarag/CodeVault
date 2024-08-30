@@ -15,7 +15,7 @@ function HeaderMenu() {
   };
 
   return (
-    <ul className="flex items-center">
+    <ul className="flex items-center md:gap-2">
       <li>
         <button
           onClick={() => navigate('/account')}

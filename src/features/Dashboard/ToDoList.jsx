@@ -7,7 +7,7 @@ const ToDoList = ({
   createMutation,
   user,
 }) => (
-  <div className="row-start-3 overflow-y-auto rounded-lg bg-white p-6 shadow-md md:col-span-2 xl:col-span-2 xl:col-start-2 xl:row-start-1">
+  <div className="] row-start-3 overflow-y-auto rounded-lg bg-white p-6 shadow-md md:col-span-2 xl:col-span-2 xl:col-start-2 xl:row-start-1">
     <div className="mb-4 items-center justify-between lg:flex">
       <h2 className="text-3xl font-semibold">To-Do List</h2>
       {(user.role === 'admin' || user.role === 'super_admin') && (
@@ -25,7 +25,7 @@ const ToDoList = ({
         No assignments are due. Enjoy your day!
       </div>
     ) : (
-      <ul className="max-h-[300px] space-y-4">
+      <ul className="max-h-[280px] space-y-4">
         {toDos.map((todo) => (
           <li
             key={todo.id}

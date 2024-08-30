@@ -87,7 +87,7 @@ const NoteItem = memo(
           </div>
         )}
 
-        <h2 className="mb-2 text-lg font-semibold text-teal-600 sm:mt-3 md:text-2xl">
+        <h2 className="mb-2 mt-3 text-lg font-semibold text-teal-600 sm:mt-3 md:text-2xl">
           {note.title}
         </h2>
 
@@ -101,7 +101,7 @@ const NoteItem = memo(
                 ? note.average_rating
                 : 'No ratings yet'}
             </p>
-            <p className="md:text-md ml-2 text-sm text-gray-500">
+            <p className="md:text-md ml-2 text-xs text-gray-500">
               ({note.note_rating.length} ratings)
             </p>
           </div>
@@ -109,7 +109,7 @@ const NoteItem = memo(
           {canDelete && (
             <button
               onClick={() => handleDeleteNote(note.note_id)}
-              className="z-20 rounded-full border border-red-300 bg-red-50 p-2 text-red-500 shadow-md transition-all duration-300 hover:bg-red-100"
+              className="z-20 -translate-y-2 rounded-full border border-red-300 bg-red-50 p-2 text-red-500 shadow-md transition-all duration-300 hover:bg-red-100"
               aria-label="Delete note"
             >
               <FaTrash />
@@ -142,7 +142,7 @@ const NoteItem = memo(
 
         <button
           onClick={handleFavoriteToggle}
-          className={`absolute bottom-4 right-4 z-20 rounded-full p-2 text-lg shadow-md transition-all duration-300 md:p-3 ${
+          className={`absolute bottom-2 right-4 z-20 rounded-full p-2 text-lg shadow-md transition-all duration-300 md:p-3 ${
             isFavorite
               ? 'border-red-300 bg-red-50 hover:bg-red-100'
               : 'border-gray-300 bg-teal-50 hover:bg-teal-100'

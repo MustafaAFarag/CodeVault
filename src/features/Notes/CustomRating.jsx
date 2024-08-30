@@ -25,7 +25,7 @@ function CustomRating({ value, onChange, max = 5 }) {
               className="hidden"
             />
             <FaStar
-              className={`mr-1 h-7 w-7 transition-colors duration-200 ${
+              className={`mr-1 h-5 w-5 transition-colors duration-200 md:h-7 md:w-7 ${
                 ratingValue <= (hover || value)
                   ? hover
                     ? 'text-yellow-300' // Hover color

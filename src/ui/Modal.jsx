@@ -12,7 +12,7 @@ function Modal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex justify-center bg-black bg-opacity-60 backdrop-blur-sm lg:items-center">
       {/* Attach the ref to the modal container */}
       <div className="w-full max-w-lg rounded-lg bg-white p-8 shadow-xl">
         <h2 className="mb-6 text-center text-3xl font-semibold text-teal-700">
