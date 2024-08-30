@@ -6,7 +6,10 @@
 
 
 -- responsive
-
+Admin panel 
+logs
+favorites
+user settings
 
 -- Later --
 

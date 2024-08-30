@@ -5,8 +5,8 @@ import { fetchLogs } from '../services/apiLogs';
 import { Paginator } from 'primereact/paginator';
 
 function Logs() {
-  const [page, setPage] = useState(0); // Current page state
-  const [rows, setRows] = useState(7); // Number of rows per page
+  const [page, setPage] = useState(0);
+  const [rows, setRows] = useState(7);
 
   const {
     data: logs = [],

@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
-
+import { useState } from 'react';
+import { Paginator } from 'primereact/paginator';
 import { UserListItem } from './UserListItem';
 
 export function UserList({
@@ -9,6 +10,10 @@ export function UserList({
   onRoleChange,
   onSuspendToggle,
 }) {
+  // State to manage pagination
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(5);
+
   const filteredUsers =
     search.length >= 3
       ? users
@@ -33,21 +38,42 @@ export function UserList({
     return roleOrder[a.role] - roleOrder[b.role];
   });
 
+  // Get the current page of users
+  const currentUsers = sortedUsers.slice(first, first + rows);
+
+  const onPageChange = (event) => {
+    setFirst(event.first);
+    setRows(event.rows);
+  };
+
   return (
-    <ul className="space-y-4">
-      {sortedUsers.length > 0
-        ? sortedUsers.map((user) => (
-            <UserListItem
-              key={user.id}
-              user={user}
-              currentUserRole={currentUserRole}
-              onRoleChange={onRoleChange}
-              onSuspendToggle={onSuspendToggle}
-            />
-          ))
-        : search.length >= 3 && (
-            <li className="text-gray-500">No users found</li>
-          )}
-    </ul>
+    <div className="rounded-lg bg-white p-6 shadow-md">
+      <ul className="space-y-6">
+        {currentUsers.length > 0
+          ? currentUsers.map((user) => (
+              <UserListItem
+                key={user.id}
+                user={user}
+                currentUserRole={currentUserRole}
+                onRoleChange={onRoleChange}
+                onSuspendToggle={onSuspendToggle}
+              />
+            ))
+          : search.length >= 3 && (
+              <li className="text-center text-xl font-semibold text-gray-500">
+                No users found
+              </li>
+            )}
+      </ul>
+
+      {/* Paginator Component */}
+      <Paginator
+        first={first}
+        rows={rows}
+        totalRecords={sortedUsers.length}
+        onPageChange={onPageChange}
+        className="mt-6"
+      />
+    </div>
   );
 }

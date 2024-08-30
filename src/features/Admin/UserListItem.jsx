@@ -26,13 +26,15 @@ export function UserListItem({
   };
 
   return (
-    <li className="flex items-center justify-between border-b border-gray-300 p-4">
+    <li className="flex items-center justify-between gap-2 border-b border-gray-300 p-4">
       <div className="flex-1">
-        <div className="text-lg font-semibold">{user.full_name}</div>
-        <div className="text-gray-600">
+        <div className="text-lg font-semibold lg:text-2xl">
+          {user.full_name}
+        </div>
+        <div className="text-gray-600 lg:text-xl">
           {user.role} - {user.email}
         </div>
-        <div className="text-sm text-gray-500">
+        <div className="text-sm text-gray-500 lg:text-lg">
           Created: {new Date(user.created_at).toLocaleDateString()}
         </div>
         {user.suspended && (
