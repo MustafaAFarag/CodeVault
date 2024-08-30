@@ -6,9 +6,12 @@
 
 
 -- responsive
-Admin panel 
-logs
+
 favorites
+upload modals responsive
+admin panel responsive 
+change paginators like logs to all others
+change trash color
 user settings
 
 -- Later --

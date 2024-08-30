@@ -12,10 +12,9 @@ function Modal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-center bg-black bg-opacity-60 backdrop-blur-sm lg:items-center">
-      {/* Attach the ref to the modal container */}
-      <div className="w-full max-w-lg rounded-lg bg-white p-8 shadow-xl">
-        <h2 className="mb-6 text-center text-3xl font-semibold text-teal-700">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
+      <div className="max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-lg bg-white p-6 shadow-xl sm:max-w-md sm:p-4 md:p-6 lg:max-w-lg lg:p-8">
+        <h2 className="mb-4 text-center text-2xl font-semibold text-teal-700 sm:text-xl lg:text-3xl">
           {title}
         </h2>
         <form onSubmit={onSubmit}>

@@ -39,33 +39,47 @@ function Logs() {
   const paginatedLogs = logs.slice(page * rows, (page + 1) * rows);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="mb-6 text-center text-3xl font-bold">Activity Logs</h1>
+    <div className="bg-gray-50 p-8 lg:h-[660px]">
+      <h1 className="mb-6 mt-10 text-center text-4xl font-bold text-teal-600 sm:text-5xl md:text-6xl lg:text-7xl">
+        Activity Logs
+      </h1>
+
       <div className="rounded-lg bg-white p-6 shadow-md">
         {paginatedLogs.length > 0 ? (
-          <ul className="space-y-4">
+          <ul className="space-y-6">
             {paginatedLogs.map((log) => (
               <li
                 key={log.id}
-                className="flex flex-col border-b border-gray-300 p-4"
+                className="flex flex-col border-b border-gray-300 pb-4"
               >
-                <div className="text-lg font-semibold">{log.action_type}</div>
-                <div className="text-gray-600">{log.description}</div>
-                <div className="text-sm text-gray-500">
-                  {new Date(log.created_at).toLocaleString()} - Done By:{' '}
+                <p className="text-lg font-semibold lg:text-2xl">
+                  {log.action_type}
+                </p>
+                <p className="text-gray-500 lg:text-lg">
+                  {new Date(log.created_at).toLocaleString()} - By:{' '}
                   {log.users.full_name}
-                </div>
+                </p>
               </li>
             ))}
           </ul>
         ) : (
-          <div className="text-center text-gray-500">No logs found</div>
+          <div className="text-center text-xl font-semibold text-gray-500">
+            No logs found
+          </div>
         )}
+
         <Paginator
           first={page * rows}
           rows={rows}
           totalRecords={totalLogs}
           onPageChange={onPageChange}
+          className="mt-6 p-2 text-xl"
+          template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+          leftContent={
+            <span className="font-bold">
+              {page + 1} of {Math.ceil(totalLogs / rows)}
+            </span>
+          }
         />
       </div>
     </div>

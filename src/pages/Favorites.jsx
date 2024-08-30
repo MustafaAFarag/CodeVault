@@ -1,16 +1,23 @@
-import { fetchFavorites, removeFavorite } from '../services/apiFavoritesFav';
-import { FaBookmark, FaHeart } from 'react-icons/fa';
+import { useState, useMemo } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { useUser } from '../features/authentication/useUser';
 import SubjectDropdown from '../features/Sheets/SubjectDropdown';
 import { fetchSubjects } from '../services/apiNotes';
-import { useSelectedSubject } from '../features/Notes/useSelectedSubject';
+import { fetchFavorites, removeFavorite } from '../services/apiFavoritesFav';
+import { FaHeart } from 'react-icons/fa';
+import { Paginator } from 'primereact/paginator';
 import { toast } from 'react-hot-toast';
+import { useSelectedSubject } from '../features/Notes/useSelectedSubject';
 
 function Favorites() {
   const { user } = useUser();
   const { selectedSubject, handleSubjectChange } = useSelectedSubject();
   const queryClient = useQueryClient();
+
+  const [pagination, setPagination] = useState({
+    first: 0,
+    rows: 6,
+  });
 
   const removeFavoriteMutation = useMutation({
     mutationFn: removeFavorite,
@@ -46,68 +53,74 @@ function Favorites() {
     enabled: !!user?.id,
   });
 
-  if (isLoading || subjectsLoading) {
-    return (
-      <div className="py-6 text-center text-gray-500">
-        <p>Loading...</p>
-      </div>
-    );
-  }
+  const filteredFavorites = useMemo(() => {
+    return favorites.filter((favorite) => {
+      return (
+        !selectedSubject ||
+        favorite.notes.subjects.id === parseInt(selectedSubject, 10)
+      );
+    });
+  }, [favorites, selectedSubject]);
 
-  if (error || subjectsError) {
-    return (
-      <div className="py-6 text-center text-red-500">
-        <p>Failed to load data</p>
-      </div>
-    );
-  }
+  const totalRecords = filteredFavorites.length;
+  const favoritesToDisplay = filteredFavorites.slice(
+    pagination.first,
+    pagination.first + pagination.rows,
+  );
 
-  const filteredFavorites = favorites.filter((favorite) => {
-    return (
-      !selectedSubject ||
-      favorite.notes.subjects.id === parseInt(selectedSubject, 10)
-    );
-  });
+  const handlePageChange = (event) => {
+    setPagination({
+      first: event.first,
+      rows: event.rows,
+    });
+  };
+
+  if (isLoading || subjectsLoading) return <p>Loading...</p>;
+  if (error || subjectsError) return <p>Error...</p>;
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <SubjectDropdown
-        subjects={subjectsData}
-        onChange={handleSubjectChange}
-        title="-- All Bookmarks --"
-        className="mb-6"
-      />
-      <div className="mb-6 flex items-center rounded-lg bg-white p-6 shadow-md">
-        <FaBookmark className="mr-2 text-accent" size={24} />
-        <h1 className="text-3xl font-bold text-gray-800">Your Favorites</h1>
+    <div className="h-full bg-gray-50 p-4 md:p-8 lg:h-[740px]">
+      <h1 className="mb-6 mt-10 text-center text-3xl font-bold text-teal-600 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
+        Your Favorites
+      </h1>
+
+      <div className="mb-8 flex flex-col items-center justify-between md:flex-row">
+        <SubjectDropdown
+          subjects={subjectsData}
+          onChange={handleSubjectChange}
+          title="All Bookmarks"
+        />
       </div>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {filteredFavorites.length > 0 ? (
-          filteredFavorites.map((favorite) => (
+
+      <div className="grid grid-cols-1 gap-6 bg-white p-6 md:grid-cols-2 lg:grid-cols-3">
+        {favoritesToDisplay.length > 0 ? (
+          favoritesToDisplay.map((favorite) => (
             <div
               key={favorite.id}
-              className="relative rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg"
+              className="relative flex flex-col rounded-lg border border-gray-200 bg-white p-4 shadow-md transition-shadow hover:shadow-lg"
             >
               <div className="absolute right-2 top-2">
                 <button
                   onClick={() => handleRemoveFavorite(favorite.id)}
-                  className="text-accent transition-colors hover:text-secondary"
+                  className="text-red-500 hover:text-red-700"
                 >
-                  <FaHeart size={24} />
+                  <FaHeart size={14} />
                 </button>
               </div>
-              <div className="text-lg font-semibold text-gray-900">
+              <h2 className="mb-2 text-lg font-semibold text-teal-600 lg:text-2xl">
                 {favorite.notes.title}
-              </div>
-              <p className="mt-2 text-gray-600">{favorite.notes.description}</p>
-              <p className="mt-1 text-sm text-gray-500">
+              </h2>
+              <p className="md:text-md mb-2 text-sm text-gray-600 lg:text-xl">
+                {favorite.notes.description}
+              </p>
+              <p className="mb-4 text-sm text-gray-500 lg:text-xl">
                 Subject: {favorite.notes.subjects.name}
               </p>
               <a
                 href={favorite.notes.pdf_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 block text-accent hover:underline"
+                className="mb-5 mt-auto block rounded-lg bg-secondary px-3 py-2 text-center text-sm font-semibold text-text transition-all duration-300 hover:bg-accent md:px-5 md:py-3 lg:text-xl"
               >
                 View PDF
               </a>
@@ -119,6 +132,20 @@ function Favorites() {
           </div>
         )}
       </div>
+      <Paginator
+        first={pagination.first}
+        rows={pagination.rows}
+        totalRecords={totalRecords}
+        onPageChange={handlePageChange}
+        className="p-2 text-xl"
+        template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+        leftContent={
+          <span className="font-bold">
+            {Math.floor(pagination.first / pagination.rows) + 1} of{' '}
+            {Math.ceil(totalRecords / pagination.rows)}
+          </span>
+        }
+      />
     </div>
   );
 }
