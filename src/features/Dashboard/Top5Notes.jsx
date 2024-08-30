@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 const Top5Notes = ({ top5Notes }) => (
-  <div className="max-h-[300px] overflow-y-auto rounded-lg bg-white p-4 shadow-md sm:p-6">
+  <div className="max-h-[310px] overflow-y-auto rounded-lg bg-white p-4 shadow-md sm:p-6">
     <h2 className="mb-4 text-2xl font-semibold">Top 5 Most Rated Notes</h2>
     <ul>
       {top5Notes.map((note, index) => (

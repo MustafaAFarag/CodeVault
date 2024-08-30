@@ -1,40 +1,20 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
-import { FaTrash, FaStar } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
 import { memo } from 'react';
 
-const SheetItem = memo(({ sheet, user, isBestSheet, handleDeleteSheet }) => {
-  const canDelete =
-    user &&
-    (user.role === 'admin' ||
-      user.role === 'super_admin' ||
-      sheet.user_id === user.id);
+const SheetItem = memo(({ sheet, user, handleDeleteSheet }) => {
+  const isAdmin =
+    user && (user.role === 'admin' || user.role === 'super_admin');
 
   return (
     <div className="relative flex h-full flex-col rounded-lg border border-gray-200 bg-white p-4 shadow-md transition-all duration-300">
-      {isBestSheet && (
-        <div className="absolute right-0 top-0 z-10 rounded-bl-lg bg-teal-400 px-2 py-1 text-sm font-bold text-white md:text-xl">
-          Best Sheet
-        </div>
-      )}
+      <div className="mt-5 flex flex-col items-start lg:flex-row lg:items-center lg:justify-between">
+        <h2 className="mb-2 text-lg font-semibold text-teal-600 md:text-2xl">
+          {sheet.title}
+        </h2>
 
-      <h2 className="mb-2 text-lg font-semibold text-teal-600 sm:mt-3 md:text-2xl">
-        {sheet.title}
-      </h2>
-
-      <div className="mb-2 flex items-center justify-between">
-        <div className="text-md mb-2 flex items-center md:text-xl">
-          {sheet.average_rating !== null && (
-            <FaStar className="mr-1 -translate-y-[0.15rem] text-yellow-400" />
-          )}
-          <p className="md:text-md text-sm text-gray-600">
-            {sheet.average_rating !== null
-              ? sheet.average_rating
-              : 'No ratings yet'}
-          </p>
-        </div>
-
-        {canDelete && (
+        {isAdmin && (
           <button
             onClick={handleDeleteSheet}
             className="z-20 rounded-full border border-red-300 bg-red-50 p-2 text-red-500 shadow-md transition-all duration-300 hover:bg-red-100"
@@ -46,11 +26,7 @@ const SheetItem = memo(({ sheet, user, isBestSheet, handleDeleteSheet }) => {
       </div>
 
       <p className="mb-4 text-sm text-gray-700 md:text-xl">
-        {sheet.description || 'No description available'}
-      </p>
-
-      <p className="mb-4 mt-auto text-sm text-gray-500 md:text-xl">
-        Author: {sheet.author || 'Unknown'}
+        {sheet.description || 'No description available '}
       </p>
 
       <a

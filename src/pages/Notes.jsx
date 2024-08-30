@@ -21,7 +21,7 @@ function Notes() {
   const [isUploading, setIsUploading] = useState(false);
   const [pagination, setPagination] = useState({
     first: 0,
-    rows: 6, // Show 6 notes per page
+    rows: 6,
   });
   const [searchQuery, setSearchQuery] = useState('');
 

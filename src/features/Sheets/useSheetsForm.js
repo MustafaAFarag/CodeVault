@@ -7,6 +7,7 @@ export function useSheetsForm() {
     title: '',
     subject_id: '',
     url: null,
+    description: '',
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -31,6 +32,7 @@ export function useSheetsForm() {
       title: '',
       subject_id: '',
       url: null,
+      description: '',
     });
   };
 
@@ -45,6 +47,7 @@ export function useSheetsForm() {
         title: formValues.title,
         subject_id: formValues.subject_id,
         file: formValues.url,
+        description: formValues.description,
       });
     } catch (error) {
       toast.error(`Error: ${error.message}`);

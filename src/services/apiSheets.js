@@ -61,14 +61,21 @@ async function uploadFile(file, bucket) {
 }
 
 // Updated uploadSheet function
-async function uploadSheet({ table, title, subject_id, file, bucket }) {
+async function uploadSheet({
+  table,
+  title,
+  subject_id,
+  file,
+  description,
+  bucket,
+}) {
   // Upload the file and get the URL
   const url = await uploadFile(file, bucket);
 
   // Insert the sheet info into the database
   const { data, error } = await supabase
     .from(table)
-    .insert([{ title, subject_id, url }]);
+    .insert([{ title, subject_id, url, description }]);
 
   if (error) {
     throw new Error('Failed to upload the sheet');
@@ -77,22 +84,34 @@ async function uploadSheet({ table, title, subject_id, file, bucket }) {
   return data;
 }
 
-export async function uploadLectureSheet({ title, subject_id, file }) {
+export async function uploadLectureSheet({
+  title,
+  subject_id,
+  file,
+  description,
+}) {
   return uploadSheet({
     table: 'lecturesSheets',
     title,
     subject_id,
     file,
+    description,
     bucket: 'lectures', // Specify the lectures bucket
   });
 }
 
-export async function uploadSectionSheet({ title, subject_id, file }) {
+export async function uploadSectionSheet({
+  title,
+  subject_id,
+  file,
+  description,
+}) {
   return uploadSheet({
     table: 'sectionSheets',
     title,
     subject_id,
     file,
+    description,
     bucket: 'sections', // Specify the sections bucket
   });
 }

@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 
 const Top5Users = ({ top5Users }) => (
-  <div className="flex max-h-[300px] flex-col rounded-lg bg-white p-4 shadow-md sm:p-6">
+  <div className="flex max-h-[310px] flex-col rounded-lg bg-white p-4 shadow-md sm:p-6">
     <h2 className="mb-5 text-2xl font-semibold">
       Top 5 Users by Uploaded Notes
     </h2>

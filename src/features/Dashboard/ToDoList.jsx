@@ -7,7 +7,7 @@ const ToDoList = ({
   createMutation,
   user,
 }) => (
-  <div className="] row-start-3 overflow-y-auto rounded-lg bg-white p-6 shadow-md md:col-span-2 xl:col-span-2 xl:col-start-2 xl:row-start-1">
+  <div className="custom-scrollbar row-start-3 overflow-y-auto rounded-lg bg-white p-6 shadow-md md:col-span-2 lg:h-[300px] xl:col-span-2 xl:col-start-2 xl:row-start-1 2xl:h-[350px]">
     <div className="mb-4 items-center justify-between lg:flex">
       <h2 className="text-3xl font-semibold">To-Do List</h2>
       {(user.role === 'admin' || user.role === 'super_admin') && (

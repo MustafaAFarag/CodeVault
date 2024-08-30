@@ -88,6 +88,8 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
       rows: event.rows,
     });
   };
+  const isAdmin =
+    user && (user.role === 'admin' || user.role === 'super_admin');
 
   const filteredSheets = useMemo(() => {
     if (!data || !data.sheetsBySubject || !selectedSubject) return [];
@@ -116,7 +118,7 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
   const { subjectsData } = data;
 
   return (
-    <div className="bg-gray-50 p-8 lg:h-[780px]">
+    <div className="bg-gray-50 p-8 lg:h-[650px]">
       <h1 className="mb-6 mt-10 text-center text-4xl font-bold text-teal-600 sm:text-5xl md:text-6xl lg:text-7xl">
         {title}
       </h1>
@@ -136,12 +138,14 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
           className="mb-4 w-full rounded-lg border border-gray-300 p-3 text-xl md:w-1/2 md:translate-y-5"
         />
 
-        <button
-          onClick={handleUploadClick}
-          className="w-full rounded-lg bg-secondary px-4 py-2 text-lg font-semibold text-text shadow-lg transition-all hover:bg-accent md:px-5 md:py-3 lg:w-auto lg:translate-y-3 lg:text-2xl"
-        >
-          Upload
-        </button>
+        {isAdmin && (
+          <button
+            onClick={handleUploadClick}
+            className="w-full rounded-lg bg-secondary px-4 py-2 text-lg font-semibold text-text shadow-lg transition-all hover:bg-accent md:px-5 md:py-3 lg:w-auto lg:translate-y-3 lg:text-2xl"
+          >
+            Upload
+          </button>
+        )}
       </div>
 
       {selectedSubject && sheetsToDisplay.length > 0 ? (

@@ -5,7 +5,7 @@
 - Streaks & Rewards: Encourage continuous study with streaks for completing daily challenges and offer rewards like badges or points.
 
 
-Make homepage / dahsboard / notes / sidebar / header responsive
+-- responsive
 
 
 -- Later --

@@ -9,7 +9,7 @@ const UsersList = ({ users, searchTerm, setSearchTerm }) => {
     .slice(0, 100);
 
   return (
-    <div className="row-span-2 max-h-[300px] overflow-hidden rounded-lg bg-white p-4 shadow-md sm:p-6 md:row-span-2 md:max-h-[600px] xl:max-h-[650px]">
+    <div className="row-span-2 max-h-[300px] overflow-hidden rounded-lg bg-white p-4 shadow-md sm:p-6 md:row-span-2 md:max-h-[600px] xl:max-h-[600px] 2xl:max-h-[650px]">
       <div className="mb-4 items-center justify-between xl:flex">
         <h2 className="text-2xl font-semibold">First 100 Users</h2>
         <input
