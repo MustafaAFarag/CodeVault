@@ -5,7 +5,6 @@ import { useUser } from '../features/authentication/useUser';
 import NotesLoader from '../ui/NotesLoader';
 import SubjectDropdown from '../features/Sheets/SubjectDropdown';
 import NoteList from '../features/Notes/NoteList';
-
 import UploadNoteModal from '../features/Notes/UploadNoteModal';
 import { useUploadNote } from '../features/Notes/useUploadNote';
 import { useRateNote } from '../features/Notes/useRateNote';
@@ -14,15 +13,12 @@ import { useNotes } from '../features/Notes/useNotes';
 import { useSelectedSubject } from '../features/Notes/useSelectedSubject';
 import ErrorMessage from '../ui/ErrorMessage';
 import { useFilteredNotes } from '../features/Notes/useFilteredNotes';
-
 import { toast } from 'react-hot-toast';
 
 function Notes() {
   const [isUploading, setIsUploading] = useState(false);
-  const [pagination, setPagination] = useState({
-    first: 0,
-    rows: 6,
-  });
+  const [page, setPage] = useState(0);
+  const [rows, setRows] = useState(6);
   const [searchQuery, setSearchQuery] = useState('');
 
   const { deleteMutation } = useNotes();
@@ -96,16 +92,11 @@ function Notes() {
   }, [sortedNotes]);
 
   const totalRecords = sortedNotes.length;
-  const notesToDisplay = sortedNotes.slice(
-    pagination.first,
-    pagination.first + pagination.rows,
-  );
+  const notesToDisplay = sortedNotes.slice(page * rows, (page + 1) * rows);
 
   const handlePageChange = (event) => {
-    setPagination({
-      first: event.first,
-      rows: event.rows,
-    });
+    setPage(event.first / event.rows);
+    setRows(event.rows);
   };
 
   const handleSearchChange = (event) => {
@@ -120,7 +111,7 @@ function Notes() {
       const noteData = {
         ...formValues,
         user_id: user.id,
-        author: user.full_name, // Assuming the user object has a full_name property
+        author: user.full_name,
       };
       await uploadMutation.mutateAsync(noteData);
       toast.success('Note uploaded successfully!');
@@ -146,7 +137,7 @@ function Notes() {
         <SubjectDropdown
           subjects={subjectsData}
           onChange={handleSubjectChange}
-          title="-- Select a Subject --"
+          title="Select a Subject"
         />
 
         <input
@@ -165,7 +156,6 @@ function Notes() {
         </button>
       </div>
 
-      {/* Content of Notes */}
       {error ? (
         <ErrorMessage message={error.message} />
       ) : selectedSubject && notesToDisplay.length > 0 ? (
@@ -175,8 +165,8 @@ function Notes() {
           user={user}
           bestNoteId={bestNote?.note_id}
           totalRecords={totalRecords}
-          first={pagination.first}
-          rows={pagination.rows}
+          first={page * rows}
+          rows={rows}
           onPageChange={handlePageChange}
           handleDeleteNote={handleDeleteNote}
         />

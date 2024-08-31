@@ -127,7 +127,7 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
         <SubjectDropdown
           subjects={subjectsData}
           onChange={handleSubjectChange}
-          title="-- Select a Subject --"
+          title="Select a Subject"
         />
 
         <input

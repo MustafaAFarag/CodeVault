@@ -8,11 +8,7 @@ function Header() {
   const headerRef = useRef(null);
 
   useEffect(() => {
-    animate(
-      headerRef.current,
-      { opacity: [0, 1], transform: ['translateY(-10px)', 'translateY(0)'] },
-      { duration: 0.5 },
-    );
+    animate(headerRef.current, { opacity: [0, 1] }, { duration: 0.5 });
   }, []);
 
   return (

@@ -44,22 +44,22 @@ function AdminPanel() {
     );
 
   return (
-    <div className="bg-gray-50 p-8 lg:h-[740px]">
+    <div className="bg-gray-50 p-4 lg:h-[740px] lg:p-8">
       <h1 className="mb-6 mt-10 text-center text-4xl font-bold text-teal-600 sm:text-5xl md:text-6xl lg:text-7xl">
         Admin Panel
       </h1>
 
-      <div className="mb-8 flex flex-col items-center justify-between md:flex-row">
+      <div className="mb-8 flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
         <input
           type="text"
           placeholder="Search by full name..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="mb-4 w-full rounded-lg border border-gray-300 p-3 text-xl md:w-1/2"
+          className="w-full rounded-lg border border-gray-300 p-3 text-xl md:w-1/2"
         />
       </div>
 
-      <div className="rounded-lg bg-white p-6 shadow-md">
+      <div className="rounded-lg bg-white p-4 shadow-md md:p-6">
         <>
           <UserList
             users={users}

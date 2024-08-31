@@ -46,6 +46,10 @@ export function UserList({
     setRows(event.rows);
   };
 
+  // Calculate current page number and total pages
+  const currentPage = Math.floor(first / rows) + 1;
+  const totalPages = Math.ceil(sortedUsers.length / rows);
+
   return (
     <div className="rounded-lg bg-white p-6 shadow-md">
       <ul className="space-y-6">
@@ -66,13 +70,19 @@ export function UserList({
             )}
       </ul>
 
-      {/* Paginator Component */}
+      {/* Updated Paginator Component */}
       <Paginator
         first={first}
         rows={rows}
         totalRecords={sortedUsers.length}
         onPageChange={onPageChange}
-        className="mt-6"
+        className="mt-6 p-2 text-xl"
+        template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+        leftContent={
+          <span className="font-bold">
+            {currentPage} of {totalPages}
+          </span>
+        }
       />
     </div>
   );

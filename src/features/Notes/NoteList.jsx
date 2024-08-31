@@ -32,7 +32,13 @@ function NoteList({
         rows={rows}
         totalRecords={totalRecords}
         onPageChange={onPageChange}
-        className="mt-6"
+        className="mt-6 p-2 text-xl"
+        template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+        leftContent={
+          <span className="font-bold">
+            {Math.ceil(first / rows) + 1} of {Math.ceil(totalRecords / rows)}
+          </span>
+        }
       />
     </div>
   );

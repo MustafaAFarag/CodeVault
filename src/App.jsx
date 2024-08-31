@@ -64,16 +64,24 @@ function App() {
         toastOptions={{
           success: {
             duration: 3000,
+            style: {
+              backgroundColor: '#d4edda',
+              color: '#155724',
+              border: '1px solid #c3e6cb',
+            },
           },
           error: {
             duration: 5000,
+            style: {
+              backgroundColor: '#f8d7da',
+              color: '#721c24',
+              border: '1px solid #f5c6cb',
+            },
           },
           style: {
             fontSize: '16px',
             maxWidth: '500px',
             padding: '16px 24px',
-            backgroundColor: 'gray',
-            color: 'black',
           },
         }}
       />

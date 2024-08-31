@@ -109,7 +109,7 @@ const NoteItem = memo(
           {canDelete && (
             <button
               onClick={() => handleDeleteNote(note.note_id)}
-              className="z-20 -translate-y-2 rounded-full border border-red-300 bg-red-50 p-2 text-red-500 shadow-md transition-all duration-300 hover:bg-red-100"
+              className="z-20 -translate-y-2 rounded-full border border-blue-300 bg-blue-50 p-2 text-blue-500 shadow-md transition-all duration-300 hover:bg-blue-100"
               aria-label="Delete note"
             >
               <FaTrash />

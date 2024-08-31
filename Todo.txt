@@ -7,19 +7,19 @@
 
 -- responsive
 
-favorites
-upload modals responsive
-admin panel responsive 
-change paginators like logs to all others
-change trash color
-user settings
+Account Settings and Admin Panel doesn't shrink
+Modal Requried forms
+supabase make it not global
+back of shoe
+loaders
+toast colors
 
 -- Later --
 
 - Showcase instead of resources
 - Dark Mode
 - Online panel
-- Add Login with Google , github ( Mahmoud ) 
+- Add Login with Google , github 
 -User Notifications: Implement a notification system for important updates or reminders, such as deadlines for tasks or new notes. ( later )
 
 

@@ -20,11 +20,13 @@ function UserAvatar() {
       onMouseLeave={handleMouseLeave}
     >
       <img
-        className="hidden aspect-square h-12 w-12 rounded-full object-cover object-center outline-2 outline-teal-500 sm:block"
+        className="aspect-square h-12 w-12 rounded-full object-cover object-center outline-2 outline-teal-500 sm:block"
         src={avatar || 'default-user.jpg'}
         alt={`Avatar of ${full_name}`}
       />
-      <span className="text-xl text-text">{full_name}</span>
+      <span className="text-nowrap text-lg text-text lg:text-xl">
+        {full_name}
+      </span>
     </div>
   );
 }
