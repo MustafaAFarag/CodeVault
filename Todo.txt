@@ -7,12 +7,15 @@
 
 -- responsive
 
-Account Settings and Admin Panel doesn't shrink
+
 Modal Requried forms
 supabase make it not global
 back of shoe
 loaders
-toast colors
+Notes ratings
+about to login while loading is buggy
+admin panel buttons small and paginator
+Account settings change design
 
 -- Later --
 

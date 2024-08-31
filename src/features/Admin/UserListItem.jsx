@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-
 export function UserListItem({
   user,
   currentUserRole,
@@ -14,7 +13,6 @@ export function UserListItem({
     user.role !== 'super_admin' &&
     (currentUserRole === 'super_admin' || !isAdmin);
 
-  // Updated getAvailableRoles to use the currentRole passed as a prop
   const getAvailableRoles = (currentRole) => {
     if (currentRole === 'super_admin') {
       return ['basic', 'verified', 'admin'];
@@ -26,26 +24,24 @@ export function UserListItem({
   };
 
   return (
-    <li className="flex items-center justify-between gap-2 border-b border-gray-300 p-4">
+    <li className="flex flex-col gap-4 border-b border-gray-300 p-4 md:flex-row md:items-center md:gap-6">
       <div className="flex-1">
-        <div className="text-lg font-semibold lg:text-2xl">
-          {user.full_name}
-        </div>
-        <div className="text-gray-600 lg:text-xl">
+        <div className="text-lg font-semibold lg:text-xl">{user.full_name}</div>
+        <div className="text-gray-600 lg:text-lg">
           {user.role} - {user.email}
         </div>
-        <div className="text-sm text-gray-500 lg:text-lg">
+        <div className="text-sm text-gray-500 lg:text-base">
           Created: {new Date(user.created_at).toLocaleDateString()}
         </div>
         {user.suspended && (
-          <div className="text-sm text-red-500 lg:text-xl">Suspended</div>
+          <div className="text-sm text-red-500 lg:text-base">Suspended</div>
         )}
       </div>
-      <div className="space-x-4">
+      <div className="flex flex-col space-y-2 md:flex-row md:space-x-4 md:space-y-0">
         <select
           value={user.role}
           onChange={(e) => onRoleChange(user.id, e.target.value)}
-          className={`rounded border border-gray-300 bg-white px-2 py-1 lg:text-xl ${!canChangeRole ? 'cursor-not-allowed opacity-50' : ''}`}
+          className={`rounded border border-gray-300 bg-white px-2 py-1 text-sm lg:text-base ${!canChangeRole ? 'cursor-not-allowed opacity-50' : ''}`}
           disabled={!canChangeRole}
         >
           {getAvailableRoles(currentUserRole).map((role) => (
@@ -56,7 +52,7 @@ export function UserListItem({
         </select>
         <button
           onClick={() => onSuspendToggle(user.id, !user.suspended)}
-          className={`rounded border px-2 py-1 lg:text-2xl ${user.suspended ? 'bg-red-500 text-white' : 'bg-green-500 text-white'} ${!canSuspend ? 'cursor-not-allowed opacity-50' : ''}`}
+          className={`rounded border px-2 py-1 text-sm lg:text-base ${user.suspended ? 'bg-red-500 text-white' : 'bg-green-500 text-white'} ${!canSuspend ? 'cursor-not-allowed opacity-50' : ''}`}
           disabled={!canSuspend}
         >
           {user.suspended ? 'Unsuspend' : 'Suspend'}
