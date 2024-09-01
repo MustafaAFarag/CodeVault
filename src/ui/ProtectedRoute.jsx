@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../features/authentication/useUser';
-import Spinner from './Spinner';
+import FullPageSpinner from '../ui/FullPageSpinner';
 import { useEffect } from 'react';
 
 function ProtectedRoute({ children }) {
@@ -22,7 +22,7 @@ function ProtectedRoute({ children }) {
   if (isLoading)
     return (
       <div className="flex h-screen items-center justify-center">
-        <Spinner />
+        <FullPageSpinner />
       </div>
     );
 

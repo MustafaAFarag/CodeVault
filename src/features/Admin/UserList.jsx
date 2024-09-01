@@ -72,7 +72,7 @@ export function UserList({
         rows={rows}
         totalRecords={sortedUsers.length}
         onPageChange={onPageChange}
-        className="mt-4 p-2 text-lg"
+        className="mt-4 p-2 text-xl"
         template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
         leftContent={
           <span className="font-bold">

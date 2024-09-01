@@ -32,6 +32,10 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+.animate {
+  will-change: opacity, transform;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;

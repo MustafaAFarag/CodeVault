@@ -41,7 +41,7 @@ export function UserListItem({
         <select
           value={user.role}
           onChange={(e) => onRoleChange(user.id, e.target.value)}
-          className={`rounded border border-gray-300 bg-white px-2 py-1 text-sm lg:text-base ${!canChangeRole ? 'cursor-not-allowed opacity-50' : ''}`}
+          className={`rounded border border-gray-300 bg-white px-2 py-1 text-sm lg:text-xl ${!canChangeRole ? 'cursor-not-allowed opacity-50' : ''}`}
           disabled={!canChangeRole}
         >
           {getAvailableRoles(currentUserRole).map((role) => (
@@ -52,7 +52,7 @@ export function UserListItem({
         </select>
         <button
           onClick={() => onSuspendToggle(user.id, !user.suspended)}
-          className={`rounded border px-2 py-1 text-sm lg:text-base ${user.suspended ? 'bg-red-500 text-white' : 'bg-green-500 text-white'} ${!canSuspend ? 'cursor-not-allowed opacity-50' : ''}`}
+          className={`rounded border px-2 py-1 text-sm lg:text-xl ${user.suspended ? 'bg-red-500 text-white' : 'bg-green-500 text-white'} ${!canSuspend ? 'cursor-not-allowed opacity-50' : ''}`}
           disabled={!canSuspend}
         >
           {user.suspended ? 'Unsuspend' : 'Suspend'}

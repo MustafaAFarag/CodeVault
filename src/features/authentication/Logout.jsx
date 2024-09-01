@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { animate } from 'motion';
+import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { HiArrowRightOnRectangle } from 'react-icons/hi2';
 import { useLogout } from './useLogout';
 import SpinnerMini from '../../ui/SpinnerMini';
@@ -8,35 +8,22 @@ function Logout() {
   const { logout, isLoading } = useLogout();
   const buttonRef = useRef(null);
 
-  useEffect(() => {
-    if (buttonRef.current) {
-      animate(buttonRef.current, { scale: [1, 1] }, { duration: 0.2 });
-    }
-  }, []);
-
-  const handleMouseEnter = () => {
-    animate(buttonRef.current, { scale: 1.1 }, { duration: 0.2 });
-  };
-
-  const handleMouseLeave = () => {
-    animate(buttonRef.current, { scale: 1 }, { duration: 0.2 });
-  };
-
   return (
-    <button
+    <motion.button
       ref={buttonRef}
-      className="flex items-center justify-center rounded-lg p-3 text-text transition-transform duration-300 hover:bg-teal-200 hover:text-text focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
+      className="flex items-center justify-center rounded-lg p-3 text-text transition-transform duration-300 hover:bg-teal-200 hover:text-text hover:outline-none hover:ring-2 hover:ring-accent hover:ring-offset-2"
       disabled={isLoading}
       onClick={logout}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ duration: 0.2 }}
     >
       {!isLoading ? (
         <HiArrowRightOnRectangle className="h-6 w-6" />
       ) : (
         <SpinnerMini />
       )}
-    </button>
+    </motion.button>
   );
 }
 

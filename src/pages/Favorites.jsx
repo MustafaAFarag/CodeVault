@@ -8,6 +8,8 @@ import { FaHeart } from 'react-icons/fa';
 import { Paginator } from 'primereact/paginator';
 import { toast } from 'react-hot-toast';
 import { useSelectedSubject } from '../features/Notes/useSelectedSubject';
+import NotesLoader from '../ui/NotesLoader';
+import ErrorMessage from '../ui/ErrorMessage';
 
 function Favorites() {
   const { user } = useUser();
@@ -75,8 +77,8 @@ function Favorites() {
     });
   };
 
-  if (isLoading || subjectsLoading) return <p>Loading...</p>;
-  if (error || subjectsError) return <p>Error...</p>;
+  if (isLoading || subjectsLoading) return <NotesLoader />;
+  if (error || subjectsError) return <ErrorMessage />;
 
   return (
     <div className="h-full bg-gray-50 p-4 md:p-8 lg:h-[650px]">

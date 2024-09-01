@@ -1,17 +1,10 @@
-import { useEffect, useRef } from 'react';
-import { animate } from 'motion';
+import { motion } from 'framer-motion';
 import Logo from './Logo';
 import LinkButton from './LinkButton';
 import { Link, useLocation } from 'react-router-dom';
 
 function HomeHeader() {
-  const navRef = useRef(null);
   const location = useLocation();
-
-  useEffect(() => {
-    animate(navRef.current, { opacity: [0, 1] }, { duration: 1 });
-  }, []);
-
   const isHomePage = location.pathname === '/';
 
   return (
@@ -24,7 +17,12 @@ function HomeHeader() {
         <Logo width={70} height={70}>
           EduData
         </Logo>
-        <nav ref={navRef} className="z-10">
+        <motion.nav
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="z-10"
+        >
           <ul className="flex items-center gap-4 md:gap-8 lg:gap-16">
             <li>
               <Link
@@ -46,7 +44,7 @@ function HomeHeader() {
               <LinkButton to="/signup" label="Sign Up" />
             </li>
           </ul>
-        </nav>
+        </motion.nav>
       </div>
     </header>
   );

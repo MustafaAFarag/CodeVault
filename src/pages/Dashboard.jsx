@@ -11,6 +11,8 @@ import UploadTodoModal from '../features/Dashboard/UploadTodoModal';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { toast } from 'react-hot-toast';
 import { useUser } from '../features/authentication/useUser';
+import Spinner from '../ui/Spinner';
+import ErrorMessage from '../ui/ErrorMessage';
 
 function Dashboard() {
   useCleanUp();
@@ -64,10 +66,12 @@ function Dashboard() {
     .sort((a, b) => b.average_rating - a.average_rating)
     .slice(0, 5);
 
-  if (isTodosLoading || isUsersLoading || isNotesLoading)
-    return <div>Loading...</div>;
-  if (todosError || usersError || notesError)
-    return <div>Error loading data</div>;
+  if (isTodosLoading || isUsersLoading || isNotesLoading) return <Spinner />;
+  if (todosError || usersError || notesError) {
+    const errorMessage =
+      todosError?.message || usersError?.message || notesError?.message;
+    return <ErrorMessage message={`Error loading data: ${errorMessage}`} />;
+  }
 
   return (
     <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">

@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchLogs } from '../services/apiLogs';
 import { Paginator } from 'primereact/paginator';
+import Spinner from '../ui/Spinner';
+import ErrorMessage from '../ui/ErrorMessage';
 
 function Logs() {
   const [page, setPage] = useState(0);
@@ -18,13 +20,11 @@ function Logs() {
   });
 
   if (isLoading) {
-    return <div className="text-center text-gray-500">Loading logs...</div>;
+    return <Spinner />;
   }
 
   if (error) {
-    return (
-      <div className="text-center text-red-500">Error: {error.message}</div>
-    );
+    return <ErrorMessage />;
   }
 
   // Calculate total pages

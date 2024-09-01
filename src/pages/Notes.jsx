@@ -145,12 +145,12 @@ function Notes() {
           value={searchQuery}
           onChange={handleSearchChange}
           placeholder="Search notes..."
-          className="mb-4 w-full rounded-lg border border-gray-300 p-3 text-xl md:w-1/2 lg:translate-y-4"
+          className="mb-4 w-full rounded-lg border border-gray-300 p-3 text-xl md:w-1/2 md:translate-y-5"
         />
 
         <button
           onClick={handleUploadClick}
-          className="w-full rounded-lg bg-secondary px-4 py-2 text-lg font-semibold text-text shadow-lg transition-all hover:bg-accent md:w-auto md:px-5 md:py-3 lg:text-2xl"
+          className="w-full translate-y-3 rounded-lg bg-secondary px-4 py-2 text-lg font-semibold text-text shadow-lg transition-all hover:bg-accent md:w-auto md:px-5 md:py-3 lg:text-2xl"
         >
           Upload
         </button>

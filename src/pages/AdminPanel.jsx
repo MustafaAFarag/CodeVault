@@ -4,6 +4,8 @@ import { useRoleMutation } from '../features/Admin/useRoleMutation';
 import { useSuspendMutation } from '../features/Admin/useSuspendMutation';
 import { UserList } from '../features/Admin/UserList';
 import { useUser } from '../features/authentication/useUser';
+import Spinner from '../ui/Spinner';
+import ErrorMessage from '../ui/ErrorMessage';
 
 function AdminPanel() {
   const { user } = useUser();
@@ -36,12 +38,8 @@ function AdminPanel() {
     }
   };
 
-  if (isLoading)
-    return <div className="text-center text-gray-500">Loading...</div>;
-  if (error)
-    return (
-      <div className="text-center text-red-500">Error: {error.message}</div>
-    );
+  if (isLoading) return <Spinner />;
+  if (error) return <ErrorMessage />;
 
   return (
     <div className="flex flex-col overflow-hidden bg-gray-50 p-4 lg:h-[700px] lg:p-8">

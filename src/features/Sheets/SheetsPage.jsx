@@ -141,7 +141,7 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
         {isAdmin && (
           <button
             onClick={handleUploadClick}
-            className="w-full rounded-lg bg-secondary px-4 py-2 text-lg font-semibold text-text shadow-lg transition-all hover:bg-accent md:px-5 md:py-3 lg:w-auto lg:translate-y-3 lg:text-2xl"
+            className="w-full translate-y-3 rounded-lg bg-secondary px-4 py-2 text-lg font-semibold text-text shadow-lg transition-all hover:bg-accent md:w-auto md:px-5 md:py-3 lg:text-2xl"
           >
             Upload
           </button>

@@ -96,12 +96,12 @@ const NoteItem = memo(
             {note.average_rating !== null && (
               <FaStar className="mr-1 -translate-y-[0.15rem] text-yellow-400" />
             )}
-            <p className="md:text-md text-sm text-gray-600">
+            <p className="text-sm text-gray-600 md:text-xl">
               {note.average_rating !== null
                 ? note.average_rating
                 : 'No ratings yet'}
             </p>
-            <p className="md:text-md ml-2 text-xs text-gray-500">
+            <p className="md:text-md ml-2 text-xs text-gray-500 lg:text-xl">
               ({note.note_rating.length} ratings)
             </p>
           </div>

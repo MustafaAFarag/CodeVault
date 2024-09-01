@@ -8,14 +8,17 @@
 -- responsive
 
 
-Modal Requried forms
 supabase make it not global
-back of shoe
-loaders
-Notes ratings
+verification gmail
+Modal Requried forms
 about to login while loading is buggy
-admin panel buttons small and paginator
-Account settings change design
+
+let user edit his avatar before uploading
+
+uninstall Motion one and change it to framer motion
+make font face
+back of shoe
+
 
 -- Later --
 
@@ -45,3 +48,5 @@ Expert Tags: Tags for users who are recognized as experts in specific subjects o
 Peer Recognition: Tags given based on peer recognition or votes, like "Most Helpful" or "Best Note Giver," where other users can nominate or vote for their peers.
 
 Supportive Tags: Tags for users who assist others frequently, like "Mentor" or "Helper," to recognize those who support the community
+
+

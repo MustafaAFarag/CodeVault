@@ -1,11 +1,14 @@
+import { Skeleton } from 'primereact/skeleton';
+
 const Spinner = () => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-      <div className="rounded-lg bg-white p-5 shadow-lg">
-        <div className="flex flex-col items-center">
-          <div className="h-12 w-12 animate-spin rounded-full border-t-4 border-solid border-blue-500"></div>
-          <p className="mt-4 text-lg font-semibold text-gray-700">Loading...</p>
-        </div>
+    <div className="flex flex-col space-y-4 p-4">
+      <Skeleton width="80%" height="10rem" />
+      <Skeleton width="60%" height="10rem" />
+      <Skeleton width="90%" height="10rem" borderRadius="8px" />
+      <div className="grid w-full grid-cols-2 gap-4">
+        <Skeleton width="100%" height="10rem" borderRadius="8px" />
+        <Skeleton width="100%" height="10rem" borderRadius="8px" />
       </div>
     </div>
   );
