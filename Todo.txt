@@ -12,12 +12,11 @@ supabase make it not global
 supabase policies tables
 verification gmail
 Modal Requried forms
-the images rerenders when i leave the page
+
 Wild oasis also upload it
 
+ErrorBoundary
 
-login and signup shows small screen then goes big
-loader when deleting a Note or Lecture
 
 
 make font face

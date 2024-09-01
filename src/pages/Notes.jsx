@@ -19,15 +19,21 @@ function Notes() {
   const [isUploading, setIsUploading] = useState(false);
   const [page, setPage] = useState(0);
   const [rows, setRows] = useState(6);
+  const [isDeletingNoteId, setIsDeletingNoteId] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
   const { deleteMutation } = useNotes();
 
   const handleDeleteNote = useCallback(
     (noteId) => {
+      setIsDeletingNoteId(noteId);
       deleteMutation.mutate(noteId, {
         onError: (error) => {
           toast.error(`Failed to delete note: ${error.message}`);
+          setIsDeletingNoteId(null);
+        },
+        onSuccess: () => {
+          setIsDeletingNoteId(null);
         },
       });
     },
@@ -169,6 +175,7 @@ function Notes() {
           rows={rows}
           onPageChange={handlePageChange}
           handleDeleteNote={handleDeleteNote}
+          isDeletingNoteId={isDeletingNoteId}
         />
       ) : (
         <p className="text-center font-semibold text-gray-600 md:text-xl">

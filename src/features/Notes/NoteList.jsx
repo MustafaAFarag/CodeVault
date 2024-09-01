@@ -12,6 +12,7 @@ function NoteList({
   rows,
   onPageChange,
   handleDeleteNote,
+  isDeletingNoteId,
 }) {
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md">
@@ -24,6 +25,7 @@ function NoteList({
             user={user}
             isBestNote={note.note_id === bestNoteId}
             handleDeleteNote={() => handleDeleteNote(note.note_id)}
+            isDeleting={isDeletingNoteId === note.note_id}
           />
         ))}
       </div>

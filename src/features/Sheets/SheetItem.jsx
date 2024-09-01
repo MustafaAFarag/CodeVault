@@ -2,8 +2,9 @@
 /* eslint-disable react/display-name */
 import { FaTrash } from 'react-icons/fa';
 import { memo } from 'react';
+import SpinnerMini from '../../ui/SpinnerMini';
 
-const SheetItem = memo(({ sheet, user, handleDeleteSheet }) => {
+const SheetItem = memo(({ sheet, user, handleDeleteSheet, isDeleting }) => {
   const isAdmin =
     user && (user.role === 'admin' || user.role === 'super_admin');
 
@@ -19,8 +20,9 @@ const SheetItem = memo(({ sheet, user, handleDeleteSheet }) => {
             onClick={handleDeleteSheet}
             className="z-20 -translate-y-2 rounded-full border border-blue-300 bg-blue-50 p-2 text-blue-500 shadow-md transition-all duration-300 hover:bg-blue-100"
             aria-label="Delete sheet"
+            disabled={isDeleting}
           >
-            <FaTrash />
+            {isDeleting ? <SpinnerMini /> : <FaTrash />}
           </button>
         )}
       </div>

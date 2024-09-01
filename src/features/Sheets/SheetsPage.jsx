@@ -24,6 +24,7 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
   } = useSheetsForm();
 
   const [isUploading, setIsUploading] = useState(false);
+  const [isDeletingSheetId, setIsDeletingSheetId] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [pagination, setPagination] = useState({
@@ -57,13 +58,18 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
 
   const deleteMutation = useMutation({
     mutationFn: deleteFn,
+    onMutate: (sheetId) => {
+      setIsDeletingSheetId(sheetId);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries([queryKey]);
       toast.success('Sheet deleted successfully.');
+      setIsDeletingSheetId(null);
     },
     onError: (error) => {
       console.error('Delete failed:', error.message);
       toast.error('There was an error deleting the sheet. Please try again.');
+      setIsDeletingSheetId(null);
     },
   });
 
@@ -157,6 +163,7 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
           first={pagination.first}
           rows={pagination.rows}
           onPageChange={handlePageChange}
+          isDeletingSheetId={isDeletingSheetId}
         />
       ) : (
         <p className="text-center font-semibold text-gray-600 md:text-xl">

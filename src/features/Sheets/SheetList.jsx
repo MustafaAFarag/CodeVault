@@ -10,8 +10,8 @@ function SheetList({
   first,
   rows,
   onPageChange,
+  isDeletingSheetId,
 }) {
-  // Calculate the current page number
   const currentPage = Math.floor(first / rows) + 1;
   const totalPages = Math.ceil(totalRecords / rows);
 
@@ -24,6 +24,7 @@ function SheetList({
             sheet={sheet}
             user={user}
             handleDeleteSheet={() => onDelete(sheet.id)}
+            isDeleting={isDeletingSheetId === sheet.id}
           />
         ))}
       </div>

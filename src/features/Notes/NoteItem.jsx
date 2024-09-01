@@ -2,6 +2,7 @@
 /* eslint-disable react/display-name */
 import { FaTrash, FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
 import { memo, useState, useEffect } from 'react';
+import SpinnerMini from '../../ui/SpinnerMini';
 
 import toast from 'react-hot-toast';
 
@@ -13,7 +14,14 @@ import {
 import CustomRating from '../Notes/CustomRating';
 
 const NoteItem = memo(
-  ({ note, onRatingChange, user, isBestNote, handleDeleteNote }) => {
+  ({
+    note,
+    onRatingChange,
+    user,
+    isBestNote,
+    handleDeleteNote,
+    isDeleting,
+  }) => {
     const [userRating, setUserRating] = useState(
       note.note_rating.find((rating) => rating.user_id === user.id)?.rating ||
         0,
@@ -111,8 +119,9 @@ const NoteItem = memo(
               onClick={() => handleDeleteNote(note.note_id)}
               className="z-20 -translate-y-2 rounded-full border border-blue-300 bg-blue-50 p-2 text-blue-500 shadow-md transition-all duration-300 hover:bg-blue-100"
               aria-label="Delete note"
+              disabled={isDeleting}
             >
-              <FaTrash />
+              {isDeleting ? <SpinnerMini /> : <FaTrash />}
             </button>
           )}
         </div>
