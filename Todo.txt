@@ -15,12 +15,15 @@ Modal Requried forms
 
 Wild oasis also upload it
 
-ErrorBoundary
 
+Code Splitting
 
-
+About placeholders
 make font face
 back of shoe
+
+Readme 
+gitignore
 
 
 -- Later --

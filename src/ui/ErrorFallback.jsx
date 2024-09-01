@@ -1,48 +1,20 @@
 /* eslint-disable react/prop-types */
-import styled from 'styled-components';
-
-const StyledErrorFallback = styled.main`
-  height: 100vh;
-  background-color: var(--color-grey-50);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4.8rem;
-`;
-
-const Box = styled.div`
-  /* Box */
-  background-color: var(--color-grey-0);
-  border: 1px solid var(--color-grey-100);
-  border-radius: var(--border-radius-md);
-
-  padding: 4.8rem;
-  flex: 0 1 96rem;
-  text-align: center;
-
-  & h1 {
-    margin-bottom: 1.6rem;
-  }
-
-  & p {
-    font-family: 'Sono';
-    margin-bottom: 3.2rem;
-    color: var(--color-grey-500);
-  }
-`;
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
-    <>
-      <StyledErrorFallback>
-        <Box>
-          <h1>Something went wrong 🧐</h1>
-          <p>{error.message}</p>
-          <button size="large" onClick={resetErrorBoundary}>
-            Try again
-          </button>
-        </Box>
-      </StyledErrorFallback>
-    </>
+    <main className="flex h-screen items-center justify-center bg-teal-100 p-12">
+      <div className="flex max-w-5xl flex-col items-center rounded-md border border-gray-200 bg-white p-12 text-center">
+        <h1 className="mb-4 text-2xl font-bold text-text">
+          Something went wrong 🧐
+        </h1>
+        <p className="mb-8 text-lg text-text">{error.message}</p>
+        <button
+          onClick={resetErrorBoundary}
+          className="rounded-lg bg-blue-500 px-4 py-2 text-lg text-white transition-colors hover:bg-blue-600"
+        >
+          Try again
+        </button>
+      </div>
+    </main>
   );
 }
 
