@@ -15,7 +15,7 @@ about to login while loading is buggy
 
 let user edit his avatar before uploading
 
-uninstall Motion one and change it to framer motion
+
 make font face
 back of shoe
 
