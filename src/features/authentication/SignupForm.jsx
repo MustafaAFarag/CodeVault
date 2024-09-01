@@ -16,16 +16,16 @@ function SignupForm() {
     <motion.form
       onSubmit={handleSubmit(onSubmit)}
       className="rounded-lg bg-gray-50 p-6 shadow-md"
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Full Name */}
         <motion.div
           className="flex flex-col gap-4"
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           <label
@@ -52,8 +52,8 @@ function SignupForm() {
         {/* Email Address */}
         <motion.div
           className="flex flex-col gap-4"
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <label
@@ -86,8 +86,8 @@ function SignupForm() {
         {/* Password */}
         <motion.div
           className="flex flex-col gap-4"
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <label
@@ -120,8 +120,8 @@ function SignupForm() {
         {/* Confirm Password */}
         <motion.div
           className="flex flex-col gap-4"
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <label

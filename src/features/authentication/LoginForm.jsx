@@ -34,16 +34,11 @@ function LoginForm() {
     <motion.form
       className="h-full rounded-lg bg-gray-50 p-6 shadow-md"
       onSubmit={handleSubmit}
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <motion.div
-        className="mb-6 flex flex-col gap-4"
-        initial={{ opacity: 0, x: -10 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5 }}
-      >
+      <div className="mb-6 flex flex-col gap-4">
         <label htmlFor="email" className="text-2xl font-semibold text-gray-700">
           Email Address
         </label>
@@ -57,14 +52,9 @@ function LoginForm() {
           onChange={(e) => setEmail(e.target.value)}
           disabled={isLoading}
         />
-      </motion.div>
+      </div>
 
-      <motion.div
-        className="mb-6 flex flex-col gap-4"
-        initial={{ opacity: 0, x: -10 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-      >
+      <div className="mb-6 flex flex-col gap-4">
         <label
           htmlFor="password"
           className="text-2xl font-semibold text-gray-700"
@@ -81,7 +71,7 @@ function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
           disabled={isLoading}
         />
-      </motion.div>
+      </div>
 
       <motion.button
         className="w-full rounded-md bg-blue-600 py-3 text-lg font-semibold text-white transition-all duration-300 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400"

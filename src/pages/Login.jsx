@@ -11,6 +11,7 @@ function Login() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
+        style={{ width: '100%' }} // Set a fixed max-width
       >
         {/* Left side: Image or Picture */}
         <div className="hidden w-1/2 lg:block">

@@ -1,14 +1,17 @@
 /* eslint-disable react/prop-types */
 import { capitalizeFirstLetter } from '../../utils/helpers';
 
+import { useMemo } from 'react';
+
 const UsersList = ({ users, searchTerm, setSearchTerm }) => {
-  // Sort users by the 'created_at' column in descending order
-  const sortedUsers = users
-    .sort((a, b) => new Date(b.created_at) + new Date(a.created_at))
-    .filter((user) =>
-      user.full_name.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
-    .slice(0, 100); // Limit to the first 100 users
+  const sortedUsers = useMemo(() => {
+    return users
+      .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+      .filter((user) =>
+        user.full_name.toLowerCase().includes(searchTerm.toLowerCase()),
+      )
+      .slice(0, 100);
+  }, [users, searchTerm]);
 
   return (
     <div className="row-span-2 max-h-[300px] overflow-hidden rounded-lg bg-white p-4 shadow-md sm:p-6 md:row-span-2 md:max-h-[600px] xl:max-h-[600px] 2xl:max-h-[650px]">

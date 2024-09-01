@@ -54,6 +54,15 @@ export async function deleteNote(noteId) {
     throw new Error(ratingError.message);
   }
 
+  const { error: favoritesError } = await supabase
+    .from('favorites')
+    .delete()
+    .eq('note_id', noteId);
+
+  if (favoritesError) {
+    throw new Error(favoritesError.message);
+  }
+
   const { error: noteError } = await supabase
     .from('notes')
     .delete()

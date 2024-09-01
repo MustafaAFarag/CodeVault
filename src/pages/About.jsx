@@ -55,11 +55,16 @@ function About() {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           <img
-            src="./about-3.jpg"
+            src="https://picsum.photos/450/450?blur=5"
+            data-src="./about-2.jpg"
             alt="Collaborative Learning"
             width="450"
             height="450"
             className="rounded-lg shadow-lg"
+            loading="lazy"
+            onLoad={(e) => {
+              e.target.src = e.target.dataset.src; // Swap to main image
+            }}
           />
         </motion.div>
 
@@ -72,11 +77,16 @@ function About() {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <img
-            src="./about-4.jpg"
+            src="https://picsum.photos/450/450?blur=10"
+            data-src="./about-4.jpg"
             alt="Organized Notes"
             width="450"
             height="450"
             className="rounded-lg shadow-lg"
+            loading="lazy"
+            onLoad={(e) => {
+              e.target.src = e.target.dataset.src; // Swap to main image
+            }}
           />
         </motion.div>
 
