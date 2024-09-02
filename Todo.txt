@@ -8,19 +8,13 @@
 -- responsive
 
 
-supabase make it not global
-supabase policies tables
 verification gmail
 Modal Requried forms
 
+tablet responsiveness
 Wild oasis also upload it
 
 
-Code Splitting
-
-About placeholders
-make font face
-back of shoe
 
 Readme 
 gitignore

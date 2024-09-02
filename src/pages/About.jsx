@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'primereact/button';
-import { motion } from 'framer-motion'; // Import motion from framer-motion
+import { motion } from 'framer-motion';
 
 function About() {
   const titleRef = useRef(null);
@@ -16,9 +16,9 @@ function About() {
         <motion.div
           className="flex flex-col gap-10"
           ref={titleRef}
-          initial={{ opacity: 0, y: 20 }} // Initial state for animation
-          animate={{ opacity: 1, y: 0 }} // Final state for animation
-          transition={{ duration: 0.6, delay: 0.2 }} // Duration and delay
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
           <h1 className="text-5xl font-bold text-primary md:text-5xl">
             Welcome to EduData
@@ -55,7 +55,7 @@ function About() {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           <img
-            src="https://picsum.photos/450/450?blur=5"
+            src="./placeholder.jpg"
             data-src="./about-2.jpg"
             alt="Collaborative Learning"
             width="450"
@@ -63,7 +63,7 @@ function About() {
             className="rounded-lg shadow-lg"
             loading="lazy"
             onLoad={(e) => {
-              e.target.src = e.target.dataset.src; // Swap to main image
+              e.target.src = e.target.dataset.src;
             }}
           />
         </motion.div>
@@ -77,7 +77,7 @@ function About() {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <img
-            src="https://picsum.photos/450/450?blur=10"
+            src="./placeholder.jpg"
             data-src="./about-4.jpg"
             alt="Organized Notes"
             width="450"

@@ -19,7 +19,7 @@ function UpdateUserDataForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!fullName || !croppedImage) return;
+    if (!fullName) return;
 
     updateUser(
       { fullName, avatar: croppedImage },

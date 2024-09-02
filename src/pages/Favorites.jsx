@@ -85,7 +85,6 @@ function Favorites() {
       <h1 className="mb-6 mt-10 text-center text-3xl font-bold text-teal-600 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
         Your Favorites
       </h1>
-
       <div className="mb-8 flex flex-col items-center justify-between md:flex-row">
         <SubjectDropdown
           subjects={subjectsData}
@@ -93,7 +92,6 @@ function Favorites() {
           title="All Bookmarks"
         />
       </div>
-
       <div className="grid grid-cols-1 gap-6 bg-white p-6 md:grid-cols-2 lg:grid-cols-3">
         {favoritesToDisplay.length > 0 ? (
           favoritesToDisplay.map((favorite) => (
@@ -129,25 +127,27 @@ function Favorites() {
             </div>
           ))
         ) : (
-          <div className="mt-10 text-center text-gray-500">
+          <div className="mt-10 font-semibold text-gray-500 lg:text-xl">
             <p>You have no favorite notes yet.</p>
           </div>
         )}
       </div>
-      <Paginator
-        first={pagination.first}
-        rows={pagination.rows}
-        totalRecords={totalRecords}
-        onPageChange={handlePageChange}
-        className="p-2 text-xl"
-        template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-        leftContent={
-          <span className="font-bold">
-            {Math.floor(pagination.first / pagination.rows) + 1} of{' '}
-            {Math.ceil(totalRecords / pagination.rows)}
-          </span>
-        }
-      />
+      {favoritesToDisplay.length > 0 && (
+        <Paginator
+          first={pagination.first}
+          rows={pagination.rows}
+          totalRecords={totalRecords}
+          onPageChange={handlePageChange}
+          className="p-2 text-xl"
+          template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+          leftContent={
+            <span className="font-bold">
+              {Math.floor(pagination.first / pagination.rows) + 1} of{' '}
+              {Math.ceil(totalRecords / pagination.rows)}
+            </span>
+          }
+        />
+      )}
     </div>
   );
 }
