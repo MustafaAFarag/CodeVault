@@ -14,7 +14,7 @@ import ProtectedRoute from './ui/ProtectedRoute';
 import ProtectedAdminRoute from './ui/ProtectedAdminRoute';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
-import About from './pages/about';
+import About from './pages/About';
 import AdminPanel from './pages/AdminPanel';
 import Logs from './pages/Logs';
 import Favorites from './pages/Favorites';
