@@ -101,10 +101,10 @@ function UploadNoteModal({
           value={formValues.description}
           onChange={handleChange}
           className="block w-full rounded-lg border border-gray-300 p-3 text-xl text-gray-700 shadow-sm transition duration-200 focus:border-teal-500 focus:ring-teal-500"
-          placeholder="Enter the description"
+          placeholder="Enter the description (Max 210 Characters)"
           disabled={isUploading}
           rows="4"
-          required
+          maxLength={210}
         ></textarea>
       </div>
 

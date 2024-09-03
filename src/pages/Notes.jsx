@@ -134,7 +134,7 @@ function Notes() {
   if (subjectsError) return <ErrorMessage message={subjectsError.message} />;
 
   return (
-    <div className="h-full bg-gray-50 p-4 md:p-8 lg:h-[740px]">
+    <div className="h-full bg-gray-50 p-4 md:p-8 lg:h-auto">
       <h1 className="mb-6 mt-10 text-center text-3xl font-bold text-teal-600 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
         Notes
       </h1>

@@ -10,6 +10,7 @@ import { useSelectedSubject } from '../Notes/useSelectedSubject';
 
 function UploadTodoModal({ isOpen, onClose, onSubmit }) {
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [deadline, setDeadline] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -28,7 +29,8 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
     if (!isOpen) {
       setTitle('');
       setDeadline('');
-      handleSubjectChange({ target: { value: null } }); // Ensure to handle null values
+      setDescription('');
+      handleSubjectChange({ target: { value: null } });
     }
   }, [isOpen, handleSubjectChange]);
 
@@ -44,6 +46,7 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
     const newTodo = {
       title,
       deadline: new Date(deadline).toISOString(),
+      description,
       subject_id: selectedSubject,
     };
 
@@ -81,6 +84,25 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
           onChange={(e) => setTitle(e.target.value)}
           required
         />
+      </div>
+
+      <div className="mb-4">
+        <label
+          htmlFor="description"
+          className="block text-2xl font-semibold text-teal-600"
+        >
+          Description
+        </label>
+        <textarea
+          type="text"
+          id="description"
+          className="mt-1 block w-full rounded-lg border border-gray-300 p-3 text-xl font-medium text-text shadow-sm transition duration-200 focus:border-teal-500 focus:ring-teal-500"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Enter the Description (Max 180 Characters)"
+          required
+          maxLength={180}
+        ></textarea>
       </div>
 
       <SubjectDropdown

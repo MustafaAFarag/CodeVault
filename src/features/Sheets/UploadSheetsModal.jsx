@@ -37,26 +37,7 @@ function UploadSheetsModal({
           className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 text-xl transition duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
           placeholder="Enter the title"
           disabled={isUploading}
-        />
-      </div>
-
-      {/* Description Input */}
-      <div className="mb-5">
-        <label
-          htmlFor="description"
-          className="mb-2 block text-lg font-semibold text-teal-600"
-        >
-          Description
-        </label>
-        <textarea
-          id="description"
-          name="description"
-          value={formValues.description}
-          onChange={handleChange}
-          className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 text-xl transition duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
-          placeholder="Enter a description"
-          rows="4"
-          disabled={isUploading}
+          required
         />
       </div>
 
@@ -75,6 +56,7 @@ function UploadSheetsModal({
           onChange={handleChange}
           className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 text-xl transition duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
           disabled={isUploading}
+          required
         >
           <option value="">Select a subject</option>
           {subjects.map((subject) => (
@@ -83,6 +65,27 @@ function UploadSheetsModal({
             </option>
           ))}
         </select>
+      </div>
+
+      {/* Description Input */}
+      <div className="mb-5">
+        <label
+          htmlFor="description"
+          className="mb-2 block text-lg font-semibold text-teal-600"
+        >
+          Description
+        </label>
+        <textarea
+          id="description"
+          name="description"
+          value={formValues.description}
+          onChange={handleChange}
+          className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 text-xl transition duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
+          placeholder="Enter the description (Max 300 Characters)"
+          maxLength={300}
+          rows="4"
+          disabled={isUploading}
+        />
       </div>
 
       {/* File Input */}

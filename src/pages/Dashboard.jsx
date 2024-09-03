@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { useTodos } from '../features/Todo/useTodos';
+import { useTodos } from '../features/Dashboard/useTodos';
 import { useUsers } from '../features/authentication/useUsers';
 import { useNotes } from '../features/Notes/useNotes';
 import { useCleanUp } from '../hooks/useCleanup';
@@ -13,6 +13,7 @@ import { toast } from 'react-hot-toast';
 import { useUser } from '../features/authentication/useUser';
 import Spinner from '../ui/Spinner';
 import ErrorMessage from '../ui/ErrorMessage';
+import '../styles/index.css';
 
 function Dashboard() {
   useCleanUp();
@@ -36,8 +37,10 @@ function Dashboard() {
     (id) => {
       confirmDialog({
         message: 'Are you sure you want to delete this assignment?',
-        header: 'Confirmation',
+        header: 'Delete Confirmation',
         icon: 'pi pi-exclamation-triangle',
+        acceptClassName: 'p-button-primary',
+        rejectClassName: 'p-button-secondary',
         accept: () => deleteMutation.mutate(id),
         reject: () => toast.error('Delete action canceled'),
       });

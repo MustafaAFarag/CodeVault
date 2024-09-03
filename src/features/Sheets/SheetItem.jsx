@@ -28,7 +28,7 @@ const SheetItem = memo(({ sheet, user, handleDeleteSheet, isDeleting }) => {
       </div>
 
       <p className="mb-4 text-sm text-gray-700 md:text-xl">
-        {sheet.description || 'No description available '}
+        {sheet.description || 'No description provided '}
       </p>
 
       <a

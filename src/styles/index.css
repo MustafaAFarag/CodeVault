@@ -126,3 +126,60 @@ body {
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
+
+.p-confirm-dialog {
+  border-radius: 12px; /* Rounded corners */
+  padding: 20px; /* More padding inside the dialog */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Soft shadow for a clean look */
+}
+
+.p-confirm-dialog .p-dialog-header {
+  border-bottom: none; /* Remove the header border */
+  padding-bottom: 10px; /* Add some space below the header */
+}
+
+.p-confirm-dialog .p-dialog-content {
+  padding-top: 10px; /* Add some space above the content */
+  font-size: 16px; /* Slightly larger font for better readability */
+  line-height: 1.5; /* Increase line-height for spacing */
+}
+
+.p-confirm-dialog .p-dialog-footer {
+  border-top: none; /* Remove the footer border */
+  padding-top: 10px; /* Add some space above the footer */
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 8px; /* Add spacing between buttons */
+}
+
+.p-confirm-dialog .p-button {
+  border-radius: 8px; /* Rounded buttons */
+  padding: 10px 16px; /* Spacious buttons */
+  font-weight: 500; /* Slightly bold text for buttons */
+}
+
+/* Styling for the 'Cancel' button (No) */
+.p-confirm-dialog .p-button-secondary {
+  background-color: #f5f5f5; /* Light gray background for the cancel button */
+  color: #333; /* Darker text color for the cancel button */
+}
+
+.p-confirm-dialog .p-button-secondary:hover {
+  background-color: #e0e0e0; /* Darker gray on hover */
+}
+
+/* Styling for the 'Accept' button (Yes) to match the Create To-Do button */
+.p-confirm-dialog .p-button-primary {
+  background-color: #14b8a6; /* Teal background color to match bg-teal-500 */
+  color: white; /* White text color */
+  border-radius: 0.375rem; /* Rounded border (matching Tailwind rounded class) */
+  padding: 0.5rem 1rem; /* Padding: matching px-4 py-2 */
+  font-size: 1.125rem; /* Text size matching text-lg */
+  font-weight: 600; /* Font weight matching font-semibold */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Shadow to match shadow-lg */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.p-confirm-dialog .p-button-primary:hover {
+  background-color: #0f766e; /* Darker teal color to match hover:bg-teal-600 */
+}
