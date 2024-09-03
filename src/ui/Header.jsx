@@ -12,7 +12,7 @@ function Header() {
       className="col-start-2 row-start-1 flex items-center justify-between gap-10 border-b border-gray-300 bg-teal-600 px-6 py-4 text-text md:px-8 md:py-6"
     >
       <FavoriteHeader />
-      <header className="mr-1 flex items-center md:gap-3">
+      <header className="flex md:gap-3">
         <UserAvatar />
         <HeaderMenu />
       </header>

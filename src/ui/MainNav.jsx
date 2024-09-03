@@ -20,7 +20,7 @@ function MainNav({ toggleSidebar }) {
   };
 
   return (
-    <nav>
+    <nav className="h-full">
       <ul className="flex flex-col gap-6 pl-2 text-lg font-semibold md:gap-10 md:pl-5 md:text-xl">
         <li>
           <StyledNavLink to="/dashboard" onClick={handleLinkClick}>

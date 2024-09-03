@@ -20,9 +20,7 @@ function UserAvatar() {
         whileHover={{ scale: 1.05 }} // Add hover effect to the image
         transition={{ duration: 0.2 }}
       />
-      <span className="text-nowrap text-lg text-text lg:text-xl">
-        {full_name}
-      </span>
+      <span className="text-lg text-text lg:text-xl">{full_name}</span>
     </motion.div>
   );
 }

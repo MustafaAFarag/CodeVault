@@ -5,6 +5,7 @@ import { useSuspendMutation } from '../features/Admin/useSuspendMutation';
 import { UserList } from '../features/Admin/UserList';
 import { useUser } from '../features/authentication/useUser';
 import Spinner from '../ui/Spinner';
+import { toast } from 'react-hot-toast';
 import ErrorMessage from '../ui/ErrorMessage';
 
 function AdminPanel() {
@@ -17,27 +18,88 @@ function AdminPanel() {
 
   const handleRoleChange = (userId, newRole) => {
     const targetUser = users.find((u) => u.id === userId);
+
     if (user.role === 'super_admin') {
-      roleMutation.mutate({ userId, newRole, adminId: user.id });
+      roleMutation.mutate(
+        { userId, newRole, adminId: user.id },
+        {
+          onSuccess: () => {
+            toast.success(
+              `User ${targetUser.full_name} promoted to ${newRole}`,
+            );
+          },
+          onError: () => {
+            toast.error(`Failed to change role for ${targetUser.full_name}`);
+          },
+        },
+      );
     } else if (user.role === 'admin') {
       if (targetUser.role === 'admin') return;
       if (newRole === 'basic' || newRole === 'verified') {
-        roleMutation.mutate({ userId, newRole, adminId: user.id });
+        roleMutation.mutate(
+          { userId, newRole, adminId: user.id },
+          {
+            onSuccess: () => {
+              toast.success(
+                `User ${targetUser.full_name} changed to ${newRole}`,
+              );
+            },
+            onError: () => {
+              toast.error(`Failed to change role for ${targetUser.full_name}`);
+            },
+          },
+        );
       }
     }
   };
 
   const handleSuspendUser = (userId, isSuspended) => {
     const targetUser = users.find((u) => u.id === userId);
+
     if (user.role === 'super_admin') {
-      suspendMutation.mutate({ userId, isSuspended, adminId: user.id });
+      suspendMutation.mutate(
+        { userId, isSuspended, adminId: user.id },
+        {
+          onSuccess: () => {
+            toast.success(
+              `User ${targetUser.full_name} ${
+                isSuspended ? 'suspended' : 'unsuspended'
+              }`,
+            );
+          },
+          onError: () => {
+            toast.error(
+              `Failed to ${isSuspended ? 'suspend' : 'unsuspend'} ${
+                targetUser.full_name
+              }`,
+            );
+          },
+        },
+      );
     } else if (user.role === 'admin') {
       if (targetUser.role !== 'admin') {
-        suspendMutation.mutate({ userId, isSuspended, adminId: user.id });
+        suspendMutation.mutate(
+          { userId, isSuspended, adminId: user.id },
+          {
+            onSuccess: () => {
+              toast.success(
+                `User ${targetUser.full_name} ${
+                  isSuspended ? 'suspended' : 'unsuspended'
+                }`,
+              );
+            },
+            onError: () => {
+              toast.error(
+                `Failed to ${isSuspended ? 'suspend' : 'unsuspend'} ${
+                  targetUser.full_name
+                }`,
+              );
+            },
+          },
+        );
       }
     }
   };
-
   if (isLoading) return <Spinner />;
   if (error) return <ErrorMessage />;
 

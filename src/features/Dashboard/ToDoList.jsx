@@ -6,13 +6,15 @@ const ToDoList = ({
   createMutation,
   user,
 }) => (
-  <div className="custom-scrollbar row-start-3 overflow-y-auto rounded-lg bg-white p-6 shadow-md md:col-span-2 lg:h-[300px] xl:col-span-2 xl:col-start-2 xl:row-start-1 2xl:h-[350px]">
+  <div className="custom-scrollbar row-start-3 overflow-y-auto rounded-lg bg-white p-6 shadow-md md:col-span-2 lg:col-start-2 lg:row-start-1 lg:h-[300px] xl:col-span-2 xl:col-start-2 xl:row-start-1 2xl:h-[350px]">
     <div className="mb-4 flex items-center justify-between">
-      <h2 className="text-3xl font-semibold text-teal-600">To-Do List</h2>
+      <h2 className="text-xl font-semibold text-teal-600 lg:text-3xl">
+        To-Do List
+      </h2>
       {(user.role === 'admin' || user.role === 'super_admin') && (
         <button
           onClick={() => setIsModalOpen(true)}
-          className="rounded bg-teal-500 px-4 py-2 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:bg-teal-600 lg:text-xl"
+          className="rounded bg-teal-500 px-4 py-2 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-teal-600 lg:text-xl"
           disabled={createMutation.isLoading}
         >
           Create To-Do
@@ -25,7 +27,7 @@ const ToDoList = ({
         No assignments are due. Enjoy your day!
       </div>
     ) : (
-      <ul className="space-y-2">
+      <ul className="h-[200px] space-y-2">
         {toDos.map((todo) => (
           <li
             key={todo.id}
