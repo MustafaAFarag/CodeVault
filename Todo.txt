@@ -1,20 +1,15 @@
-- Users of the app are types ( ordinary -verified - Admin ).
 - Users have badges and tags 
 - Incentivize Early Adoption: Offer rewards or recognition to the first set of users who upload notes or reach certain milestones.
 - Daily Challenges: Offer daily or weekly study challenges, such as “Review last week’s notes” or “Complete a practice quiz,” to keep students engaged
 - Streaks & Rewards: Encourage continuous study with streaks for completing daily challenges and offer rewards like badges or points.
 
 
--- responsive
-
-
 verification gmail
-
-Wild oasis also upload it
-
+Wild oasis also upload it and other projects
 
 
-Readme 
+ReadMe 
+LinkedIn
 gitignore
 
 

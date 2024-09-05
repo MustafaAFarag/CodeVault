@@ -1,78 +1,112 @@
-NoteVault is a college community website that help share notes and prepare for exams/studying throughout all year long
+# EduData
 
-This is a external interactive application where there will be users ( my college peers ) and administrater ( me and people i handpick )
+EduData is a web application designed for college peers to share their notes, lecture sheets, and section repositories with each other. Users can upload, rate, and favorite notes, access a dashboard with various functionalities, and participate in leaderboards.
 
-We have no API or anything yet , so we will use Supabase
+## Table of Contents
 
-Project Requriments :
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Getting Started](#getting-started)
+  - [Installation](#installation)
+  - [Usage](#usage)
+- [Components](#components)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-- Users of the app are two types ( User - Admin ). They need to be logged into the application to perform tasks
-- New users can sign up through a form
-- Users should be able to upload an avatar , and change their name and password
-- User data should contain : Full Name ,email , nationality , country flag , year in college , age
-- Leaderboard based on some system (still thinking)
-- Notes that can be uploaded by all users ( for now then will be for verified )
-- Users can rate the uploads
-- Home Page where basic lectures and sheets for each subject will be displayed at
-- Incentivize Early Adoption: Offer rewards or recognition to the first set of users who upload notes or reach certain milestones.
-- Daily Challenges: Offer daily or weekly study challenges, such as “Review last week’s notes” or “Complete a practice quiz,” to keep students engaged.
-- Custom Quizzes: Allow students to create and take quizzes based on their course material or shared notes, helping with regular revision.
-- Streaks & Rewards: Encourage continuous study with streaks for completing daily challenges and offer rewards like badges or points.
-- App needs dark mode ( not prio )
+## Features
 
-Feature Categories :
-1 ) Dashboard with leaderboards
-2 ) Homework
-3 ) Exam Prepping
-4 ) Finals - Midterms
-5 ) To-Do List
-6 ) Login / Sign-up
-7 ) Account Settings
-8 ) Authentication
+- **Landing Page**: A welcoming page that includes:
 
-----Home (/dashboard):
+  - About: Information about EduData.
+  - Login: Access for registered users.
+  - Signup: Registration for new users.
 
-A dashboard overview with quick access to recent notes, upcoming quizzes, and a summary of recent activities.
-A personalized greeting with the user's current streak and badges earned.
-Notifications about new lectures or shared notes.
+- **Main Application**:
 
-----Notes (/notes):
+  - **Dashboard**:
+    - Leaderboard of the first 100 users who signed up.
+    - Top 5 notes rated by users.
+    - A to-do list for assignments and projects.
+    - Top 5 users who uploaded the most.
+  - **Notes**: Upload and manage your notes.
+  - **Lectures**: Repository for lecture sheets.
+  - **Sections**: Repository for section notes.
+  - **Admin Panel**: Manage users and content.
+  - **Logs**: View application logs.
+  - **Favorites**: Access your favorite notes and materials.
+  - **User Settings**: Manage your profile and application preferences.
+  - **Logout**: Securely log out of the application.
 
-A page where students can browse, upload, and search for notes by subject, course, or date.
-Options to filter by popularity, rating, or recency.
-A section for users to see their own uploaded notes and manage them.
+- **User Interaction**:
+  - Upload and share notes with peers.
+  - Rate and favorite notes.
+  - Access sheets and repositories for lectures and sections.
 
-----Lectures (/lectures):
+## Screenshots
 
-A page listing all available lecture materials, either by course or subject.
-Integration with video lectures or slide presentations, if applicable.
-A feature to bookmark or download lectures for offline viewing.
+## Getting Started
 
-----QuizTime! (/quiztime): ( not prio )
+### Installation
 
-A quiz hub where students can take quizzes based on their subjects.
-A leaderboard showcasing top performers.
-A history of taken quizzes with scores and badges earned.
+To set up the project locally:
 
-----Settings (/settings):
+1. Clone the repository:
 
-User profile settings, including the ability to change the display name, email, and password.
-Notifications and preferences management.
-Account management, such as connecting or disconnecting from social accounts or deleting the account.
-You could also consider adding a few more items depending on your project's needs:
+   ```bash
+   git clone https://github.com/yourusername/EduData.git
+   cd EduData
+   ```
 
-----Community (/community): ( not prio )
+2. Install dependencies:
 
-A forum or chat space where students can discuss topics, ask questions, or form study groups.
+   ```bash
+   npm install
+   ```
 
-----Resources (/resources):
+3. Start the development server:
 
-Additional study resources like past papers, reference books, or recommended reading materials.
+   ```bash
+   npm run dev
+   ```
 
-Tech Stack :
-Routing => React Router
-Styling => Tailwind CSS
-Remote State Mangement => React Query
-UI state management => If you think there is no UI state needed in the App => Context API , otherwise Redux
-Form Management => React Hook Form
-other tools => React icons / React hot toast / Recharts / date-fns / Supabase
+4. Open your browser and visit `http://localhost:3001` to view the application.
+
+### Usage
+
+1. Sign up or log in to your account.
+2. Explore the dashboard to view leaderboards, top notes, and your to-do list.
+3. Upload and manage your notes, rate others' notes, and save favorites.
+4. Access the lectures and sections repository for additional resources.
+
+## Components
+
+The main components of EduData include:
+
+- **Landing Page**: Introduction to the app with links to about, login, and signup pages.
+- **Dashboard**: Overview of the app's highlights, including leaderboards and top content.
+- **Notes Management**: Upload, view, and manage notes.
+- **Lectures and Sections**: Browse and access lecture sheets and section notes.
+- **Admin Panel**: Control panel for managing users and content.
+- **User Settings**: Update profile information and preferences.
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature/YourFeature`.
+3. Make your changes and commit them: `git commit -m 'Add some feature'`.
+4. Push to the branch: `git push origin feature/YourFeature`.
+5. Open a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For any inquiries or issues, please reach out to:
+
+- **Mustafa Ashraf** - [mustafa.ashraf.saad@gmail.com ](mailto:mustafa.ashraf.saad@gmail.com)
+- GitHub: [MustafaAFarag](https://github.com/MustafaAFarag)
