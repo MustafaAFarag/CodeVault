@@ -68,19 +68,21 @@ function Logs() {
           </div>
         )}
 
-        <Paginator
-          first={page * rows}
-          rows={rows}
-          totalRecords={totalLogs}
-          onPageChange={onPageChange}
-          className="mt-6 p-2 text-xl"
-          template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-          leftContent={
-            <span className="font-bold">
-              {page + 1} of {Math.ceil(totalLogs / rows)}
-            </span>
-          }
-        />
+        {paginatedLogs.length > 0 && (
+          <Paginator
+            first={page * rows}
+            rows={rows}
+            totalRecords={totalLogs}
+            onPageChange={onPageChange}
+            className="mt-6 p-2 text-xl"
+            template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+            leftContent={
+              <span className="font-bold">
+                {page + 1} of {Math.ceil(totalLogs / rows)}
+              </span>
+            }
+          />
+        )}
       </div>
     </div>
   );

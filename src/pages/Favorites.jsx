@@ -127,8 +127,8 @@ function Favorites() {
             </div>
           ))
         ) : (
-          <div className="mt-10 font-semibold text-gray-500 lg:text-xl">
-            <p>You have no favorite notes yet.</p>
+          <div className="items center col-span-full flex justify-center text-xl font-semibold text-gray-500">
+            No favorites yet
           </div>
         )}
       </div>

@@ -1,28 +1,43 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+
+import { Toaster } from 'react-hot-toast';
+
 import AppLayout from './ui/AppLayout';
+import HomeLayout from './ui/HomeLayout';
+import ProtectedRoute from './ui/ProtectedRoute';
+import ProtectedAdminRoute from './ui/ProtectedAdminRoute';
+
 import Homepage from './pages/Homepage';
+import About from './pages/About';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 import PageNotFound from './pages/PageNotFound';
 import Notes from './pages/Notes';
 import Account from './pages/Account';
 import Lectures from './pages/Lectures';
 import Sections from './pages/Sections';
-import Login from './pages/Login';
-import { Toaster } from 'react-hot-toast';
-import ProtectedRoute from './ui/ProtectedRoute';
-import ProtectedAdminRoute from './ui/ProtectedAdminRoute';
-import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
-import About from './pages/About';
 import AdminPanel from './pages/AdminPanel';
 import Logs from './pages/Logs';
 import Favorites from './pages/Favorites';
-import HomeLayout from './ui/HomeLayout';
 
 const queryClient = new QueryClient();
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (window.gtag) {
+      window.gtag('config', 'G-P3TPJPS1QN', {
+        page_path: location.pathname,
+      });
+    }
+  }, [location.pathname]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />

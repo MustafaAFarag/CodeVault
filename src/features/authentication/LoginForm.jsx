@@ -16,8 +16,9 @@ function LoginForm() {
     login(
       { email, password },
       {
-        onSuccess: () => {
-          toast.success('Login Successful!');
+        onSuccess: (response) => {
+          console.log(response.user);
+          // The success handler now relies on fetching user details from the `users` table
         },
         onError: (error) => {
           toast.error(`Login failed: ${error.message}`);
@@ -38,6 +39,7 @@ function LoginForm() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
+      {/* Form Fields */}
       <div className="mb-6 flex flex-col gap-4">
         <label htmlFor="email" className="text-2xl font-semibold text-gray-700">
           Email Address
