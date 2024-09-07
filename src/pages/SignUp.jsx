@@ -16,7 +16,7 @@ function SignUp() {
         {/* Left side: Image or Picture */}
         <div className="hidden w-1/2 lg:block">
           <img
-            src="./sign-up.jpg"
+            src="./signup.jpg"
             alt="Signup Illustration"
             className="h-full w-full rounded-l-lg object-cover"
           />

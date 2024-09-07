@@ -56,7 +56,7 @@ function About() {
         >
           <img
             src="./placeholder.jpg"
-            data-src="./about-2.jpg"
+            data-src="./about1.jpg"
             alt="Collaborative Learning"
             width="450"
             height="450"
@@ -78,7 +78,7 @@ function About() {
         >
           <img
             src="./placeholder.jpg"
-            data-src="./about-4.jpg"
+            data-src="./about2.jpg"
             alt="Organized Notes"
             width="450"
             height="450"
