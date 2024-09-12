@@ -17,9 +17,9 @@ function Homepage() {
         </motion.h1>
 
         <motion.h2
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
           className="mb-6 text-xl font-semibold tracking-tight text-text md:text-2xl lg:text-2xl"
         >
           Search Less, Study More

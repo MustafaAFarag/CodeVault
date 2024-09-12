@@ -37,12 +37,14 @@ function About() {
             enhanced.
           </motion.p>
           <p className="text-lg md:text-2xl">
-            Whether you&apos;re a student looking to catch up on missed lectures
-            or someone who wants to consolidate your understanding before exams,
-            Edudata provides a vast repository of resources at your fingertips.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, at!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit,
-            tempore.
+            Whether you&apos;re catching up on lectures, revising for exams, or
+            looking for new insights into your coursework, EduData provides a
+            wealth of resources at your fingertips is right here, crafted by
+            students for students.
+          </p>
+          <p className="text-lg md:text-2xl">
+            Our platform makes it easy to find exactly what you need, when you
+            need it.
           </p>
         </motion.div>
 
@@ -110,7 +112,7 @@ function About() {
             Join our growing community of learners, contribute your knowledge,
             and benefit from the collective wisdom of others. Together, we can
             achieve academic excellence and make studying a more enjoyable and
-            effective experience.
+            effective experience!
           </p>
           <Link to="/dashboard">
             <Button

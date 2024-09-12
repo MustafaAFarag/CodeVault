@@ -10,10 +10,10 @@ function ProtectedRoute({ children }) {
   // 1. Load the autenticated User
   const { isLoading, isAuthenticated } = useUser();
 
-  // 2. if there is no authenticated user , redirect to /login
+  // 2. if there is no authenticated user , redirect to /signup
   useEffect(
     function () {
-      if (!isAuthenticated && !isLoading) navigate('/login');
+      if (!isAuthenticated && !isLoading) navigate('/signup');
     },
     [isAuthenticated, isLoading, navigate],
   );

@@ -15,12 +15,6 @@ export function useLogin() {
         // Fetch user details from the 'users' table
         const userDetails = await getCurrentUser();
 
-        // Check if the user is suspended
-        if (userDetails.suspended) {
-          toast.error('Your account has been suspended.');
-          return;
-        }
-
         // Set user data in the cache
         queryClient.setQueryData(['user'], userDetails);
 
@@ -30,7 +24,6 @@ export function useLogin() {
         toast.error('Failed to fetch user details');
       }
     },
-    onError: (error) => toast.error('Provided email or password is incorrect'),
   });
 
   return { login, isLoading: isPending };
