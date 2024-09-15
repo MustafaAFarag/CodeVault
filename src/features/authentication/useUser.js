@@ -5,7 +5,7 @@ export function useUser() {
   const { isLoading, data: user } = useQuery({
     queryKey: ['user'],
     queryFn: getCurrentUser,
-    retry: false, // Avoid retries to handle errors gracefully
+    retry: false,
   });
 
   return { isLoading, user, isAuthenticated: !!user };

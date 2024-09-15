@@ -180,7 +180,7 @@ function Notes() {
       ) : (
         <p className="text-center font-semibold text-gray-600 md:text-xl">
           {selectedSubject
-            ? 'No notes available for this subject.'
+            ? 'No notes uploaded for this subject.'
             : 'Please select a subject to view notes.'}
         </p>
       )}

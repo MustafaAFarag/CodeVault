@@ -168,7 +168,7 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
       ) : (
         <p className="text-center font-semibold text-gray-600 md:text-xl">
           {selectedSubject
-            ? 'No sheets available for this subject.'
+            ? 'No sheets uploaded for this subject.'
             : 'Please select a subject to view sheets.'}
         </p>
       )}

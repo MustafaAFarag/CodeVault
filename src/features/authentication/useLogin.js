@@ -10,7 +10,7 @@ export function useLogin() {
 
   const { mutate: login, isPending } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
-    onSuccess: async (response) => {
+    onSuccess: async () => {
       try {
         // Fetch user details from the 'users' table
         const userDetails = await getCurrentUser();

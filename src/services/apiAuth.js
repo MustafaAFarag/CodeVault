@@ -102,17 +102,21 @@ export async function updateCurrentUser({ password, fullName, avatar }) {
   }
 
   // Handle avatar upload
-  let avatarUrl;
-  if (avatar) {
-    const fileName = `avatar-${userId}-${Math.random()}`;
+  if (avatar !== undefined) {
+    // This condition allows for an empty string
+    let avatarUrl = '';
 
-    const { error: storageError } = await supabase.storage
-      .from('avatars')
-      .upload(fileName, avatar, { contentType: 'image/jpeg' });
+    if (avatar) {
+      const fileName = `avatar-${userId}-${Math.random()}`;
 
-    if (storageError) throw new Error(storageError.message);
+      const { error: storageError } = await supabase.storage
+        .from('avatars')
+        .upload(fileName, avatar, { contentType: 'image/jpeg' });
 
-    avatarUrl = `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`;
+      if (storageError) throw new Error(storageError.message);
+
+      avatarUrl = `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`;
+    }
 
     const { error: updateAvatarError } = await supabase
       .from('users')

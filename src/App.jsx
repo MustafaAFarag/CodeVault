@@ -30,7 +30,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
-        <Analytics /> {/* Include the Analytics component here */}
+        <Analytics />
         <Routes>
           <Route element={<HomeLayout />}>
             <Route path="/" element={<Homepage />} />

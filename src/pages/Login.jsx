@@ -32,7 +32,7 @@ function Login() {
             <LoginForm />
             <Link
               to="/signup"
-              className="text-center text-lg text-blue-500 hover:text-blue-400"
+              className="text-center text-xl text-blue-500 hover:text-blue-400"
             >
               Don&apos;t have an account?
               <span className="font-semibold text-blue-700"> Sign up!</span>

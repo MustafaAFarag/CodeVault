@@ -81,9 +81,9 @@ function Favorites() {
   if (error || subjectsError) return <ErrorMessage />;
 
   return (
-    <div className="h-full bg-gray-50 p-4 md:p-8 lg:h-[650px]">
+    <div className="h-full bg-gray-50 p-4 md:p-8 lg:h-auto">
       <h1 className="mb-6 mt-10 text-center text-3xl font-bold text-teal-600 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
-        Your Favorites
+        Favorites
       </h1>
       <div className="mb-8 flex flex-col items-center justify-between md:flex-row">
         <SubjectDropdown
@@ -92,7 +92,11 @@ function Favorites() {
           title="All Bookmarks"
         />
       </div>
-      <div className="grid grid-cols-1 gap-6 bg-white p-6 md:grid-cols-2 lg:grid-cols-3">
+      <div
+        className={`grid grid-cols-1 gap-6 p-6 md:grid-cols-2 lg:grid-cols-3 ${
+          favoritesToDisplay.length > 0 ? 'bg-white' : ''
+        }`}
+      >
         {favoritesToDisplay.length > 0 ? (
           favoritesToDisplay.map((favorite) => (
             <div
@@ -127,9 +131,9 @@ function Favorites() {
             </div>
           ))
         ) : (
-          <div className="items center col-span-full flex justify-center text-xl font-semibold text-gray-500">
+          <p className="items center col-span-full flex justify-center text-xl font-semibold text-gray-600 md:text-xl">
             No favorites yet
-          </div>
+          </p>
         )}
       </div>
       {favoritesToDisplay.length > 0 && (

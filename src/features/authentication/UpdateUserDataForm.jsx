@@ -53,6 +53,17 @@ function UpdateUserDataForm() {
     }
   };
 
+  const handleResetAvatar = async () => {
+    try {
+      await updateUser({ fullName, avatar: '' });
+      setAvatar(null);
+      setCroppedImage(null);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Failed to reset avatar:', error);
+    }
+  };
+
   const handleCropComplete = useCallback(() => {
     if (editorRef.current) {
       const canvas = editorRef.current.getImageScaledToCanvas();
@@ -125,6 +136,14 @@ function UpdateUserDataForm() {
       )}
 
       <div className="flex justify-end gap-4 pt-4">
+        <button
+          type="button"
+          disabled={isUpdating}
+          onClick={handleResetAvatar}
+          className="transform rounded-lg bg-gray-200 px-4 py-2 text-base transition-transform hover:scale-105 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 md:text-lg lg:text-xl"
+        >
+          Reset to Default
+        </button>
         <button
           type="button"
           disabled={isUpdating}
