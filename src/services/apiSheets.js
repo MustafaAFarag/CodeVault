@@ -1,3 +1,5 @@
+// Deletion from Storage is bugged
+
 /* eslint-disable no-unused-vars */
 import supabase, { supabaseUrl } from './supabase';
 import { getRandomLetter, sanitizeFileName } from './apiNotes';
@@ -33,13 +35,15 @@ export async function fetchSectionsAndSheets() {
 }
 
 async function uploadFile(file, bucket) {
+  const uploadFolder = 'sheets_uploads';
+
   // Sanitize the file name
   const sanitizedFileName = sanitizeFileName(`${Date.now()}-${file.name}`);
 
   // Upload the file to the specified bucket
   const { data, error } = await supabase.storage
     .from(bucket)
-    .upload(sanitizedFileName, file);
+    .upload(`${uploadFolder}/${sanitizedFileName}`, file);
 
   if (error) {
     console.error('Upload error:', error.message);
@@ -50,7 +54,9 @@ async function uploadFile(file, bucket) {
   const {
     data: { publicUrl },
     error: urlError,
-  } = supabase.storage.from(bucket).getPublicUrl(sanitizedFileName);
+  } = supabase.storage
+    .from(bucket)
+    .getPublicUrl(`${uploadFolder}/${sanitizedFileName}`);
 
   if (urlError) {
     console.error('URL fetch error:', urlError.message);
@@ -117,7 +123,7 @@ export async function uploadSectionSheet({
 }
 
 async function deleteSheet({ table, sheetId, bucket }) {
-  // Fetch the sheet from the database to get the URL or file name
+  // Fetch the sheet details to get the URL
   const { data: sheetData, error: fetchError } = await supabase
     .from(table)
     .select('url')
@@ -125,8 +131,19 @@ async function deleteSheet({ table, sheetId, bucket }) {
     .single();
 
   if (fetchError) {
-    console.error('Fetch error:', fetchError.message);
     throw new Error('Failed to fetch sheet details');
+  }
+
+  // Extract the file name from the URL
+  const fileName = sheetData.url.split('/').pop();
+
+  // Delete the file from storage
+  const { error: storageError } = await supabase.storage
+    .from(bucket)
+    .remove([fileName]);
+
+  if (storageError) {
+    throw new Error('Failed to delete the file from storage');
   }
 
   // Delete the sheet from the database
@@ -136,21 +153,7 @@ async function deleteSheet({ table, sheetId, bucket }) {
     .eq('id', sheetId);
 
   if (deleteError) {
-    console.error('Delete error:', deleteError.message);
     throw new Error('Failed to delete the sheet from the database');
-  }
-
-  // Extract the file name from the URL
-  const fileName = sheetData.url.split('/').pop();
-
-  // Delete the file from the storage
-  const { error: storageError } = await supabase.storage
-    .from(bucket)
-    .remove([fileName]);
-
-  if (storageError) {
-    console.error('Storage delete error:', storageError.message);
-    throw new Error('Failed to delete the file from storage');
   }
 }
 

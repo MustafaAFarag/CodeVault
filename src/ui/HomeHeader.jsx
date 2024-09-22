@@ -9,7 +9,7 @@ function HomeHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-secondary px-4 py-3 md:px-10 ${
+      className={`sticky top-0 z-[999] border-b border-secondary px-4 py-3 md:px-10 ${
         isHomePage ? 'border-b-0 bg-transparent' : 'bg-white'
       }`}
     >

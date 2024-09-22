@@ -83,7 +83,7 @@ function Dashboard() {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-      <Top5Users top5Users={top5Users} />
+      <Top5Users top5Users={top5Users} user={user} />
       <Top5Notes top5Notes={top5Notes} />
       <ToDoList
         toDos={todos}

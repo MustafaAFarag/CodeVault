@@ -48,9 +48,19 @@ const ToDoList = ({
                 </p>
               </div>
               {todo.description && (
-                <p className="mt-3 text-sm text-gray-600 lg:text-lg">
+                <p className="mt-3 text-sm text-gray-600 lg:text-xl">
                   {todo.description}
                 </p>
+              )}
+              {todo.url && (
+                <a
+                  href={todo.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block rounded bg-blue-500 px-3 py-1.5 text-sm text-white transition-all duration-300 hover:bg-blue-600 lg:text-xl"
+                >
+                  View PDF
+                </a>
               )}
             </div>
 

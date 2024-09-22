@@ -24,7 +24,7 @@ function UploadSheetsModal({
       <div className="mb-5">
         <label
           htmlFor="title"
-          className="mb-2 block text-lg font-semibold text-teal-600"
+          className="mb-2 block text-xl font-semibold text-teal-600"
         >
           Title
         </label>
@@ -45,7 +45,7 @@ function UploadSheetsModal({
       <div className="mb-5">
         <label
           htmlFor="subject_id"
-          className="mb-2 block text-lg font-semibold text-teal-600"
+          className="mb-2 block text-xl font-semibold text-teal-600"
         >
           Subject
         </label>
@@ -71,7 +71,7 @@ function UploadSheetsModal({
       <div className="mb-5">
         <label
           htmlFor="description"
-          className="mb-2 block text-lg font-semibold text-teal-600"
+          className="mb-2 block text-xl font-semibold text-teal-600"
         >
           Description
         </label>
@@ -92,7 +92,7 @@ function UploadSheetsModal({
       <div className="mb-5">
         <label
           htmlFor="pdf"
-          className="mb-2 block text-lg font-semibold text-teal-600"
+          className="mb-2 block text-xl font-semibold text-teal-600"
         >
           Upload {title} PDF
         </label>

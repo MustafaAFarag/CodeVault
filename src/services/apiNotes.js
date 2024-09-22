@@ -1,3 +1,4 @@
+// Deletion from Storage is bugged
 import supabase from './supabase';
 
 export async function fetchSubjects() {
@@ -45,31 +46,41 @@ export async function rateNote(noteId, ratingValue, userId) {
 }
 
 export async function deleteNote(noteId) {
-  const { error: ratingError } = await supabase
-    .from('note_rating')
-    .delete()
-    .eq('note_id', noteId);
+  // Fetch the note to get the PDF URL
+  const { data: noteData, error: fetchError } = await supabase
+    .from('notes')
+    .select('pdf_url')
+    .eq('note_id', noteId)
+    .single();
 
-  if (ratingError) {
-    throw new Error(ratingError.message);
+  if (fetchError) {
+    throw new Error('Failed to fetch note details');
   }
 
-  const { error: favoritesError } = await supabase
-    .from('favorites')
-    .delete()
-    .eq('note_id', noteId);
+  // Extract the file name from the URL
+  const fileName = noteData.pdf_url.split('/').pop();
 
-  if (favoritesError) {
-    throw new Error(favoritesError.message);
+  // Delete the PDF file from storage
+  const { error: storageError } = await supabase.storage
+    .from('notes')
+    .remove([fileName]);
+
+  if (storageError) {
+    throw new Error('Failed to delete the file from storage');
   }
 
+  // Delete associated ratings and favorites
+  await supabase.from('note_rating').delete().eq('note_id', noteId);
+  await supabase.from('favorites').delete().eq('note_id', noteId);
+
+  // Delete the note from the database
   const { error: noteError } = await supabase
     .from('notes')
     .delete()
     .eq('note_id', noteId);
 
   if (noteError) {
-    throw new Error(noteError.message);
+    throw new Error('Failed to delete the note');
   }
 }
 
@@ -110,7 +121,7 @@ export async function uploadNote({
 }) {
   // Sanitize the file name
   const sanitizedFileName = sanitizeFileName(pdf.name);
-  const uploadFolder = 'user_uploads';
+  const uploadFolder = 'notes_uploads';
 
   // Upload the PDF file to Supabase Storage with the sanitized file name
   const { data: pdfData, error: uploadError } = await supabase.storage

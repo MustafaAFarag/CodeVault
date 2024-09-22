@@ -25,7 +25,7 @@ function UploadNoteModal({
       <div className="mb-5">
         <label
           htmlFor="author"
-          className="mb-2 block text-lg font-semibold text-teal-600"
+          className="mb-2 block text-xl font-semibold text-teal-600"
         >
           Author
         </label>
@@ -45,7 +45,7 @@ function UploadNoteModal({
       <div className="mb-5">
         <label
           htmlFor="title"
-          className="mb-2 block text-lg font-semibold text-teal-600"
+          className="mb-2 block text-xl font-semibold text-teal-600"
         >
           Title
         </label>
@@ -56,8 +56,9 @@ function UploadNoteModal({
           value={formValues.title}
           onChange={handleChange}
           className="block w-full rounded-lg border border-gray-300 p-3 text-xl text-gray-700 shadow-sm transition duration-200 focus:border-teal-500 focus:ring-teal-500"
-          placeholder="Enter the title"
+          placeholder="Enter the title (Max 50 Characters)"
           disabled={isUploading}
+          maxLength={50}
           required
         />
       </div>
@@ -65,7 +66,7 @@ function UploadNoteModal({
       <div className="mb-5">
         <label
           htmlFor="subject_id"
-          className="mb-2 block text-sm font-semibold text-teal-600"
+          className="mb-2 block text-xl font-semibold text-teal-600"
         >
           Subject
         </label>
@@ -91,7 +92,7 @@ function UploadNoteModal({
       <div className="mb-5">
         <label
           htmlFor="description"
-          className="mb-2 block text-lg font-semibold text-teal-600"
+          className="mb-2 block text-xl font-semibold text-teal-600"
         >
           Description
         </label>
@@ -112,7 +113,7 @@ function UploadNoteModal({
       <div className="mb-5">
         <label
           htmlFor="pdf"
-          className="mb-2 block text-lg font-semibold text-teal-600"
+          className="mb-2 block text-xl font-semibold text-teal-600"
         >
           Upload PDF
         </label>

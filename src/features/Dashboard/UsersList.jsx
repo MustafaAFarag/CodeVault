@@ -29,14 +29,13 @@ const UsersList = ({ users, searchTerm, setSearchTerm }) => {
         {sortedUsers.map((user, index) => (
           <li
             key={user.id}
-            className="flex items-center gap-4 border-b border-gray-300 py-2"
+            className="flex items-center justify-between gap-4 border-b border-gray-300 py-2"
           >
-            {/* Numbered List */}
-            <span className="text-lg font-medium text-gray-500">
-              {index + 1}.
-            </span>
             {/* User Name */}
-            <span className="w-1/2 truncate text-xl">
+            <span className="flex w-1/2 gap-3 truncate text-xl">
+              <span className="text-lg font-medium text-gray-500">
+                {index + 1}.
+              </span>
               {capitalizeFirstLetter(user.full_name)}
             </span>
             {/* User Role */}

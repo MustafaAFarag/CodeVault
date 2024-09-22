@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import Modal from '../../ui/Modal';
 import { useQuery } from '@tanstack/react-query';
@@ -7,11 +6,13 @@ import { fetchSubjects } from '../../services/apiNotes';
 import SubjectDropdown from '../Sheets/SubjectDropdown';
 import { toast } from 'react-hot-toast';
 import { useSelectedSubject } from '../Notes/useSelectedSubject';
+import { uploadFileToSupabase } from '../../services/apiTodos';
 
 function UploadTodoModal({ isOpen, onClose, onSubmit }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [deadline, setDeadline] = useState('');
+  const [file, setFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -30,6 +31,7 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
       setTitle('');
       setDeadline('');
       setDescription('');
+      setFile(null);
       handleSubjectChange({ target: { value: null } });
     }
   }, [isOpen, handleSubjectChange]);
@@ -43,14 +45,21 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
 
     setIsSubmitting(true);
 
-    const newTodo = {
-      title,
-      deadline: new Date(deadline).toISOString(),
-      description,
-      subject_id: selectedSubject,
-    };
-
     try {
+      let fileUrl = '';
+      if (file) {
+        // Upload the file to Supabase and get the URL
+        fileUrl = await uploadFileToSupabase(file);
+      }
+
+      const newTodo = {
+        title,
+        deadline: new Date(deadline).toISOString(),
+        description,
+        subject_id: selectedSubject,
+        url: fileUrl, // Add the file URL here
+      };
+
       await onSubmit(newTodo);
       onClose();
     } catch (error) {
@@ -60,6 +69,8 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
     }
   }
 
+  if (subjectsError) return;
+  if (subjectsLoading) return;
   return (
     <Modal
       isOpen={isOpen}
@@ -72,7 +83,7 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
       <div className="mb-4">
         <label
           htmlFor="title"
-          className="block text-2xl font-semibold text-teal-600"
+          className="block text-xl font-semibold text-teal-600"
         >
           Title
         </label>
@@ -80,8 +91,10 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
           type="text"
           id="title"
           className="mt-1 block w-full rounded-lg border border-gray-300 p-3 text-xl font-medium text-text shadow-sm transition duration-200 focus:border-teal-500 focus:ring-teal-500"
+          placeholder="Enter the title (Max 80 Characters)"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          maxLength={80}
           required
         />
       </div>
@@ -89,12 +102,11 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
       <div className="mb-4">
         <label
           htmlFor="description"
-          className="block text-2xl font-semibold text-teal-600"
+          className="block text-xl font-semibold text-teal-600"
         >
           Description
         </label>
         <textarea
-          type="text"
           id="description"
           className="mt-1 block w-full rounded-lg border border-gray-300 p-3 text-xl font-medium text-text shadow-sm transition duration-200 focus:border-teal-500 focus:ring-teal-500"
           value={description}
@@ -115,7 +127,7 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
       <div className="mb-4">
         <label
           htmlFor="deadline"
-          className="block text-2xl font-semibold text-teal-600"
+          className="block text-xl font-semibold text-teal-600"
         >
           Deadline
         </label>
@@ -126,6 +138,22 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
           value={deadline}
           onChange={(e) => setDeadline(e.target.value)}
           required
+        />
+      </div>
+
+      <div className="mb-4">
+        <label
+          htmlFor="file"
+          className="mb-2 block text-xl font-semibold text-teal-600"
+        >
+          Upload PDF
+        </label>
+        <input
+          type="file"
+          id="file"
+          className="block w-full rounded-lg border border-gray-300 p-3 text-xl text-gray-700 shadow-sm transition duration-200 focus:border-teal-500 focus:ring-teal-500"
+          accept=".pdf"
+          onChange={(e) => setFile(e.target.files[0])}
         />
       </div>
     </Modal>
