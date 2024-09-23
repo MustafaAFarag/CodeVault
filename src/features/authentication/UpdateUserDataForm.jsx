@@ -154,7 +154,8 @@ function UpdateUserDataForm() {
         </button>
         <button
           type="submit"
-          disabled={isUpdating}
+          // disabled={isUpdating}
+          disabled
           className="w-full transform rounded-lg bg-teal-600 px-4 py-2 text-base text-white transition-transform hover:scale-105 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 lg:w-auto lg:text-xl"
         >
           Update Account
