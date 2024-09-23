@@ -16,10 +16,6 @@ function LoginForm() {
     login(
       { email, password },
       {
-        onSuccess: (response) => {
-          console.log(response.user);
-          // The success handler now relies on fetching user details from the `users` table
-        },
         onError: (error) => {
           toast.error(`Login failed: ${error.message}`);
         },
