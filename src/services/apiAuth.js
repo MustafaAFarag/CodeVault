@@ -1,6 +1,5 @@
 import supabase, { supabaseUrl } from './supabase';
 import { addLog } from './apiLogs';
-import { sanitizeFileName } from './apiNotes';
 
 // Function to create a new user in the 'users' table after signing up
 async function createUserInDatabase(userId, fullName, email) {
@@ -104,46 +103,39 @@ export async function updateCurrentUser({ password, fullName, avatar }) {
 
   // Handle avatar upload
   if (avatar !== undefined) {
-    // Fetch the current user details to get the existing avatar URL
-    const { data: userDetails, error: fetchError } = await supabase
-      .from('users')
-      .select('avatar')
-      .eq('id', userId)
-      .single();
+    // This condition allows for an empty string
+    let avatarUrl = '';
 
-    if (fetchError) throw new Error('Failed to fetch user details');
-
-    // Delete existing avatar file if there's one
-    if (userDetails.avatar) {
-      const avatarFileName = userDetails.avatar.split('/').pop();
-      await supabase.storage.from('avatars').remove([avatarFileName]);
-    }
-
-    // Upload new avatar if it's not an empty string
-    let newAvatarUrl = '';
     if (avatar) {
-      const uploadFolder = 'avatar_uploads';
+      const fileName = `avatar-${userId}-${Math.random()}`;
 
-      const sanitizedFileName = sanitizeFileName(
-        `${Date.now()}-${avatar.name}`,
-      );
-      const { error: uploadError } = await supabase.storage
+      const { error: storageError } = await supabase.storage
         .from('avatars')
-        .upload(`${uploadFolder}/${sanitizedFileName}`, avatar);
+        .upload(fileName, avatar, { contentType: 'image/jpeg' });
 
-      if (uploadError) throw new Error('Failed to upload new avatar');
+      if (storageError) throw new Error(storageError.message);
 
-      newAvatarUrl = `${supabaseUrl}/storage/v1/object/public/avatars/${sanitizedFileName}`;
+      avatarUrl = `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`;
     }
 
-    // Update the user's avatar URL in the database
-    const { error: updateError } = await supabase
+    const { error: updateAvatarError } = await supabase
       .from('users')
-      .update({ avatar: newAvatarUrl })
+      .update({ avatar: avatarUrl })
       .eq('id', userId);
 
-    if (updateError) throw new Error(updateError.message);
+    if (updateAvatarError) throw new Error(updateAvatarError.message);
   }
+
+  // Fetch and return the updated user details from the 'users' table
+  const { data: updatedUser, error: fetchUserError } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', userId)
+    .single();
+
+  if (fetchUserError) throw new Error(fetchUserError.message);
+
+  return updatedUser;
 }
 
 export async function fetchUsers() {
