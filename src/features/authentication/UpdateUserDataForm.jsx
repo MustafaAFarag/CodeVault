@@ -160,7 +160,7 @@ function UpdateUserDataForm() {
           type="button"
           disabled={isUpdating}
           onClick={handleResetAvatar}
-          className="transform rounded-lg bg-gray-200 px-4 py-2 text-base transition-transform hover:scale-105 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 md:text-lg lg:text-xl"
+          className="transform rounded-lg bg-gray-200 px-4 py-2 text-sm transition-transform hover:scale-105 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 md:text-lg lg:text-xl"
         >
           Reset to Default
         </button>
@@ -168,14 +168,14 @@ function UpdateUserDataForm() {
           type="button"
           disabled={isUpdating}
           onClick={handleCancel}
-          className="transform rounded-lg bg-gray-200 px-4 py-2 text-base transition-transform hover:scale-105 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 md:text-lg lg:text-xl"
+          className="transform rounded-lg bg-gray-200 px-4 py-2 text-sm transition-transform hover:scale-105 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 md:text-lg lg:text-xl"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={isUpdating}
-          className={`w-full transform rounded-lg bg-teal-600 px-4 py-2 text-base text-white transition-transform hover:scale-105 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 lg:w-auto lg:text-xl ${isUpdating ? 'cursor-not-allowed bg-gray-100' : 'cursor-pointer bg-teal-600'}`}
+          className={`w-full transform rounded-lg bg-teal-600 px-4 py-2 text-sm text-white transition-transform hover:scale-105 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 lg:w-auto lg:text-xl ${isUpdating ? 'cursor-not-allowed bg-gray-100' : 'cursor-pointer bg-teal-600'}`}
         >
           Update Account
         </button>

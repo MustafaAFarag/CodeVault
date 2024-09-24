@@ -17,9 +17,9 @@ const UsersList = ({ users, searchTerm, setSearchTerm }) => {
   return (
     <div className="row-span-2 max-h-[300px] overflow-hidden rounded-lg bg-white p-4 shadow-md sm:p-6 md:row-span-2 md:max-h-[600px] lg:max-h-[6100px] xl:max-h-[600px] 2xl:max-h-[650px]">
       <div className="mb-4 flex flex-col">
-        <h2 className="flex items-center justify-between text-2xl font-semibold">
+        <h2 className="flex items-center justify-between text-xl font-semibold md:text-2xl">
           First 50 Users
-          <span className="text-lg">Total {users.length} Users!</span>
+          <span className="text-base">Total {users.length} Users!</span>
         </h2>
 
         <input
