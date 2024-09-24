@@ -11,14 +11,14 @@ const UsersList = ({ users, searchTerm, setSearchTerm }) => {
           !user.suspended &&
           user.full_name.toLowerCase().includes(searchTerm.toLowerCase()),
       )
-      .slice(0, 100);
+      .slice(0, 50);
   }, [users, searchTerm]);
 
   return (
     <div className="row-span-2 max-h-[300px] overflow-hidden rounded-lg bg-white p-4 shadow-md sm:p-6 md:row-span-2 md:max-h-[600px] lg:max-h-[6100px] xl:max-h-[600px] 2xl:max-h-[650px]">
       <div className="mb-4 flex flex-col">
         <h2 className="flex items-center justify-between text-2xl font-semibold">
-          First 100 Users{' '}
+          First 50 Users
           <span className="text-lg">Total {users.length} Users!</span>
         </h2>
 
