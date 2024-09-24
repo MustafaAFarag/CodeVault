@@ -1,14 +1,15 @@
 /* eslint-disable react/prop-types */
 import { capitalizeFirstLetter } from '../../utils/helpers';
-
 import { useMemo } from 'react';
 
 const UsersList = ({ users, searchTerm, setSearchTerm }) => {
   const sortedUsers = useMemo(() => {
     return users
       .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
-      .filter((user) =>
-        user.full_name.toLowerCase().includes(searchTerm.toLowerCase()),
+      .filter(
+        (user) =>
+          !user.suspended &&
+          user.full_name.toLowerCase().includes(searchTerm.toLowerCase()),
       )
       .slice(0, 100);
   }, [users, searchTerm]);
@@ -16,7 +17,11 @@ const UsersList = ({ users, searchTerm, setSearchTerm }) => {
   return (
     <div className="row-span-2 max-h-[300px] overflow-hidden rounded-lg bg-white p-4 shadow-md sm:p-6 md:row-span-2 md:max-h-[600px] lg:max-h-[6100px] xl:max-h-[600px] 2xl:max-h-[650px]">
       <div className="mb-4 flex flex-col">
-        <h2 className="text-2xl font-semibold">First 100 Users</h2>
+        <h2 className="flex items-center justify-between text-2xl font-semibold">
+          First 100 Users{' '}
+          <span className="text-lg">Total {users.length} Users!</span>
+        </h2>
+
         <input
           type="text"
           placeholder="Search by name"

@@ -13,14 +13,32 @@ function UpdateUserDataForm() {
   const [isEditing, setIsEditing] = useState(false);
   const [croppedImage, setCroppedImage] = useState(null);
   const [scale, setScale] = useState(1);
+  const [nameError, setNameError] = useState('');
 
   const editorRef = useRef(null);
   const { updateUser, isUpdating } = useUpdateUser();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!fullName) return;
 
+    // Regex for validating full name (only letters, min 3 characters)
+    const fullNameRegex = /^[A-Za-z\s]{3,}$/;
+
+    if (!fullName) {
+      setNameError('Full name is required.');
+      return;
+    }
+
+    if (!fullNameRegex.test(fullName)) {
+      setNameError(
+        'Full name must contain only letters and be at least 3 characters long.',
+      );
+      return;
+    }
+
+    setNameError(''); // Clear any existing errors
+
+    // Proceed with updating user if validation passes
     updateUser(
       { fullName, avatar: croppedImage },
       {
@@ -39,6 +57,7 @@ function UpdateUserDataForm() {
     setAvatar(null);
     setCroppedImage(null);
     setIsEditing(false);
+    setNameError('');
   };
 
   const handleFileChange = (e) => {
@@ -92,6 +111,7 @@ function UpdateUserDataForm() {
           disabled={isUpdating}
           className="rounded-lg border border-gray-300 p-2 text-base md:text-lg"
         />
+        {nameError && <span className="text-sm text-red-500">{nameError}</span>}
       </div>
 
       <div className="flex flex-col space-y-2 border-b border-gray-300 py-2">
@@ -154,9 +174,8 @@ function UpdateUserDataForm() {
         </button>
         <button
           type="submit"
-          // disabled={isUpdating}
-          disabled
-          className="w-full transform rounded-lg bg-teal-600 px-4 py-2 text-base text-white transition-transform hover:scale-105 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 lg:w-auto lg:text-xl"
+          disabled={isUpdating}
+          className={`w-full transform rounded-lg bg-teal-600 px-4 py-2 text-base text-white transition-transform hover:scale-105 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 lg:w-auto lg:text-xl ${isUpdating ? 'cursor-not-allowed bg-gray-100' : 'cursor-pointer bg-teal-600'}`}
         >
           Update Account
         </button>

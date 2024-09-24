@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'; // Import icons from react-icons
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import Logo from './Logo';
 import MainNav from './MainNav';
+import { Link } from 'react-router-dom';
+import { Button } from 'primereact/button';
 
 function Sidebar() {
   return (
@@ -18,31 +20,49 @@ function Sidebar() {
       </div>
 
       {/* Bottom Section: Social Media Icons */}
-      <div className="flex items-center justify-center gap-4 rounded-lg bg-gray-800 p-3 shadow-lg md:p-4">
-        <a
-          href="https://mail.google.com/mail/?view=cm&fs=1&to=mustafa.ashraf.saad@gmail.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-teal-300 hover:text-teal-100"
-        >
-          <FaEnvelope size={24} />
-        </a>
-        <a
-          href="https://github.com/MustafaAFarag"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-teal-300 hover:text-teal-100"
-        >
-          <FaGithub size={24} />
-        </a>
-        <a
-          href="https://www.linkedin.com/in/mustafaashrafsaad/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-teal-300 hover:text-teal-100"
-        >
-          <FaLinkedin size={24} />
-        </a>
+      <div className="flex flex-col gap-10">
+        <div className="flex flex-col items-center justify-center gap-4 rounded-lg bg-gray-800 p-3 shadow-lg md:p-4">
+          <Link to="/rules">
+            <Button
+              label="Rules-Policies!"
+              className="w-full rounded-full bg-transparent text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl md:text-lg"
+            />
+          </Link>
+          <Link to="/how-to-use">
+            <Button
+              label="How to Use!"
+              className="w-full rounded-full bg-transparent text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl md:text-lg"
+              disabled
+            />
+          </Link>
+        </div>
+
+        <div className="flex items-center justify-center gap-4 rounded-lg bg-gray-800 p-3 shadow-lg md:p-4">
+          <a
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=mustafa.ashraf.saad@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-teal-300 hover:text-teal-100"
+          >
+            <FaEnvelope size={24} />
+          </a>
+          <a
+            href="https://github.com/MustafaAFarag"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-teal-300 hover:text-teal-100"
+          >
+            <FaGithub size={24} />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/mustafaashrafsaad/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-teal-300 hover:text-teal-100"
+          >
+            <FaLinkedin size={24} />
+          </a>
+        </div>
       </div>
     </motion.aside>
   );

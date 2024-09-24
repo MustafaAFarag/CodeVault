@@ -1,20 +1,10 @@
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+
 import { Link } from 'react-router-dom';
 import LoginForm from '../features/authentication/LoginForm';
 import Logo from '../ui/Logo';
-import { useUser } from '../features/authentication/useUser';
-import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const { user } = useUser();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user) {
-      navigate('/dashboard');
-    }
-  }, [user, navigate]);
   return (
     <main className="flex h-screen items-center justify-center bg-white p-4 text-gray-800 2xl:items-start">
       <motion.div

@@ -22,6 +22,8 @@ import Dashboard from './pages/Dashboard';
 import AdminPanel from './pages/AdminPanel';
 import Logs from './pages/Logs';
 import Favorites from './pages/Favorites';
+import Updates from './pages/Updates';
+import Rules from './pages/Rules';
 
 const queryClient = new QueryClient();
 
@@ -31,6 +33,7 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
         <Analytics />
+
         <Routes>
           <Route element={<HomeLayout />}>
             <Route path="/" element={<Homepage />} />
@@ -52,6 +55,8 @@ function App() {
             <Route path="/sections" element={<Sections />} />
             <Route path="/account" element={<Account />} />
             <Route path="/favorites" element={<Favorites />} />
+            <Route path="/updates" element={<Updates />} />
+            <Route path="/rules" element={<Rules />} />
             <Route element={<ProtectedAdminRoute />}>
               <Route path="/admin" element={<AdminPanel />} />
               <Route path="/logs" element={<Logs />} />

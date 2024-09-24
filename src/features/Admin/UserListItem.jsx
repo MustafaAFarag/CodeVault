@@ -54,6 +54,7 @@ export function UserListItem({
           onClick={() => onSuspendToggle(user.id, !user.suspended)}
           className={`rounded border px-2 py-1 text-sm lg:text-xl ${user.suspended ? 'bg-red-500 text-white' : 'bg-green-500 text-white'} ${!canSuspend ? 'cursor-not-allowed opacity-50' : ''}`}
           disabled={!canSuspend}
+          // disabled
         >
           {user.suspended ? 'Unsuspend' : 'Suspend'}
         </button>

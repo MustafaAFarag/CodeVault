@@ -14,6 +14,7 @@ import { useUser } from '../features/authentication/useUser';
 import Spinner from '../ui/Spinner';
 import ErrorMessage from '../ui/ErrorMessage';
 import '../styles/index.css';
+import UpdateModal from '../ui/UpdateModal';
 
 function Dashboard() {
   useCleanUp();
@@ -78,6 +79,7 @@ function Dashboard() {
 
   return (
     <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+      <UpdateModal />
       <UsersList
         users={filteredUsers}
         searchTerm={searchTerm}

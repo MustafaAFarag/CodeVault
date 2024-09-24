@@ -8,6 +8,7 @@ function Modal({
   children,
   isSubmitting,
   submitText = 'Submit',
+  showButtons = true,
 }) {
   if (!isOpen) return null;
 
@@ -19,31 +20,33 @@ function Modal({
         </h2>
         <form onSubmit={onSubmit}>
           {children}
-          <div className="mt-4 flex justify-end">
-            <button
-              type="button"
-              onClick={onClose}
-              className={`mr-3 rounded-md bg-gray-300 px-4 py-2 text-xl text-gray-700 transition-all ${
-                isSubmitting
-                  ? 'cursor-not-allowed opacity-50'
-                  : 'hover:bg-gray-400'
-              }`}
-              disabled={isSubmitting}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className={`rounded-md bg-teal-500 px-4 py-2 text-xl text-white shadow-md transition-all ${
-                isSubmitting
-                  ? 'cursor-not-allowed opacity-50'
-                  : 'hover:bg-teal-600'
-              }`}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Submitting...' : submitText}
-            </button>
-          </div>
+          {showButtons && ( // Conditional rendering of buttons
+            <div className="mt-4 flex justify-end">
+              <button
+                type="button"
+                onClick={onClose}
+                className={`mr-3 rounded-md bg-gray-300 px-4 py-2 text-xl text-gray-700 transition-all ${
+                  isSubmitting
+                    ? 'cursor-not-allowed opacity-50'
+                    : 'hover:bg-gray-400'
+                }`}
+                disabled={isSubmitting}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className={`rounded-md bg-teal-500 px-4 py-2 text-xl text-white shadow-md transition-all ${
+                  isSubmitting
+                    ? 'cursor-not-allowed opacity-50'
+                    : 'hover:bg-teal-600'
+                }`}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Submitting...' : submitText}
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </div>
