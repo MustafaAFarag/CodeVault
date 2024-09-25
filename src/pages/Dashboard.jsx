@@ -78,29 +78,35 @@ function Dashboard() {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
-      <UpdateModal />
-      <UsersList
-        users={filteredUsers}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-      />
-      <Top5Users top5Users={top5Users} user={user} />
-      <Top5Notes top5Notes={top5Notes} />
-      <ToDoList
-        toDos={todos}
-        handleDeleteTodo={handleDeleteTodo}
-        setIsModalOpen={setIsModalOpen}
-        createMutation={createMutation}
-        user={user}
-      />
-      <UploadTodoModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={handleCreateToDo}
-      />
-      <ConfirmDialog />
-    </div>
+    <>
+      <h2 className="px-4 py-2 text-3xl font-semibold">
+        Welcome{' '}
+        <span className="font-bold text-teal-600">{user.full_name}!</span>
+      </h2>
+      <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+        <UpdateModal />
+        <UsersList
+          users={filteredUsers}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
+        <Top5Users top5Users={top5Users} user={user} />
+        <Top5Notes top5Notes={top5Notes} />
+        <ToDoList
+          toDos={todos}
+          handleDeleteTodo={handleDeleteTodo}
+          setIsModalOpen={setIsModalOpen}
+          createMutation={createMutation}
+          user={user}
+        />
+        <UploadTodoModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSubmit={handleCreateToDo}
+        />
+        <ConfirmDialog />
+      </div>
+    </>
   );
 }
 

@@ -51,7 +51,7 @@ const UsersList = ({ users, searchTerm, setSearchTerm }) => {
             </span>
             {/* User Avatar */}
             <img
-              className="aspect-square h-12 w-12 rounded-full object-cover object-center outline-2 outline-teal-500"
+              className="mr-5 aspect-square h-12 w-12 rounded-full object-cover object-center outline-2 outline-teal-500"
               src={user.avatar || 'default-user.jpg'}
               alt={`Avatar of ${user.full_name}`}
             />
