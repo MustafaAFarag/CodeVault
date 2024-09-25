@@ -74,6 +74,31 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+.custom-scrollbar {
+  scrollbar-width: thin; /* Thin scrollbar width */
+  scrollbar-color: #d1d5db transparent; /* Custom scrollbar color */
+}
+
+/* For WebKit Browsers */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 10px; /* Round corners */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin; /* Use 'thin' for a thin scrollbar */
+  scrollbar-color: rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.1); /* thumb color track color */
+}
+
 .animate {
   will-change: opacity, transform;
 }
@@ -89,7 +114,6 @@ body {
   z-index: 1000;
 }
 
-/* Modal content styling */
 .modal-content {
   position: absolute;
   top: 50%;
@@ -103,28 +127,6 @@ body {
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   z-index: 1001;
   outline: none;
-}
-
-.card {
-  @apply rounded-lg bg-white p-4 shadow-md;
-}
-
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: #d1d5db transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #d1d5db;
-  border-radius: 10px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
 }
 
 .p-confirm-dialog {

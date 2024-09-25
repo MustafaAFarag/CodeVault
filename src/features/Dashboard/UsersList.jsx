@@ -15,7 +15,7 @@ const UsersList = ({ users, searchTerm, setSearchTerm }) => {
   }, [users, searchTerm]);
 
   return (
-    <div className="row-span-2 max-h-[300px] overflow-hidden rounded-lg bg-white p-4 shadow-md sm:p-6 md:row-span-2 md:max-h-[600px] lg:max-h-[6100px] xl:max-h-[600px] 2xl:max-h-[650px]">
+    <div className="row-span-2 max-h-[300px] overflow-hidden rounded-lg bg-white p-4 shadow-md sm:p-6 md:row-span-2 md:max-h-[600px] lg:max-h-[600px] xl:max-h-[600px] 2xl:max-h-[650px]">
       <div className="mb-4 flex flex-col">
         <h2 className="flex items-center justify-between text-xl font-semibold md:text-2xl">
           First 50 Users
@@ -30,7 +30,7 @@ const UsersList = ({ users, searchTerm, setSearchTerm }) => {
           className="rounded-lg border border-gray-300 px-2 py-1 text-xl"
         />
       </div>
-      <ul className="custom-scrollbar max-h-[230px] overflow-y-auto md:max-h-[500px] lg:max-h-[530px] xl:max-h-[580px]">
+      <ul className="custom-scrollbar max-h-[230px] overflow-y-auto md:max-h-[500px] lg:max-h-[500px] xl:max-h-[580px]">
         {sortedUsers.map((user, index) => (
           <li
             key={user.id}

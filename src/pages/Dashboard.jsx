@@ -79,7 +79,7 @@ function Dashboard() {
 
   return (
     <>
-      <h2 className="px-4 py-2 text-3xl font-semibold">
+      <h2 className="px-4 py-2 text-xl font-semibold md:text-3xl">
         Welcome{' '}
         <span className="font-bold text-teal-600">{user.full_name}!</span>
       </h2>

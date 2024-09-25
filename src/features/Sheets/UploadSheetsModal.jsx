@@ -103,6 +103,7 @@ function UploadSheetsModal({
           onChange={handleChange}
           className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 text-xl transition duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
           disabled={isUploading}
+          accept=".pdf"
         />
       </div>
     </Modal>

@@ -124,6 +124,7 @@ function UploadNoteModal({
           onChange={handleChange}
           className="block w-full rounded-lg border border-gray-300 p-3 text-xl text-gray-700 shadow-sm transition duration-200 focus:border-teal-500 focus:ring-teal-500"
           disabled={isUploading}
+          accept=".pdf"
           required
         />
       </div>

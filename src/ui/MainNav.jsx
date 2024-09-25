@@ -46,21 +46,41 @@ function MainNav({ toggleSidebar }) {
             Sections
           </StyledNavLink>
         </li>
+        <li>
+          <StyledNavLink
+            to="/sections"
+            onClick={handleLinkClick}
+            disabled={true}
+          >
+            <HiOutlineCollection className="text-teal-600" />
+            Midterm
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink
+            to="/sections"
+            onClick={handleLinkClick}
+            disabled={true}
+          >
+            <HiOutlineCollection className="text-teal-600" />
+            Finals
+          </StyledNavLink>
+        </li>
         {user.role === 'super_admin' || user.role === 'admin' ? (
-          <li>
-            <StyledNavLink to="/admin" onClick={handleLinkClick}>
-              <HiOutlineCog className="text-teal-600" />
-              Admin Panel
-            </StyledNavLink>
-          </li>
-        ) : null}
-        {user.role === 'super_admin' ? (
-          <li>
-            <StyledNavLink to="/logs" onClick={handleLinkClick}>
-              <HiOutlineClipboard className="text-teal-600" />
-              Logs
-            </StyledNavLink>
-          </li>
+          <>
+            <li>
+              <StyledNavLink to="/admin" onClick={handleLinkClick}>
+                <HiOutlineCog className="text-teal-600" />
+                Admin Panel
+              </StyledNavLink>
+            </li>
+            <li>
+              <StyledNavLink to="/logs" onClick={handleLinkClick}>
+                <HiOutlineClipboard className="text-teal-600" />
+                Logs
+              </StyledNavLink>
+            </li>
+          </>
         ) : null}
       </ul>
     </nav>

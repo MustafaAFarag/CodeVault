@@ -6,12 +6,14 @@ import Confetti from 'react-confetti';
 
 function UpdateModal() {
   const updates = [
-    '✨ Interface adjustments and fun new features have been added!',
-    '🎉 New pages are live! Check out "How to Use", "Rules/Policies!"',
-    '🐞 Fixed that avatar bug — Upload your picture!',
-    '⏳ Heads up: Notes upload is on pause until college kicks off!',
-    '🔒 New restrictions on Full Name!',
-    '👩‍🏫 Admin selections are now in place to smooth out the process!',
+    '✨ Exciting interface adjustments and new features have been added!',
+    '🌟 A warm welcome awaits you in the Dashboard!',
+    '🔒 Uploads are now restricted to PDF files only for better compatibility.',
+    '🎉 New pages are live! Check out our "How to Use" and "Rules/Policies" sections!',
+    '🐞 We fixed the avatar bug—feel free to upload your picture now!',
+    '⏳ Heads up: Notes uploads are paused until college starts!',
+    '🔐 New restrictions have been implemented for Full Name entries!',
+    '👩‍🏫 Admin selections are now in place to streamline the process!',
   ];
 
   const [isOpen, setIsOpen] = useState(false);
