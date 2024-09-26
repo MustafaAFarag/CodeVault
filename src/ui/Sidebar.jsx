@@ -24,15 +24,8 @@ function Sidebar() {
         <div className="flex flex-col items-center justify-center gap-4 rounded-lg bg-gray-800 p-3 shadow-lg md:p-4">
           <Link to="/rules">
             <Button
-              label="Rules-Policies!"
-              className="w-full rounded-full bg-transparent text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl md:text-lg"
-            />
-          </Link>
-          <Link to="/how-to-use">
-            <Button
-              label="How to Use!"
-              className="w-full rounded-full bg-transparent text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl md:text-lg"
-              disabled
+              label="Rules and Permissions!"
+              className="w-full rounded-full bg-transparent text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl md:text-base"
             />
           </Link>
         </div>
@@ -47,7 +40,7 @@ function Sidebar() {
             <FaEnvelope size={24} />
           </a>
           <a
-            href="https://github.com/MustafaAFarag"
+            href="https://github.com/MustafaAFarag/EduData"
             target="_blank"
             rel="noopener noreferrer"
             className="text-teal-300 hover:text-teal-100"

@@ -9,10 +9,10 @@ function UpdateModal() {
     '✨ Exciting interface adjustments and new features have been added!',
     '🌟 A warm welcome awaits you in the Dashboard!',
     '🔒 Uploads are now restricted to PDF files only for better compatibility.',
-    '🎉 New pages are live! Check out our "How to Use" and "Rules/Policies" sections!',
+    '🎉 New pages are live! Check out our "Rules and Permissions" sections!',
     '🐞 We fixed the avatar bug—feel free to upload your picture now!',
     '⏳ Heads up: Notes uploads are paused until college starts!',
-    '🔐 New restrictions have been implemented for Full Name entries!',
+    '🔐 New restrictions have been implemented for Full Name entries and for the Backend!',
     '👩‍🏫 Admin selections are now in place to streamline the process!',
   ];
 
@@ -54,8 +54,8 @@ function UpdateModal() {
   const handleClose = () => {
     setIsOpen(false);
     const expirationDate = new Date();
-    // Set expiration for 7 days (in milliseconds)
-    expirationDate.setDate(expirationDate.getDate() + 7);
+
+    expirationDate.setDate(expirationDate.getDate() + 1);
 
     localStorage.setItem('hasSeenUpdates', 'true');
     localStorage.setItem(

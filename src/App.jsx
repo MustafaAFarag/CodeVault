@@ -23,7 +23,7 @@ import AdminPanel from './pages/AdminPanel';
 import Logs from './pages/Logs';
 import Favorites from './pages/Favorites';
 import Updates from './pages/Updates';
-import Rules from './pages/Rules';
+import RulesAndPermissions from './pages/RulesAndPermissions';
 
 const queryClient = new QueryClient();
 
@@ -56,7 +56,7 @@ function App() {
             <Route path="/account" element={<Account />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/updates" element={<Updates />} />
-            <Route path="/rules" element={<Rules />} />
+            <Route path="/rules" element={<RulesAndPermissions />} />
             <Route element={<ProtectedAdminRoute />}>
               <Route path="/admin" element={<AdminPanel />} />
               <Route path="/logs" element={<Logs />} />

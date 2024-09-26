@@ -3,10 +3,12 @@ import StyledNavLink from '../StyledContainers/StyledNavLink';
 import {
   HiOutlineHome,
   HiOutlineDocumentText,
-  HiOutlinePlay,
+  HiDocumentReport,
   HiOutlineCollection,
   HiOutlineCog,
   HiOutlineClipboard,
+  HiClipboardList,
+  HiAcademicCap,
 } from 'react-icons/hi';
 import { useUser } from '../features/authentication/useUser';
 
@@ -36,7 +38,7 @@ function MainNav({ toggleSidebar }) {
         </li>
         <li>
           <StyledNavLink to="/lectures" onClick={handleLinkClick}>
-            <HiOutlinePlay className="text-teal-600" />
+            <HiDocumentReport className="text-teal-600" />
             Lectures
           </StyledNavLink>
         </li>
@@ -52,7 +54,7 @@ function MainNav({ toggleSidebar }) {
             onClick={handleLinkClick}
             disabled={true}
           >
-            <HiOutlineCollection className="text-teal-600" />
+            <HiClipboardList className="text-teal-600" />
             Midterm
           </StyledNavLink>
         </li>
@@ -62,7 +64,7 @@ function MainNav({ toggleSidebar }) {
             onClick={handleLinkClick}
             disabled={true}
           >
-            <HiOutlineCollection className="text-teal-600" />
+            <HiAcademicCap className="text-teal-600" />
             Finals
           </StyledNavLink>
         </li>
