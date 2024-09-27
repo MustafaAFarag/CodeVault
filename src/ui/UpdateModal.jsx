@@ -1,8 +1,9 @@
-/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import Modal from './Modal';
 import { Button } from 'primereact/button';
 import Confetti from 'react-confetti';
+
+const CURRENT_APP_VERSION = '1.1.0'; // Increment this version on every update
 
 function UpdateModal() {
   const updates = [
@@ -21,21 +22,17 @@ function UpdateModal() {
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   useEffect(() => {
+    const storedAppVersion = localStorage.getItem('appVersion');
     const hasSeenUpdates = localStorage.getItem('hasSeenUpdates');
-    const updatesExpiration = localStorage.getItem('updatesExpiration');
 
-    const now = new Date().getTime();
-    const isExpired =
-      updatesExpiration && now > parseInt(updatesExpiration, 10);
-
-    // Reset hasSeenUpdates if expired
-    if (isExpired) {
+    // Check if version has changed
+    if (storedAppVersion !== CURRENT_APP_VERSION) {
       localStorage.removeItem('hasSeenUpdates');
-      localStorage.removeItem('updatesExpiration');
+      localStorage.setItem('appVersion', CURRENT_APP_VERSION); // Update to new version
     }
 
-    // Show the modal if it has not been seen or has expired
-    if (!hasSeenUpdates || isExpired) {
+    // Show the modal if it has not been seen
+    if (!hasSeenUpdates || storedAppVersion !== CURRENT_APP_VERSION) {
       setIsOpen(true);
     }
 
@@ -53,15 +50,7 @@ function UpdateModal() {
 
   const handleClose = () => {
     setIsOpen(false);
-    const expirationDate = new Date();
-
-    expirationDate.setDate(expirationDate.getDate() + 1);
-
     localStorage.setItem('hasSeenUpdates', 'true');
-    localStorage.setItem(
-      'updatesExpiration',
-      expirationDate.getTime().toString(),
-    );
   };
 
   return (

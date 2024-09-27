@@ -48,7 +48,7 @@ function Sidebar() {
             <FaGithub size={24} />
           </a>
           <a
-            href="https://www.linkedin.com/in/mustafaashrafsaad/"
+            href="https://www.linkedin.com/feed/update/urn:li:activity:7245384319135797249/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-teal-300 hover:text-teal-100"
