@@ -182,20 +182,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 For any inquiries or issues, please reach out to:
 
 - **Mustafa Ashraf** - [mustafa.ashraf.saad@gmail.com ](mailto:mustafa.ashraf.saad@gmail.com)
-
-# EduData
-
-EduData is a web application designed for college peers to share their notes, lecture sheets, and section repositories with each other. Users can upload, rate, and favorite notes, access a dashboard with various functionalities, and participate in leaderboards.
-
-## Table of Contents
-
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Screenshots](#screenshots)
-- [Getting Started](#getting-started)
-  - [Installation](#installation)
-  - [Usage](#usage)
-- [Components](#components)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
