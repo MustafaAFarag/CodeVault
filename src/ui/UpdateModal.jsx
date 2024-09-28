@@ -3,7 +3,7 @@ import Modal from './Modal';
 import { Button } from 'primereact/button';
 import Confetti from 'react-confetti';
 
-const CURRENT_APP_VERSION = '1.1.0'; // Increment this version on every update
+const CURRENT_APP_VERSION = '1.1.1'; // Increment this version on every update
 
 function UpdateModal() {
   const updates = [
