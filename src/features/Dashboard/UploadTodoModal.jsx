@@ -111,9 +111,9 @@ function UploadTodoModal({ isOpen, onClose, onSubmit }) {
           className="mt-1 block w-full rounded-lg border border-gray-300 p-3 text-xl font-medium text-text shadow-sm transition duration-200 focus:border-teal-500 focus:ring-teal-500"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Enter the Description (Max 180 Characters)"
+          placeholder="Enter the Description (Max 280 Characters)"
           required
-          maxLength={180}
+          maxLength={280}
         ></textarea>
       </div>
 

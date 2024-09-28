@@ -108,9 +108,10 @@ function SheetsPage({ title, queryKey, queryFn, uploadFn, deleteFn }) {
   }, [data, selectedSubject, searchQuery]);
 
   const sortedSheets = useMemo(() => {
-    return [...filteredSheets].sort(
-      (a, b) => b.average_rating - a.average_rating,
-    );
+    return [...filteredSheets].sort((a, b) => {
+      // Sort by createdAt in ascending order
+      return new Date(a.createdAt) - new Date(b.createdAt);
+    });
   }, [filteredSheets]);
 
   const sheetsToDisplay = sortedSheets.slice(

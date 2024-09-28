@@ -130,10 +130,10 @@ function Notes() {
     }
   };
 
-  const canUpload =
-    user.role === 'admin' ||
-    user.role === 'super_admin' ||
-    user.role === 'verified';
+  // const canUpload =
+  //   user.role === 'admin' ||
+  //   user.role === 'super_admin' ||
+  //   user.role === 'verified';
 
   if (isLoading || subjectsLoading) return <NotesLoader />;
   if (subjectsError) return <ErrorMessage message={subjectsError.message} />;
@@ -159,14 +159,12 @@ function Notes() {
           className="mb-4 w-full rounded-lg border border-gray-300 p-3 text-xl md:w-1/2 md:translate-y-5"
         />
 
-        {canUpload && (
-          <button
-            onClick={handleUploadClick}
-            className="w-full translate-y-3 rounded-lg bg-secondary px-4 py-2 text-lg font-semibold text-text shadow-lg transition-all hover:bg-accent md:w-auto md:px-5 md:py-3 lg:text-2xl"
-          >
-            Upload
-          </button>
-        )}
+        <button
+          onClick={handleUploadClick}
+          className="w-full translate-y-3 rounded-lg bg-secondary px-4 py-2 text-lg font-semibold text-text shadow-lg transition-all hover:bg-accent md:w-auto md:px-5 md:py-3 lg:text-2xl"
+        >
+          Upload
+        </button>
       </div>
 
       {error ? (

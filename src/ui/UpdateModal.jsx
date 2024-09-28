@@ -7,14 +7,11 @@ const CURRENT_APP_VERSION = '1.1.0'; // Increment this version on every update
 
 function UpdateModal() {
   const updates = [
-    '✨ Exciting interface adjustments and new features have been added!',
-    '🌟 A warm welcome awaits you in the Dashboard!',
-    '🔒 Uploads are now restricted to PDF files only for better compatibility.',
-    '🎉 New pages are live! Check out our "Rules and Permissions" sections!',
-    '🐞 We fixed the avatar bug—feel free to upload your picture now!',
-    '⏳ Heads up: Notes uploads are paused until college starts!',
-    '🔐 New restrictions have been implemented for Full Name entries and for the Backend!',
-    '👩‍🏫 Admin selections are now in place to streamline the process!',
+    '👥 Users List displays all Users!',
+    '✅ To-Dos have been updated',
+    '📚 Numerical Lectures PDFs/Notes have landed',
+    '🎉 All Users can upload Notes!',
+    '⚠️ Warnings: Use appropriate names, or your account might face a ban/suspend!',
   ];
 
   const [isOpen, setIsOpen] = useState(false);
